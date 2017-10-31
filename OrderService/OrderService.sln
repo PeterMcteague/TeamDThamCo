@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2002
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderService", "OrderService\OrderService.csproj", "{13DBD4D5-56A9-43D6-AA2A-C502FABA4061}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{36C1307F-8C38-4976-91C4-C9120A950185}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{13DBD4D5-56A9-43D6-AA2A-C502FABA4061}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13DBD4D5-56A9-43D6-AA2A-C502FABA4061}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13DBD4D5-56A9-43D6-AA2A-C502FABA4061}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13DBD4D5-56A9-43D6-AA2A-C502FABA4061}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36C1307F-8C38-4976-91C4-C9120A950185}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36C1307F-8C38-4976-91C4-C9120A950185}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36C1307F-8C38-4976-91C4-C9120A950185}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36C1307F-8C38-4976-91C4-C9120A950185}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EF9BEF99-E938-453A-8BF5-7D78AED4E890}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 2
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://w-tsoftware.visualstudio.com/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = OrderService\\OrderService.csproj
+		SccProjectName1 = OrderService
+		SccLocalPath1 = OrderService
+	EndGlobalSection
+EndGlobal

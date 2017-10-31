@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  orderservice:
+    image: orderservice
+    build:
+      context: ./OrderService
+      dockerfile: Dockerfile

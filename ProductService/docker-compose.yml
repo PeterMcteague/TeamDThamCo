@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  productservice:
+    image: productservice
+    build:
+      context: ./ProductService
+      dockerfile: Dockerfile
