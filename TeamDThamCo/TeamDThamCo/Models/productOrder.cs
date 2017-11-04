@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace OrderService.Models
+namespace TeamDThamCo.Models
 {
     //Relational model between products and orders
-    public class ProductOrder
+    public class productOrder
     {
         public int id { get; set; }
 

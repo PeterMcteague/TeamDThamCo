@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace OrderService.Models
+namespace TeamDThamCo.Models
 {
     public class Dispatch
     {
