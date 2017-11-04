@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace TeamDThamCo.Models
+namespace OrderService.Models
 {
     public class Order
     {

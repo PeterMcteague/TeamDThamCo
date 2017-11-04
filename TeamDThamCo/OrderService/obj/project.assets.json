@@ -2,6 +2,15 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v2.0": {
+      "EntityFramework.SqlServerCompact/6.2.0": {
+        "type": "package",
+        "compile": {
+          "lib/net45/EntityFramework.SqlServerCompact.dll": {}
+        },
+        "runtime": {
+          "lib/net45/EntityFramework.SqlServerCompact.dll": {}
+        }
+      },
       "Libuv/1.10.0": {
         "type": "package",
         "dependencies": {
@@ -4750,6 +4759,22 @@
     }
   },
   "libraries": {
+    "EntityFramework.SqlServerCompact/6.2.0": {
+      "sha512": "pGPxxPUCsckMg/UP/EOfklanNCCGIQvJzMBt56UnjwutzlVni7dJL92LFeQR2foI+O2E4NjlCaWWHXxGI7gpQw==",
+      "type": "package",
+      "path": "entityframework.sqlservercompact/6.2.0",
+      "files": [
+        "content/net40/App.config.transform",
+        "content/net40/Web.config.transform",
+        "entityframework.sqlservercompact.6.2.0.nupkg.sha512",
+        "entityframework.sqlservercompact.nuspec",
+        "lib/net40/EntityFramework.SqlServerCompact.dll",
+        "lib/net40/EntityFramework.SqlServerCompact.xml",
+        "lib/net45/EntityFramework.SqlServerCompact.dll",
+        "lib/net45/EntityFramework.SqlServerCompact.xml",
+        "tools/install.ps1"
+      ]
+    },
     "Libuv/1.10.0": {
       "sha512": "GsCf4q+eyaI49rCPlgYxdxa1SQCysXFFdSJWdstrwxytg4+VPYLYrXD4AT2rjHVJ+UF7SSWX9CapWEYaU4ejVQ==",
       "type": "package",
@@ -12528,6 +12553,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.0": [
+      "EntityFramework.SqlServerCompact >= 6.2.0",
       "Microsoft.AspNetCore.All >= 2.0.0",
       "Microsoft.NETCore.App >= 2.0.0"
     ]
@@ -12576,6 +12602,10 @@
     "frameworks": {
       "netcoreapp2.0": {
         "dependencies": {
+          "EntityFramework.SqlServerCompact": {
+            "target": "Package",
+            "version": "6.2.0"
+          },
           "Microsoft.NETCore.App": {
             "target": "Package",
             "version": "2.0.0",
@@ -12593,5 +12623,17 @@
         "warn": true
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'EntityFramework.SqlServerCompact 6.2.0' was restored using '.NETFramework,Version=v4.6.1' instead of the project target framework '.NETCoreApp,Version=v2.0'. This package may not be fully compatible with your project.",
+      "libraryId": "EntityFramework.SqlServerCompact",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v2.0"
+      ]
+    }
+  ]
 }
