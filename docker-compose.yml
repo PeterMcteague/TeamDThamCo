@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  teamdthamco:
+    image: teamdthamco
+    build:
+      context: ./TeamDThamCo
+      dockerfile: Dockerfile
