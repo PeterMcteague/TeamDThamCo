@@ -3,7 +3,7 @@
   <PropertyGroup Label="Globals">
     <ProjectVersion>2.0</ProjectVersion>
     <DockerTargetOS>Windows</DockerTargetOS>
-    <ProjectGuid>8d5222fd-5bda-4bbe-af63-e04882e873b7</ProjectGuid>
+    <ProjectGuid>26d1f72b-4f05-43b9-bc48-f67eff70b218</ProjectGuid>
     <DockerLaunchBrowser>True</DockerLaunchBrowser>
     <DockerServiceUrl>http://{ServiceIPAddress}</DockerServiceUrl>
     <DockerServiceName>teamdthamco</DockerServiceName>
