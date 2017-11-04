@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  teamdthamco:
+    image: teamdthamco
+    build:
+      context: ./TeamDThamCo
+      dockerfile: Dockerfile
+
+  orderservice:
+    image: orderservice
+    build:
+      context: ./OrderService
+      dockerfile: Dockerfile
