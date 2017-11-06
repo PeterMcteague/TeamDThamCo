@@ -20,14 +20,23 @@ namespace OrderService.Controllers
             _context = context;
         }
 
-        // GET: api/OrdersAPI
+        // GET: api/Orders
         [HttpGet]
-        public IEnumerable<Order> GetOrder()
+        public async Task<IActionResult> GetOrder()
         {
-            return _context.Orders;
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            if (!_context.Orders.Any())
+            {
+                return NotFound();
+            }
+
+            return Ok(_context.Orders);
         }
 
-        // GET: api/OrdersAPI/5
+        // GET: api/Orders/5
         [HttpGet("{id}", Name = "Get orders by buyer ID")]
         public async Task<IActionResult> GetOrder([FromRoute] string id)
         {
@@ -46,33 +55,40 @@ namespace OrderService.Controllers
             return Ok(order);
         }
 
-        // GET: api/OrdersAPI/Products/5
-        [HttpGet("Products/{id}", Name = "Get products in order by buyer ID")]
-        public async Task<IActionResult> GetProductsOrder([FromRoute] string id)
+        // GET: api/Orders/Products
+        [HttpGet("Products/{id}", Name = "Get all products ordered")]
+        public async Task<IActionResult> GetProductsOrdered()
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            if (!_context.OrderItems.Any())
+            {
+                return NotFound();
+            }
+
+            return Ok(_context.OrderItems);
+        }
+
+        // GET: api/Orders/Products/5
+        [HttpGet("Products/{id}", Name = "Get products in order by order ID")]
+        public async Task<IActionResult> GetProductsInOrder([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var order = await _context.Orders.SingleOrDefaultAsync(m => m.buyerId == id);
+            var orders = _context.OrderItems.Where(m => m.orderId == id);
 
-            if (order == null)
+            if (!orders.Any())
             {
                 return NotFound();
             }
-            if (order.products.ToList().Count() == 0)
-            {
-                return NoContent();
-            }
             else
             {
-                var listOfProducts = new List<OrderItem>();
-                foreach (OrderItem i in order.products)
-                {
-                    listOfProducts.Add(i);
-                }
-                return Ok(listOfProducts.ToList());
+                return Ok(orders);
             }
         }
 

@@ -20,6 +20,8 @@ namespace OrderService.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Order>().ToTable("Order");
+            modelBuilder.Entity<OrderItem>().ToTable("OrderItem");
+            modelBuilder.Entity<Dispatch>().ToTable("Dispatch");
         }
     }
 }

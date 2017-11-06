@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,9 +11,8 @@ namespace OrderService.Models
         public int id { get; set; }
 
         public DateTime orderDate { get; set; }
-
-        public ICollection<OrderItem> products {get;set;}
-
+        
+        [ForeignKey("buyerId")]
         public string buyerId { get; set; }
 
         public string address { get; set; }
