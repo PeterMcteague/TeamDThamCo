@@ -1,0 +1,11 @@
+C:\Users\q5233000\Documents\GitHub\TeamDThamCo\Messaging\bin\Debug\netcoreapp2.0\Messaging.deps.json
+C:\Users\q5233000\Documents\GitHub\TeamDThamCo\Messaging\bin\Debug\netcoreapp2.0\Messaging.runtimeconfig.json
+C:\Users\q5233000\Documents\GitHub\TeamDThamCo\Messaging\bin\Debug\netcoreapp2.0\Messaging.runtimeconfig.dev.json
+C:\Users\q5233000\Documents\GitHub\TeamDThamCo\Messaging\bin\Debug\netcoreapp2.0\Messaging.dll
+C:\Users\q5233000\Documents\GitHub\TeamDThamCo\Messaging\bin\Debug\netcoreapp2.0\Messaging.pdb
+C:\Users\q5233000\Documents\GitHub\TeamDThamCo\Messaging\obj\Debug\netcoreapp2.0\Messaging.csprojResolveAssemblyReference.cache
+C:\Users\q5233000\Documents\GitHub\TeamDThamCo\Messaging\obj\Debug\netcoreapp2.0\Messaging.csproj.CoreCompileInputs.cache
+C:\Users\q5233000\Documents\GitHub\TeamDThamCo\Messaging\obj\Debug\netcoreapp2.0\Messaging.AssemblyInfoInputs.cache
+C:\Users\q5233000\Documents\GitHub\TeamDThamCo\Messaging\obj\Debug\netcoreapp2.0\Messaging.AssemblyInfo.cs
+C:\Users\q5233000\Documents\GitHub\TeamDThamCo\Messaging\obj\Debug\netcoreapp2.0\Messaging.dll
+C:\Users\q5233000\Documents\GitHub\TeamDThamCo\Messaging\obj\Debug\netcoreapp2.0\Messaging.pdb

@@ -1,0 +1,11 @@
+C:\Users\q5233000\Documents\GitHub\TeamDThamCo\TeamDThamCo\OrderService\bin\Debug\netcoreapp2.0\OrderService.deps.json
+C:\Users\q5233000\Documents\GitHub\TeamDThamCo\TeamDThamCo\OrderService\bin\Debug\netcoreapp2.0\OrderService.runtimeconfig.json
+C:\Users\q5233000\Documents\GitHub\TeamDThamCo\TeamDThamCo\OrderService\bin\Debug\netcoreapp2.0\OrderService.runtimeconfig.dev.json
+C:\Users\q5233000\Documents\GitHub\TeamDThamCo\TeamDThamCo\OrderService\bin\Debug\netcoreapp2.0\OrderService.dll
+C:\Users\q5233000\Documents\GitHub\TeamDThamCo\TeamDThamCo\OrderService\bin\Debug\netcoreapp2.0\OrderService.pdb
+C:\Users\q5233000\Documents\GitHub\TeamDThamCo\TeamDThamCo\OrderService\obj\Debug\netcoreapp2.0\OrderService.csprojResolveAssemblyReference.cache
+C:\Users\q5233000\Documents\GitHub\TeamDThamCo\TeamDThamCo\OrderService\obj\Debug\netcoreapp2.0\OrderService.csproj.CoreCompileInputs.cache
+C:\Users\q5233000\Documents\GitHub\TeamDThamCo\TeamDThamCo\OrderService\obj\Debug\netcoreapp2.0\OrderService.AssemblyInfoInputs.cache
+C:\Users\q5233000\Documents\GitHub\TeamDThamCo\TeamDThamCo\OrderService\obj\Debug\netcoreapp2.0\OrderService.AssemblyInfo.cs
+C:\Users\q5233000\Documents\GitHub\TeamDThamCo\TeamDThamCo\OrderService\obj\Debug\netcoreapp2.0\OrderService.dll
+C:\Users\q5233000\Documents\GitHub\TeamDThamCo\TeamDThamCo\OrderService\obj\Debug\netcoreapp2.0\OrderService.pdb
