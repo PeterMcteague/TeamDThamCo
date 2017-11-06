@@ -21,3 +21,4 @@ C:\Users\07mct\Documents\GitHub\TeamDThamCo\TeamDThamCo\OrderService\obj\Debug\n
 C:\Users\07mct\Documents\GitHub\TeamDThamCo\TeamDThamCo\OrderService\obj\Debug\netcoreapp2.0\OrderService.AssemblyInfo.cs
 C:\Users\07mct\Documents\GitHub\TeamDThamCo\TeamDThamCo\OrderService\obj\Debug\netcoreapp2.0\OrderService.dll
 C:\Users\07mct\Documents\GitHub\TeamDThamCo\TeamDThamCo\OrderService\obj\Debug\netcoreapp2.0\OrderService.pdb
+C:\Users\07mct\Documents\GitHub\TeamDThamCo\TeamDThamCo\OrderService\obj\Debug\netcoreapp2.0\OrderService.csprojResolveAssemblyReference.cache

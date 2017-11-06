@@ -9,8 +9,11 @@ using OrderService.Models;
 
 namespace OrderService.Controllers
 {
+    ///<Summary>
+    /// A controller for the orders API
+    ///</Summary>
     [Produces("application/json")]
-    [Route("api/OrdersAPI")]
+    [Route("api/Orders")]
     public class OrdersAPIController : Controller
     {
         private readonly OrderServiceContext _context;
@@ -21,7 +24,7 @@ namespace OrderService.Controllers
         }
 
         // GET: api/Orders
-        [HttpGet]
+        [HttpGet("/api/Orders", Name = "Get all orders")]
         public async Task<IActionResult> GetOrder()
         {
             if (!ModelState.IsValid)
@@ -37,7 +40,7 @@ namespace OrderService.Controllers
         }
 
         // GET: api/Orders/5
-        [HttpGet("{id}", Name = "Get orders by buyer ID")]
+        [HttpGet("/api/Orders/{id}", Name = "Get orders by buyer ID")]
         public async Task<IActionResult> GetOrder([FromRoute] string id)
         {
             if (!ModelState.IsValid)
@@ -56,7 +59,7 @@ namespace OrderService.Controllers
         }
 
         // GET: api/Orders/Products
-        [HttpGet("Products/{id}", Name = "Get all products ordered")]
+        [HttpGet("/api/Orders/Products", Name = "Get all products ordered")]
         public async Task<IActionResult> GetProductsOrdered()
         {
             if (!ModelState.IsValid)
@@ -72,7 +75,7 @@ namespace OrderService.Controllers
         }
 
         // GET: api/Orders/Products/5
-        [HttpGet("Products/{id}", Name = "Get products in order by order ID")]
+        [HttpGet("/api/Orders/Products/{id}", Name = "Get products in order by order ID")]
         public async Task<IActionResult> GetProductsInOrder([FromRoute] int id)
         {
             if (!ModelState.IsValid)

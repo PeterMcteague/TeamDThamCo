@@ -19,3 +19,4 @@ C:\Users\07mct\Documents\GitHub\TeamDThamCo\TeamDThamCo\TeamDThamCo\obj\Debug\ne
 C:\Users\07mct\Documents\GitHub\TeamDThamCo\TeamDThamCo\TeamDThamCo\obj\Debug\netcoreapp2.0\TeamDThamCo.AssemblyInfo.cs
 C:\Users\07mct\Documents\GitHub\TeamDThamCo\TeamDThamCo\TeamDThamCo\obj\Debug\netcoreapp2.0\TeamDThamCo.dll
 C:\Users\07mct\Documents\GitHub\TeamDThamCo\TeamDThamCo\TeamDThamCo\obj\Debug\netcoreapp2.0\TeamDThamCo.pdb
+C:\Users\07mct\Documents\GitHub\TeamDThamCo\TeamDThamCo\TeamDThamCo\obj\Debug\netcoreapp2.0\TeamDThamCo.csprojResolveAssemblyReference.cache
