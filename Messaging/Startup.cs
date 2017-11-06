@@ -51,5 +51,9 @@ namespace Messaging
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
+
+        using (var serviceScope = AppContext.ApplicationServices.GetRequiredService<IServiceScopeFactory>)().CreateScope())
+    {
+
     }
 }
