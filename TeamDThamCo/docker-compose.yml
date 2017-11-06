@@ -12,3 +12,9 @@ services:
     build:
       context: ./OrderService
       dockerfile: Dockerfile
+
+  messaging:
+    image: messaging
+    build:
+      context: ./../Messaging
+      dockerfile: Dockerfile
