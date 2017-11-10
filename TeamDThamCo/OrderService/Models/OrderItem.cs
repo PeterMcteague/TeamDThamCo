@@ -19,5 +19,7 @@ namespace OrderService.Models
 
         // Refers to cost of 1 item, not many
         public double cost { get; set; }
+
+        public Boolean active { get; set; }
     }
 }

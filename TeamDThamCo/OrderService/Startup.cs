@@ -29,7 +29,12 @@ namespace OrderService
             // Register the Swagger generator, defining one or more Swagger documents
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
+                c.SwaggerDoc("v1", new Info {
+                    Title = "Order Service API",
+                    Version = "v1",
+                    Description = "A ASP.NET Core Web API for the Order Service",
+                    TermsOfService = "For between service communications",
+                });
             });
 
             services.AddDbContext<OrderServiceContext>(options =>

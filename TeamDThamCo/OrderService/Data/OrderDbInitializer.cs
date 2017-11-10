@@ -1,4 +1,5 @@
-﻿using OrderService.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using OrderService.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,35 +11,47 @@ namespace OrderService.Data
     {
         public static void Initialize(OrderServiceContext context)
         {
+            context.Database.EnsureDeleted(); //Reset for dev
             context.Database.EnsureCreated();
+            
+            List<Order> orders = new List<Order>();
+            List<OrderItem> testProducts = new List<OrderItem>();
 
-            if (context.Orders.Any())
+            #if DEBUG
+            orders.Add(new Order { invoiced = true, dispatched = true, address = "Kevins House, 69 Wallaby Way, Sydney, PST CDE", buyerId = "test-id-plz-ignore", orderDate = DateTime.Parse("2005-09-01"), active = true });
+            orders.Add(new Order { invoiced = true, dispatched = false, address = "Kevins House, 69 Wallaby Way, Sydney, PST CDE", buyerId = "test-id-plz-ignore", orderDate = DateTime.Parse("2005-09-01"), active = true });
+            
+            testProducts.Add(new OrderItem { orderId = 1, name = "Premium Jelly Beans", cost = 2.00, quantity = 5, active = true });
+            testProducts.Add(new OrderItem { orderId = 2, name = "Netlogo Supercomputer", cost = 2005.99, quantity = 1, active = true });
+            #endif
+
+            if (context.Orders.Count() == orders.Count())
             {
                 return;   // DB has been seeded
             }
-            
-            List<OrderItem> testProducts = new List<OrderItem>();
-            testProducts.Add(new OrderItem { orderId = 1, name = "Premium Jelly Beans", cost = 2.00, quantity = 5 });
-
-            List<Order> orders = new List<Order>();
-            orders.Add(new Order { id = 1, invoiced = true, dispatched = true, address = "Kevins House, 69 Wallaby Way, Sydney, PST CDE", buyerId = "test-id-plz-ignore", orderDate = DateTime.Parse("2005-09-01") });
-
-            foreach (Order s in orders)
+            else
             {
-                context.Orders.Add(s);
-            }
-            foreach (OrderItem s in testProducts)
-            {
-                context.OrderItems.Add(s);
-            }
-            foreach (Order s in orders)
-            {
-                if (s.dispatched)
+                foreach (Order s in orders)
                 {
-                    context.Dispatches.Add(new Dispatch { orderId = s.id });
+                    context.Orders.Add(s);
                 }
+                context.SaveChanges();
+
+                foreach (OrderItem s in testProducts)
+                {
+                    context.OrderItems.Add(s);
+                }
+                context.SaveChanges();
+
+                foreach (Order s in orders)
+                {
+                    if (s.dispatched)
+                    {
+                        context.Dispatches.Add(new Dispatch { orderId = s.id });
+                    }
+                }
+                context.SaveChanges();
             }
-            context.SaveChanges();
         }
     }
 }
