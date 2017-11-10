@@ -8,7 +8,7 @@ namespace OrderService.Models
 {
     public class OrderServiceContext : DbContext
     {
-        public OrderServiceContext (DbContextOptions<OrderServiceContext> options)
+        public OrderServiceContext (DbContextOptions options)
             : base(options)
         {
         }

@@ -41,8 +41,13 @@ namespace OrderService.Controllers
             {
                 return NotFound();
             }
+            if (!_context.Orders.Where(b => b.active == true).Any())
+            {
+                return NoContent();
+            }
 
-            return Ok(_context.Orders.Where(b => b.active == true));
+            var orders = _context.Orders.Where(b => b.active == true);
+            return Ok(orders);
         }
 
         /// <summary>
@@ -59,14 +64,15 @@ namespace OrderService.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            var orders = _context.Orders.Where(m => m.buyerId == buyerid && m.active == true);
-
-            if (orders == null)
+            if (!_context.Orders.Any())
             {
                 return NotFound();
             }
-
+            if (!_context.Orders.Where(b => b.active == true && b.buyerId == buyerid).Any())
+            {
+                return NoContent();
+            }
+            var orders = _context.Orders.Where(m => m.buyerId == buyerid && m.active == true);
             return Ok(orders);
         }
 
@@ -83,13 +89,12 @@ namespace OrderService.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            var products = _context.OrderItems.Where(b => b.active == true);
-
-            if (!products.Any())
+            if (!_context.OrderItems.Any())
             {
                 return NotFound();
             }
+
+            var products = _context.OrderItems.Where(b => b.active == true);
 
             return Ok(products);
         }
@@ -108,13 +113,16 @@ namespace OrderService.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            var products = _context.OrderItems.Where(b => b.active == true && b.orderId == orderid);
-
-            if (!products.Any())
+            if (!_context.OrderItems.Any())
             {
                 return NotFound();
             }
+            if (!_context.OrderItems.Where(b => b.active == true && b.orderId == orderid).Any())
+            {
+                return NoContent();
+            }
+
+            var products = _context.OrderItems.Where(b => b.active == true && b.orderId == orderid);
 
             return Ok(products);
         }
@@ -122,7 +130,7 @@ namespace OrderService.Controllers
         /// <summary>
         /// Gets all products ordered by a customer.
         /// </summary>
-        /// <param name="Buyer ID"></param>  
+        /// <param name="buyerid"></param>
         /// <response code="200">Returns the products</response>
         /// <response code="400">If not any products ordered by that buyer</response>  
         /// <response code="404">If parameters are invalid</response>  
@@ -133,18 +141,29 @@ namespace OrderService.Controllers
             {
                 return BadRequest(ModelState);
             }
-            
-            var listOfOrderIdsByBuyer = _context.Orders.Where(r => r.buyerId == buyerid && r.active).Select(r => r.id);
-            var listOfProducts = _context.OrderItems.Where(r => listOfOrderIdsByBuyer.Contains(r.orderId) && r.active == true);
-
-            if (!listOfProducts.Any())
+            if (!_context.OrderItems.Any())
             {
                 return NotFound();
             }
-            else
+            if (!_context.Orders.Any())
             {
-                return Ok(listOfProducts);
+                return NotFound();
             }
+            if (!_context.Orders.Where(b => b.active == true && b.buyerId == buyerid).Any())
+            {
+                return NoContent();
+            }
+
+            var listOfOrderIdsByBuyer = _context.Orders.Where(m => m.buyerId == buyerid && m.active == true).Select(m => m.id);
+
+            if (!_context.OrderItems.Where(m => listOfOrderIdsByBuyer.Contains(m.orderId) && m.active == true).Any())
+            {
+                return NoContent();
+            }
+
+            var listOfProducts = _context.OrderItems.Where(m => listOfOrderIdsByBuyer.Contains(m.orderId) && m.active == true);
+            
+            return Ok(listOfProducts);
         }
 
         /// <summary>
@@ -161,23 +180,26 @@ namespace OrderService.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            var orders = _context.Orders.SingleOrDefault(m => m.id == orderid && m.active && m.dispatched == false);
-
-            if (orders == null)
+            if (!_context.Orders.Any())
             {
                 return NotFound();
             }
+            if (!_context.Orders.Where(b => b.active == true && b.id == orderid).Any())
+            {
+                return NoContent();
+            }
             else
             {
-                var products = _context.OrderItems.Where(m => m.orderId == orders.id);
-                orders.active = false;
+                var order = _context.Orders.SingleOrDefault(m => m.id == orderid && m.active && m.dispatched == false);
+                var products = _context.OrderItems.Where(m => m.orderId == order.id);
+                order.active = false;
                 foreach (OrderItem product in products)
                 {
                     product.active = false;
                 }
-                _context.SaveChanges();
-                return Ok();
+                await _context.SaveChangesAsync();
+                var returnValue = _context.Orders.Where(b => b.active == true);
+                return Ok(returnValue);
             }
         }
 
@@ -195,21 +217,24 @@ namespace OrderService.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            var products = _context.OrderItems.SingleOrDefault(m => m.id == productId && m.active);
-
-            if (products == null)
+            if (!_context.OrderItems.Any())
             {
                 return NotFound();
             }
+            if (!_context.OrderItems.Where(b => b.active == true && b.id == productId).Any())
+            {
+                return NoContent();
+            }
+
             else
             {
-                var order = _context.Orders.SingleOrDefault(m => m.id == products.orderId);
+                var product = _context.OrderItems.SingleOrDefault(m => m.id == productId && m.active);
+                var order = _context.Orders.SingleOrDefault(m => m.id == product.orderId);
                 if (!order.dispatched)
                 {
-                    products.active = false;
-                    _context.SaveChanges();
-                    return Ok();
+                    product.active = false;
+                    await _context.SaveChangesAsync();
+                    return Ok(product);
                 }
                 return NotFound("Order already dispatched");
             }

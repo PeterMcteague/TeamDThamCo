@@ -11,39 +11,35 @@ namespace OrderService.Data
     {
         public static void Initialize(OrderServiceContext context)
         {
+            #if DEBUG
             context.Database.EnsureDeleted(); //Reset for dev
+            #endif
             context.Database.EnsureCreated();
             
-            List<Order> orders = new List<Order>();
+            List<Order> testOrders = new List<Order>();
             List<OrderItem> testProducts = new List<OrderItem>();
 
             #if DEBUG
-            orders.Add(new Order { invoiced = true, dispatched = true, address = "Kevins House, 69 Wallaby Way, Sydney, PST CDE", buyerId = "test-id-plz-ignore", orderDate = DateTime.Parse("2005-09-01"), active = true });
-            orders.Add(new Order { invoiced = true, dispatched = false, address = "Kevins House, 69 Wallaby Way, Sydney, PST CDE", buyerId = "test-id-plz-ignore", orderDate = DateTime.Parse("2005-09-01"), active = true });
+            testOrders.Add(new Order { invoiced = true, dispatched = true, address = "Kevins House, 69 Wallaby Way, Sydney, PST CDE", buyerId = "test-id-plz-ignore", orderDate = DateTime.Parse("2005-09-01"), active = true });
+            testOrders.Add(new Order { invoiced = true, dispatched = false, address = "Kevins House, 69 Wallaby Way, Sydney, PST CDE", buyerId = "test-id-plz-ignore", orderDate = DateTime.Parse("2005-09-01"), active = true });
             
             testProducts.Add(new OrderItem { orderId = 1, name = "Premium Jelly Beans", cost = 2.00, quantity = 5, active = true });
             testProducts.Add(new OrderItem { orderId = 2, name = "Netlogo Supercomputer", cost = 2005.99, quantity = 1, active = true });
             #endif
 
-            if (context.Orders.Count() == orders.Count())
+            if (context.Orders.Count() == testOrders.Count())
             {
                 return;   // DB has been seeded
             }
             else
             {
-                foreach (Order s in orders)
-                {
-                    context.Orders.Add(s);
-                }
+                context.Orders.AddRange(testOrders);
                 context.SaveChanges();
 
-                foreach (OrderItem s in testProducts)
-                {
-                    context.OrderItems.Add(s);
-                }
+                context.OrderItems.AddRange(testProducts);
                 context.SaveChanges();
 
-                foreach (Order s in orders)
+                foreach (Order s in testOrders)
                 {
                     if (s.dispatched)
                     {

@@ -48,7 +48,7 @@
             <summary>
             Gets all products ordered by a customer.
             </summary>
-            <param name="Buyer IDID"></param>  
+            <param name="buyerid"></param>
             <response code="200">Returns the products</response>
             <response code="400">If not any products ordered by that buyer</response>  
             <response code="404">If parameters are invalid</response>  

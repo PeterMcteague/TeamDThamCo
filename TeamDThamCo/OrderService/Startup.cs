@@ -38,8 +38,8 @@ namespace OrderService
             });
 
             services.AddDbContext<OrderServiceContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("OrderServiceContext")));
-
+                    options.UseSqlServer(Configuration.GetConnectionString("OrderServiceContext"))                
+                    );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,7 +51,7 @@ namespace OrderService
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Order-Api-Simple");
+                c.SwaggerEndpoint(" / swagger/v1/swagger.json", "Order-Api-Simple");
             });
 
             if (env.IsDevelopment())
