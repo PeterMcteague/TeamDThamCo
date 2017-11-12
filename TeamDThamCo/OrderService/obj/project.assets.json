@@ -12533,7 +12533,7 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\q5233000\\.nuget\\packages\\": {},
+    "C:\\Users\\ant12\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
@@ -12542,17 +12542,17 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "C:\\Users\\q5233000\\Documents\\GitHub\\TeamDThamCo\\TeamDThamCo\\OrderService\\OrderService.csproj",
+      "projectUniqueName": "C:\\Users\\ant12\\Documents\\GitHub\\TeamDThamCo\\TeamDThamCo\\OrderService\\OrderService.csproj",
       "projectName": "OrderService",
-      "projectPath": "C:\\Users\\q5233000\\Documents\\GitHub\\TeamDThamCo\\TeamDThamCo\\OrderService\\OrderService.csproj",
-      "packagesPath": "C:\\Users\\q5233000\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\q5233000\\Documents\\GitHub\\TeamDThamCo\\TeamDThamCo\\OrderService\\obj\\",
+      "projectPath": "C:\\Users\\ant12\\Documents\\GitHub\\TeamDThamCo\\TeamDThamCo\\OrderService\\OrderService.csproj",
+      "packagesPath": "C:\\Users\\ant12\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\ant12\\Documents\\GitHub\\TeamDThamCo\\TeamDThamCo\\OrderService\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\q5233000\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\ant12\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -12560,7 +12560,6 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "http://packagesource": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
