@@ -18,6 +18,7 @@ namespace OrderService.Data
             
             List<Order> testOrders = new List<Order>();
             List<OrderItem> testProducts = new List<OrderItem>();
+            List<BasketItem> testBasket = new List<BasketItem>();
 
             #if DEBUG
             testOrders.Add(new Order { invoiced = true, dispatched = true, address = "Kevins House, 69 Wallaby Way, Sydney, PST CDE", buyerId = "test-id-plz-ignore", orderDate = DateTime.Parse("2005-09-01"), active = true });
@@ -25,6 +26,8 @@ namespace OrderService.Data
             
             testProducts.Add(new OrderItem { orderId = 1, name = "Premium Jelly Beans", cost = 2.00, quantity = 5, active = true });
             testProducts.Add(new OrderItem { orderId = 2, name = "Netlogo Supercomputer", cost = 2005.99, quantity = 1, active = true });
+
+            testBasket.Add(new BasketItem { id = 1, buyerId = "test-id-plz-ignore", productId = 1, quantity = 9001 });
             #endif
 
             if (context.Orders.Count() == testOrders.Count())
@@ -37,6 +40,9 @@ namespace OrderService.Data
                 context.SaveChanges();
 
                 context.OrderItems.AddRange(testProducts);
+                context.SaveChanges();
+
+                context.Baskets.AddRange(testBasket);
                 context.SaveChanges();
 
                 foreach (Order s in testOrders)

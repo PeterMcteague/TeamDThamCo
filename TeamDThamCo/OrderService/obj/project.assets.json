@@ -6212,7 +6212,7 @@
       ]
     },
     "Microsoft.CodeAnalysis.Analyzers/1.1.0": {
-      "sha512": "HS3iRWZKcUw/8eZ/08GXKY2Bn7xNzQPzf8gRPHGSowX7u7XXu9i9YEaBeBNKUXWfI7qjvT2zXtLUvbN0hds8vg==",
+      "sha512": "CEIuf/uynrdBYShKWR5d/j9L7z4jzVOm1V+29evSMVy679oVjTZqyqXnrasQs6jlAuebMXlzocCmKyOzpzAI/A==",
       "type": "package",
       "path": "microsoft.codeanalysis.analyzers/1.1.0",
       "files": [
@@ -8170,7 +8170,7 @@
       ]
     },
     "Remotion.Linq/2.1.1": {
-      "sha512": "IJn0BqkvwEDpP+2qjvci7n4/a9f7DhKESLWb2/uG4xQh3rTkGTBUz69bI4IivCoKkTFAqjXxYDZw2K/npohjsw==",
+      "sha512": "Wgl3JSs8oR9b/WAYat2UzzyyGJ9TQDAocD5yo/gr7rw+rmIDdPG5TWhR8Q2wyZfgZ5Or319jm4IUY3cdwtJdKg==",
       "type": "package",
       "path": "remotion.linq/2.1.1",
       "files": [
@@ -13370,8 +13370,8 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\07mct\\.nuget\\packages\\": {},
-    "c:\\program files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\p4029206\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
@@ -13379,17 +13379,17 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "C:\\Users\\07mct\\Documents\\GitHub\\TeamDThamCo\\TeamDThamCo\\OrderService\\OrderService.csproj",
+      "projectUniqueName": "C:\\Users\\p4029206\\Documents\\GitHub\\TeamDThamCo\\TeamDThamCo\\OrderService\\OrderService.csproj",
       "projectName": "OrderService",
-      "projectPath": "C:\\Users\\07mct\\Documents\\GitHub\\TeamDThamCo\\TeamDThamCo\\OrderService\\OrderService.csproj",
-      "packagesPath": "C:\\Users\\07mct\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\07mct\\Documents\\GitHub\\TeamDThamCo\\TeamDThamCo\\OrderService\\obj\\",
+      "projectPath": "C:\\Users\\p4029206\\Documents\\GitHub\\TeamDThamCo\\TeamDThamCo\\OrderService\\OrderService.csproj",
+      "packagesPath": "C:\\Users\\p4029206\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\p4029206\\Documents\\GitHub\\TeamDThamCo\\TeamDThamCo\\OrderService\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "c:\\program files\\dotnet\\sdk\\NuGetFallbackFolder"
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\07mct\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\p4029206\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
