@@ -12542,11 +12542,11 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "C:\\Users\\q5117346\\Documents\\GitHub\\TeamDThamCo\\TeamDThamCo\\TeamDThamCo\\TeamDThamCo.csproj",
-      "projectName": "TeamDThamCo",
-      "projectPath": "C:\\Users\\q5117346\\Documents\\GitHub\\TeamDThamCo\\TeamDThamCo\\TeamDThamCo\\TeamDThamCo.csproj",
+      "projectUniqueName": "C:\\Users\\q5117346\\Documents\\GitHub\\TeamDThamCo\\CustomerDetail\\CustomerDetail.csproj",
+      "projectName": "CustomerDetail",
+      "projectPath": "C:\\Users\\q5117346\\Documents\\GitHub\\TeamDThamCo\\CustomerDetail\\CustomerDetail.csproj",
       "packagesPath": "C:\\Users\\q5117346\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\q5117346\\Documents\\GitHub\\TeamDThamCo\\TeamDThamCo\\TeamDThamCo\\obj\\",
+      "outputPath": "C:\\Users\\q5117346\\Documents\\GitHub\\TeamDThamCo\\CustomerDetail\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

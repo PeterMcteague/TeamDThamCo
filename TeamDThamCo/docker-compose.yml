@@ -12,3 +12,9 @@ services:
     build:
       context: ./OrderService
       dockerfile: Dockerfile
+
+  customerdetail:
+    image: customerdetail
+    build:
+      context: ./../CustomerDetail
+      dockerfile: Dockerfile
