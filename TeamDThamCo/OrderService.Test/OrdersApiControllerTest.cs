@@ -23,7 +23,7 @@ namespace OrderService.Test
         {
             // Initialize DbContext in memory
             var optionsBuilder = new DbContextOptionsBuilder();
-            optionsBuilder.UseInMemoryDatabase("ServiceAPITestDB");
+            optionsBuilder.UseInMemoryDatabase("OrdersAPITestDB");
             _context = new OrderServiceContext(optionsBuilder.Options);
 
             _context.Database.EnsureDeleted();
