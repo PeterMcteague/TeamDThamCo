@@ -4,15 +4,6 @@
         <name>OrderService</name>
     </assembly>
     <members>
-        <member name="M:OrderService.Controllers.BasketAPIController.GetBasket(System.String)">
-            <summary>
-            Gets the basket of a customer.
-            </summary>
-            <param name="User IDID"></param>  
-            <response code="200">Returns the basket</response>
-            <response code="400">If not any basket items by userid</response>  
-            <response code="404">If parameters are invalid</response>
-        </member>
         <member name="T:OrderService.Controllers.OrdersAPIController">
             <Summary>
              A controller for the orders API.

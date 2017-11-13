@@ -12,3 +12,9 @@ services:
     build:
       context: ./OrderService
       dockerfile: Dockerfile
+
+  basketservice:
+    image: basketservice
+    build:
+      context: ./../BasketService
+      dockerfile: Dockerfile
