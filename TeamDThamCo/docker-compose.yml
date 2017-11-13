@@ -18,3 +18,9 @@ services:
     build:
       context: ./../Messaging
       dockerfile: Dockerfile
+
+  messageservice:
+    image: messageservice
+    build:
+      context: ./../MessageService
+      dockerfile: Dockerfile

@@ -8,9 +8,9 @@ namespace Messaging.Models
 {
     public class MessagingContext : DbContext
     {
-        public MessagingContext(DbContextOptions<MessagingContext> options)
-            : base(options)
-        { }
+    //   public MessagingContext(DbContextOptions<MessagingContext> options)
+      //      : base(options)
+        //{ }
 
         public DbSet<Conversation> Conversations { get; set; }
         public DbSet<Message> Messages { get; set; }
