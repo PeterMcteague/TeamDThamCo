@@ -12,11 +12,11 @@ namespace BasketService.Controllers
 {
     [Produces("application/json")]
     [Route("api/Basket")]
-    public class BasketAPIController : Controller
+    public class BasketController : Controller
     {
         private readonly BasketContext _context;
 
-        public BasketAPIController(BasketContext context)
+        public BasketController(BasketContext context)
         {
             _context = context;
         }

@@ -1,16 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
-using OrderService;
 using OrderService.Models;
-using Moq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using OrderService.Controllers;
-using Newtonsoft.Json;
 
 namespace OrderService.Test
 {

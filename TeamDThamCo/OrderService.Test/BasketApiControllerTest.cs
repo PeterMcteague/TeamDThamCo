@@ -1,6 +1,4 @@
-﻿using OrderService.Models;
-using OrderService.Controllers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
@@ -8,13 +6,16 @@ using Xunit;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using BasketService;
+using BasketService.Controllers;
+using BasketService.Models;
 
-namespace OrderService.Test
+namespace BasketService.Test
 {
     public class BasketApiControllerTest
     {
-        private OrderServiceContext _context;
-        private BasketAPIController _controller;
+        private BasketServiceContext _context;
+        private BasketController _controller;
 
         public BasketApiControllerTest()
         {

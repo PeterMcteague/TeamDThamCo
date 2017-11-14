@@ -33,7 +33,7 @@ namespace OrderService.Data
             }
             else
             {
-                #if debug
+                #if DEBUG
                 context.Orders.AddRange(testOrders);
                 context.SaveChanges();
 

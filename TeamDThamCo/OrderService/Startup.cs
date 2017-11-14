@@ -51,7 +51,7 @@ namespace OrderService
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint(" / swagger/v1/swagger.json", "Order-Api-Simple");
+                c.SwaggerEndpoint(" /swagger/v1/swagger.json", "Order Service API");
             });
 
             if (env.IsDevelopment())
@@ -59,19 +59,12 @@ namespace OrderService
                 app.UseDeveloperExceptionPage();
                 app.UseBrowserLink();
             }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-            }
 
+            DefaultFilesOptions DefaultFile = new DefaultFilesOptions();
+            DefaultFile.DefaultFileNames.Clear();
+            DefaultFile.DefaultFileNames.Add("/swagger");
+            app.UseDefaultFiles(DefaultFile);
             app.UseStaticFiles();
-
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-            });
         }
     }
 }
