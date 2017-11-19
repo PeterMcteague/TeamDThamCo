@@ -46,7 +46,7 @@ namespace OrderService.Controllers
                 return NoContent();
             }
 
-            var orders = _context.Orders.Where(b => b.active == true);
+            var orders = await _context.Orders.Where(b => b.active == true).ToListAsync();
             return Ok(orders);
         }
 
@@ -72,7 +72,7 @@ namespace OrderService.Controllers
             {
                 return NoContent();
             }
-            var orders = _context.Orders.Where(m => m.buyerId == buyerid && m.active == true);
+            var orders = await _context.Orders.Where(m => m.buyerId == buyerid && m.active == true).ToListAsync();
             return Ok(orders);
         }
 
@@ -94,7 +94,7 @@ namespace OrderService.Controllers
                 return NotFound();
             }
 
-            var products = _context.OrderItems.Where(b => b.active == true);
+            var products = await _context.OrderItems.Where(b => b.active == true).ToListAsync();
 
             return Ok(products);
         }
@@ -122,7 +122,7 @@ namespace OrderService.Controllers
                 return NoContent();
             }
 
-            var products = _context.OrderItems.Where(b => b.active == true && b.orderId == orderid);
+            var products = await _context.OrderItems.Where(b => b.active == true && b.orderId == orderid).ToListAsync();
 
             return Ok(products);
         }
@@ -154,14 +154,14 @@ namespace OrderService.Controllers
                 return NoContent();
             }
 
-            var listOfOrderIdsByBuyer = _context.Orders.Where(m => m.buyerId == buyerid && m.active == true).Select(m => m.id);
+            var listOfOrderIdsByBuyer = await _context.Orders.Where(m => m.buyerId == buyerid && m.active == true).Select(m => m.id).ToListAsync();
 
             if (!_context.OrderItems.Where(m => listOfOrderIdsByBuyer.Contains(m.orderId) && m.active == true).Any())
             {
                 return NoContent();
             }
 
-            var listOfProducts = _context.OrderItems.Where(m => listOfOrderIdsByBuyer.Contains(m.orderId) && m.active == true);
+            var listOfProducts = await _context.OrderItems.Where(m => listOfOrderIdsByBuyer.Contains(m.orderId) && m.active == true).ToListAsync();
             
             return Ok(listOfProducts);
         }

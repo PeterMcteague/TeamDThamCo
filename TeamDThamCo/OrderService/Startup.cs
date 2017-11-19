@@ -60,11 +60,7 @@ namespace OrderService
                 app.UseBrowserLink();
             }
 
-            DefaultFilesOptions DefaultFile = new DefaultFilesOptions();
-            DefaultFile.DefaultFileNames.Clear();
-            DefaultFile.DefaultFileNames.Add("/swagger");
-            app.UseDefaultFiles(DefaultFile);
-            app.UseStaticFiles();
+            app.UseMvc();
         }
     }
 }

@@ -58,6 +58,7 @@ namespace BasketService
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseBrowserLink();
             }
 
             DefaultFilesOptions DefaultFile = new DefaultFilesOptions();

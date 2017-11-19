@@ -18,10 +18,16 @@ namespace BasketService.Data
             #endif
             context.Database.EnsureCreated();
 
-            List<BasketItem> testBasket = new List<BasketItem>();
+
 
             #if DEBUG
-            testBasket.Add(new BasketItem { buyerId = "test-id-plz-ignore", productId = 1, quantity = 9001 });
+            // Seed data
+            List<BasketItem> testBasket = new List<BasketItem>();
+            testBasket.Add(new BasketItem { id = 1, buyerId = "test-id-plz-ignore", productId = 1, quantity = 9001 });
+            testBasket.Add(new BasketItem { id = 2, buyerId = "test-id-plz-ignore", productId = 2, quantity = 1 });
+
+            context.Baskets.AddRange(testBasket);
+            context.SaveChanges();
             #endif
 
             if (context.Baskets.Count() == testBasket.Count())

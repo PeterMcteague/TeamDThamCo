@@ -8,6 +8,8 @@ namespace OrderService.Models
 {
     public class Dispatch
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
 
         [ForeignKey("orderId")]

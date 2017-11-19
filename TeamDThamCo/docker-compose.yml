@@ -18,3 +18,9 @@ services:
     build:
       context: ./../BasketService
       dockerfile: Dockerfile
+
+  basketserviceremake:
+    image: basketserviceremake
+    build:
+      context: ./../BasketServiceRemake
+      dockerfile: Dockerfile
