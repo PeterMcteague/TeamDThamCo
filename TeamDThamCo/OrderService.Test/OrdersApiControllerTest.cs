@@ -7,25 +7,29 @@ using OrderService.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using OrderService.Controllers;
+using Microsoft.Data.Sqlite;
 
 namespace OrderService.Test
 {
-    public class OrdersApiControllerTest
+    public class OrdersApiControllerTest : IDisposable
     {
         private OrderServiceContext _context;
         private OrdersAPIController _controller;
+        private SqliteConnection connection;
 
         public OrdersApiControllerTest()
         {
-            // Initialize DbContext in memory
+            // Initialize DbContext
+            connection = new SqliteConnection("DataSource=:memory:");
+            connection.Open();
+
             var optionsBuilder = new DbContextOptionsBuilder();
-            optionsBuilder.UseInMemoryDatabase("OrdersAPITestDB");
+            optionsBuilder.UseSqlite(connection);
             _context = new OrderServiceContext(optionsBuilder.Options);
 
             _context.Database.EnsureDeleted();
             _context.Database.EnsureCreated();
             
-
             // Seed data
             List<Order> testOrders = new List<Order>();
             List<OrderItem> testProducts = new List<OrderItem>();
@@ -135,13 +139,11 @@ namespace OrderService.Test
         [Fact]
         public async Task DeleteOrder_ShouldReturnWithoutIt()
         {
-            var before = await _controller.GetOrder() as ObjectResult;
-            var productsBefore = (before.Value as IEnumerable<Order>).Count(); //Have to get the count value before because the delete will happen to this too,  we don't have the data yet!
+            var productsBefore = _context.Orders.AsNoTracking().Where(b => b.active == true).Count();
 
             var result = await _controller.DeleteOrder(2) as ObjectResult;
 
-            var after = await _controller.GetOrder() as ObjectResult;
-            var productsAfter = (after.Value as IEnumerable<Order>).Count();
+            var productsAfter = _context.Orders.AsNoTracking().Where(b => b.active == true).Count();
 
             var testOrders = getTestOrders();
             testOrders.RemoveAll(x => x.id == 2);
@@ -163,21 +165,56 @@ namespace OrderService.Test
         [Fact]
         public async Task DeleteProductOrder_ShouldReturnWithoutIt()
         {
-            var before = await _controller.GetProductsOrdered() as ObjectResult;
-            var productsBefore = (before.Value as IEnumerable<OrderItem>).Count();
+            var productsBefore = _context.OrderItems.AsNoTracking().Where(b => b.active == true).Count();
 
             var result = await _controller.DeleteProductFromOrder(2) as ObjectResult;
 
-            var after = await _controller.GetProductsOrdered() as ObjectResult;
-            var productsAfter = (after.Value as IEnumerable<OrderItem>).Count();
-            
+            var productsAfter = _context.OrderItems.AsNoTracking().Where(b => b.active == true).Count();
+
             var testProducts = getTestProducts();
             testProducts.RemoveAll(x => x.id == 2);
 
             Assert.Equal(productsBefore - 1, productsAfter);
             Assert.Equal(testProducts.Count(), productsAfter);
             Assert.Equal(200, result.StatusCode);
+        }
+
+        //PUT /api/Orders/Add/buyerId={buyerId}&address={address}
+        [Fact]
+        public async Task AddOrder_ShouldReturnOrderAdded()
+        {
+            var productsBefore = _context.Orders.AsNoTracking().Count();
+
+            var result = await _controller.AddOrder("another-id", "Peters House, Street, County, PostCode") as ObjectResult;
+            var resultItem = result.Value as Order;
             
+            var productsAfter = _context.Orders.AsNoTracking().Count();
+
+            Assert.Equal(productsBefore + 1, productsAfter);
+            Assert.Equal(200, result.StatusCode);
+        }
+
+        //PUT /api/Orders/Add/buyerId={buyerId}&address={address}
+        [Fact]
+        public async Task AddOrderItem_ShouldAddItemToOrder()
+        {
+            //Getting count before add
+            var beforeCount = _context.OrderItems.AsNoTracking().Where(b => b.active == true).Count();
+            //Test that response is 200 for valid
+            var validRequest = await _controller.AddOrderItem(1,"Blue cheese 1KG",1,9.00) as ObjectResult;
+            var validRequestItem = validRequest.Value as OrderItem;
+            //Getting count after add
+            var afterCount = _context.OrderItems.AsNoTracking().Where(b => b.active == true).Count();
+            //Test that response is 404 for invalid orderId
+            var invalidRequest = await _controller.AddOrderItem(7, "Blue cheese 1KG", 1, 9.00) as NotFoundResult;
+
+            Assert.Equal(beforeCount + 1, afterCount);
+            Assert.Equal(200, validRequest.StatusCode);
+            Assert.Equal(404, invalidRequest.StatusCode);
+            Assert.Equal(1, validRequestItem.orderId);
+            Assert.Equal("Blue cheese 1KG", validRequestItem.name);
+            Assert.Equal(1, validRequestItem.quantity);
+            Assert.Equal(9.00, validRequestItem.cost);
         }
 
         //PUT /api/Orders/Delete/productId=invalid-id
@@ -221,8 +258,12 @@ namespace OrderService.Test
             else
             {
                 return testProducts.Where(b => b.active).ToList();
-            }
-            
+            }   
+        }
+
+        public void Dispose()
+        {
+            connection.Close();
         }
     }
 }

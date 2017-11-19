@@ -18,7 +18,7 @@ namespace BasketService.Test
         {
             // Initialize DbContext in memory
             var optionsBuilder = new DbContextOptionsBuilder();
-            optionsBuilder.UseInMemoryDatabase("BasketAPITestDB").EnableSensitiveDataLogging();
+            optionsBuilder.UseInMemoryDatabase("BasketAPITestDB");
             _context = new BasketContext(optionsBuilder.Options);
 
             _context.Database.EnsureDeleted();

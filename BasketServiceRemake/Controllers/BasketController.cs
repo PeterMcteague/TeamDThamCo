@@ -81,16 +81,12 @@ namespace BasketService.Controllers
             return Ok(orders);
         }
 
-        [HttpPut("add/userId={userId}&productId={productId}&quantity={quantity}", Name = "Add an item to a customers basket")]
+        [HttpPost("add/userId={userId}&productId={productId}&quantity={quantity}", Name = "Add an item to a customers basket")]
         public async Task<IActionResult> AddItemToBasket([FromRoute] string userId, [FromRoute] int productId, [FromRoute] int quantity)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
-            }
-            if (!_context.Baskets.Any())
-            {
-                return NotFound();
             }
             else
             {

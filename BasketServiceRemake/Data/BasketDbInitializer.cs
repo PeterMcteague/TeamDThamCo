@@ -23,9 +23,6 @@ namespace BasketService.Data
             List<BasketItem> testBasket = new List<BasketItem>();
             testBasket.Add(new BasketItem {buyerId = "test-id-plz-ignore", productId = 1, quantity = 9001 });
             testBasket.Add(new BasketItem {buyerId = "test-id-plz-ignore", productId = 2, quantity = 1 });
-
-            context.Baskets.AddRange(testBasket);
-            context.SaveChanges();
             #endif
 
             if (context.Baskets.Count() == testBasket.Count())

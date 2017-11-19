@@ -23,8 +23,8 @@ namespace OrderService.Data
             testOrders.Add(new Order { invoiced = true, dispatched = true, address = "Kevins House, 69 Wallaby Way, Sydney, PST CDE", buyerId = "test-id-plz-ignore", orderDate = DateTime.Parse("2005-09-01"), active = true });
             testOrders.Add(new Order { invoiced = true, dispatched = false, address = "Kevins House, 69 Wallaby Way, Sydney, PST CDE", buyerId = "test-id-plz-ignore", orderDate = DateTime.Parse("2005-09-01"), active = true });
             
-            testProducts.Add(new OrderItem { orderId = 1, name = "Premium Jelly Beans", cost = 2.00, quantity = 5, active = true });
-            testProducts.Add(new OrderItem { orderId = 2, name = "Netlogo Supercomputer", cost = 2005.99, quantity = 1, active = true });
+            testProducts.Add(new OrderItem { orderId = testOrders[0].id, name = "Premium Jelly Beans", cost = 2.00, quantity = 5, active = true });
+            testProducts.Add(new OrderItem { orderId = testOrders[1].id, name = "Netlogo Supercomputer", cost = 2005.99, quantity = 1, active = true });
             #endif
 
             if (context.Orders.Count() == testOrders.Count())
