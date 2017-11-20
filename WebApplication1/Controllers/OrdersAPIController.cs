@@ -136,7 +136,7 @@ namespace OrderService.Controllers
         /// <response code="400">If not any products ordered by that buyer</response>  
         /// <response code="404">If parameters are invalid</response>  
         [HttpGet("Products/Get/buyerid={buyerid}", Name = "Get products ordered by buyer ID")]
-        public async Task<IActionResult> GetOrderItems([FromRoute] string buyerid)
+        public async Task<IActionResult> GetOrderItemsByBuyerID([FromRoute] string buyerid)
         {
             if (!ModelState.IsValid)
             {

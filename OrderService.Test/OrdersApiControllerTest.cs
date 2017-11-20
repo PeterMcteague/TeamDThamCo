@@ -36,7 +36,7 @@ namespace OrderService.Test
             List<OrderItem> testProducts = new List<OrderItem>();
 
             testOrders.Add(new Order {id = 1, invoiced = true, dispatched = true, address = "Kevins House, 69 Wallaby Way, Sydney, PST CDE", buyerId = "test-id-plz-ignore", orderDate = DateTime.Parse("2005-09-01"), active = true });
-            testOrders.Add(new Order {id = 2, invoiced = true, dispatched = false, address = "Kevins House, 69 Wallaby Way, Sydney, PST CDE", buyerId = "test-id-plz-ignore", orderDate = DateTime.Parse("2005-09-01"), active = true });
+            testOrders.Add(new Order {id = 2, invoiced = false, dispatched = false, address = "Kevins House, 69 Wallaby Way, Sydney, PST CDE", buyerId = "test-id-plz-ignore", orderDate = DateTime.Parse("2005-09-01"), active = true });
 
             testProducts.Add(new OrderItem {id = 1, orderId = 1, itemName = "Premium Jelly Beans", cost = 2.00, quantity = 5, active = true });
             testProducts.Add(new OrderItem {id = 2, orderId = 2, itemName = "Netlogo Supercomputer", cost = 2005.99, quantity = 1, active = true });
@@ -121,7 +121,7 @@ namespace OrderService.Test
         [Fact]
         public async Task GetProductsOrderedAsyncByBuyerId_ShouldReturnTestProducts()
         {
-            var result = await _controller.GetOrderItems("test-id-plz-ignore") as ObjectResult;
+            var result = await _controller.GetOrderItemsByBuyerID("test-id-plz-ignore") as ObjectResult;
             var products = result.Value as IEnumerable<OrderItem>;
 
             Assert.Equal(getTestProducts(buyerId:"test-id-plz-ignore").Count(), products.Count());
@@ -132,8 +132,76 @@ namespace OrderService.Test
         [Fact]
         public async Task GetProductsOrderedAsyncByInvalidBuyerId_ShouldReturnNoProducts()
         {
-            var result = await _controller.GetOrderItems("fake-id") as NoContentResult;
+            var result = await _controller.GetOrderItemsByBuyerID("fake-id") as NoContentResult;
             Assert.Equal(204, result.StatusCode);
+        }
+
+        //PUT /api/orders/update/id=int&address=string
+        [Fact]
+        public async Task UpdateOrderAddress_ShouldChangeAddress()
+        {
+            var beforeAddress = _context.Orders.AsNoTracking().Where(b => b.id == 1).FirstOrDefault().address;
+
+            var response = await _controller.UpdateOrderAddress(1 , "test-address") as ObjectResult;
+            var responseAddress = (response.Value as Order).address;
+
+            var afterAddress = _context.Orders.AsNoTracking().Where(b => b.id == 1).FirstOrDefault().address;
+
+            Assert.Equal(200, response.StatusCode);
+            Assert.Equal("Kevins House, 69 Wallaby Way, Sydney, PST CDE", beforeAddress);
+            Assert.Equal("test-address", responseAddress);
+            Assert.Equal("test-address", afterAddress);
+        }
+
+        //PUT /api/orders/update/id=int&dispatched=bool
+        [Fact]
+        public async Task UpdateOrderDispatched_ShouldChangeDispatch()
+        {
+            var beforeDispatched = _context.Orders.AsNoTracking().Where(b => b.id == 2).FirstOrDefault().dispatched;
+
+            var response = await _controller.UpdateOrderDispatch(2, true) as ObjectResult;
+            var responseDispatched = (response.Value as Order).dispatched;
+
+            var afterDispatched = _context.Orders.AsNoTracking().Where(b => b.id == 2).FirstOrDefault().dispatched;
+
+            Assert.Equal(200, response.StatusCode);
+            Assert.Equal(false, beforeDispatched);
+            Assert.Equal(true, responseDispatched);
+            Assert.Equal(true, afterDispatched);
+        }
+
+        //PUT /api/orders/update/id=int&invoiced=bool
+        [Fact]
+        public async Task UpdateOrderInvoiced_ShouldChangeInvoiced()
+        {
+            var beforeInvoiced = _context.Orders.AsNoTracking().Where(b => b.id == 2).FirstOrDefault().invoiced;
+
+            var response = await _controller.UpdateOrderInvoiced(2, true) as ObjectResult;
+            var responseInvoiced= (response.Value as Order).invoiced;
+
+            var afterInvoiced = _context.Orders.AsNoTracking().Where(b => b.id == 2).FirstOrDefault().invoiced;
+
+            Assert.Equal(200, response.StatusCode);
+            Assert.Equal(false, beforeInvoiced);
+            Assert.Equal(true, responseInvoiced);
+            Assert.Equal(true, afterInvoiced);
+        }
+
+        //PUT /api/orders/products/update/id=int&quantity=int
+        [Fact]
+        public async Task UpdateOrderItemQuantity_ShouldChangeQuantity()
+        {
+            var beforeQuantity = _context.OrderItems.AsNoTracking().Where(b => b.id == 1).FirstOrDefault().quantity;
+
+            var response = await _controller.UpdateOrderItemQuantity(1, 27) as ObjectResult;
+            var responseQuantity = (response.Value as OrderItem).quantity;
+
+            var afterQuantity = _context.OrderItems.AsNoTracking().Where(b => b.id == 1).FirstOrDefault().quantity;
+
+            Assert.Equal(200, response.StatusCode);
+            Assert.Equal(5, beforeQuantity);
+            Assert.Equal(27, responseQuantity);
+            Assert.Equal(27, afterQuantity);
         }
 
         //PUT /api/Orders/Delete/orderId={order-id}
