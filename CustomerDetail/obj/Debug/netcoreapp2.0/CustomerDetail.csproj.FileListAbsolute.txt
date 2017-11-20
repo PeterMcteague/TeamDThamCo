@@ -1,0 +1,11 @@
+C:\Users\q5117346\Documents\GitHub\TeamDThamCo\CustomerDetail\obj\Debug\netcoreapp2.0\CustomerDetail.csprojResolveAssemblyReference.cache
+C:\Users\q5117346\Documents\GitHub\TeamDThamCo\CustomerDetail\obj\Debug\netcoreapp2.0\CustomerDetail.csproj.CoreCompileInputs.cache
+C:\Users\q5117346\Documents\GitHub\TeamDThamCo\CustomerDetail\obj\Debug\netcoreapp2.0\CustomerDetail.AssemblyInfoInputs.cache
+C:\Users\q5117346\Documents\GitHub\TeamDThamCo\CustomerDetail\obj\Debug\netcoreapp2.0\CustomerDetail.AssemblyInfo.cs
+C:\Users\q5117346\Documents\GitHub\TeamDThamCo\CustomerDetail\bin\Debug\netcoreapp2.0\CustomerDetail.deps.json
+C:\Users\q5117346\Documents\GitHub\TeamDThamCo\CustomerDetail\bin\Debug\netcoreapp2.0\CustomerDetail.runtimeconfig.json
+C:\Users\q5117346\Documents\GitHub\TeamDThamCo\CustomerDetail\bin\Debug\netcoreapp2.0\CustomerDetail.runtimeconfig.dev.json
+C:\Users\q5117346\Documents\GitHub\TeamDThamCo\CustomerDetail\bin\Debug\netcoreapp2.0\CustomerDetail.dll
+C:\Users\q5117346\Documents\GitHub\TeamDThamCo\CustomerDetail\bin\Debug\netcoreapp2.0\CustomerDetail.pdb
+C:\Users\q5117346\Documents\GitHub\TeamDThamCo\CustomerDetail\obj\Debug\netcoreapp2.0\CustomerDetail.dll
+C:\Users\q5117346\Documents\GitHub\TeamDThamCo\CustomerDetail\obj\Debug\netcoreapp2.0\CustomerDetail.pdb
