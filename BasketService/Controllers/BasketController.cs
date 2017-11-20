@@ -21,6 +21,12 @@ namespace BasketService.Controllers
             _context = context;
         }
 
+        /// <summary>
+        /// Get all baskets
+        /// </summary>
+        /// <returns>Returns all baskets</returns>
+        /// <response code="200">Returns the basket</response>
+        /// <response code="400">If not any baskets</response>  
         [HttpGet("", Name = "Get all baskets")]
         public async Task<IActionResult> GetBaskets()
         {
@@ -55,6 +61,31 @@ namespace BasketService.Controllers
                 return NotFound("No baskets found");
             }
             var orders = await _context.Baskets.Where(b => b.buyerId == userid).ToListAsync();
+            return Ok(orders);
+        }
+
+        /// <summary>
+        /// Get an item from a basket by productid
+        /// </summary>
+        /// <param name="userid">The userid to get by</param>
+        /// <param name="productid">The productid to get by</param>
+        /// <returns></returns>
+        [HttpGet("{userid}&{productid}", Name = "Get basket item by buyer ID and productid")]
+        public async Task<IActionResult> GetBasketItem([FromRoute] string userid, [FromRoute] int productid)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            if (!_context.Baskets.Any())
+            {
+                return NotFound();
+            }
+            if (!_context.Baskets.Any(b => b.buyerId == userid && b.productId == productid))
+            {
+                return NotFound();
+            }
+            var orders = await _context.Baskets.Where(b => b.buyerId == userid && b.productId == productid).ToListAsync();
             return Ok(orders);
         }
 

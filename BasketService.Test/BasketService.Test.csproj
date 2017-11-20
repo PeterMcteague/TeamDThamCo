@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BasketServiceRemake\BasketService.csproj" />
+    <ProjectReference Include="..\BasketService\BasketService.csproj" />
   </ItemGroup>
 
 </Project>

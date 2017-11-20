@@ -37,16 +37,16 @@ namespace OrderService.Controllers
             {
                 return BadRequest(ModelState);
             }
-            if (!_context.Orders.AsNoTracking().Any())
+            if (!_context.Orders.Any())
             {
                 return NotFound("No orders found");
             }
-            if (!_context.Orders.AsNoTracking().Any(b => b.active == true))
+            if (!_context.Orders.Any(b => b.active == true))
             {
                 return NoContent();
             }
 
-            var orders = await _context.Orders.AsNoTracking().Where(b => b.active == true).ToListAsync();
+            var orders = await _context.Orders.Where(b => b.active == true).ToListAsync();
             return Ok(orders);
         }
 
@@ -72,7 +72,7 @@ namespace OrderService.Controllers
             {
                 return NoContent();
             }
-            var orders = await _context.Orders.AsNoTracking().Where(m => m.buyerId == buyerid && m.active == true).ToListAsync();
+            var orders = await _context.Orders.Where(m => m.buyerId == buyerid && m.active == true).ToListAsync();
             return Ok(orders);
         }
 
@@ -94,7 +94,7 @@ namespace OrderService.Controllers
                 return NotFound("No orders found");
             }
 
-            var products = await _context.OrderItems.AsNoTracking().Where(b => b.active == true).ToListAsync();
+            var products = await _context.OrderItems.Where(b => b.active == true).ToListAsync();
 
             return Ok(products);
         }
@@ -122,7 +122,7 @@ namespace OrderService.Controllers
                 return NoContent();
             }
 
-            var products = await _context.OrderItems.AsNoTracking().Where(b => b.active == true && b.orderId == orderid).ToListAsync();
+            var products = await _context.OrderItems.Where(b => b.active == true && b.orderId == orderid).ToListAsync();
 
             return Ok(products);
         }
@@ -141,27 +141,27 @@ namespace OrderService.Controllers
             {
                 return BadRequest(ModelState);
             }
-            if (!_context.OrderItems.AsNoTracking().Any())
+            if (!_context.OrderItems.Any())
             {
                 return NotFound("No orderitems found");
             }
-            if (!_context.Orders.AsNoTracking().Any())
+            if (!_context.Orders.Any())
             {
                 return NotFound("No orders found");
             }
-            if (!_context.Orders.AsNoTracking().Any(b => b.active == true && b.buyerId == buyerid))
+            if (!_context.Orders.Any(b => b.active == true && b.buyerId == buyerid))
             {
                 return NoContent();
             }
 
-            var listOfOrderIdsByBuyer = await _context.Orders.AsNoTracking().Where(m => m.buyerId == buyerid && m.active == true).Select(m => m.id).ToListAsync();
+            var listOfOrderIdsByBuyer = await _context.Orders.Where(m => m.buyerId == buyerid && m.active == true).Select(m => m.id).ToListAsync();
 
-            if (!_context.OrderItems.AsNoTracking().Any(m => listOfOrderIdsByBuyer.Contains(m.orderId) && m.active == true))
+            if (!_context.OrderItems.Any(m => listOfOrderIdsByBuyer.Contains(m.orderId) && m.active == true))
             {
                 return NoContent();
             }
 
-            var listOfProducts = await _context.OrderItems.AsNoTracking().Where(m => listOfOrderIdsByBuyer.Contains(m.orderId) && m.active == true).ToListAsync();
+            var listOfProducts = await _context.OrderItems.Where(m => listOfOrderIdsByBuyer.Contains(m.orderId) && m.active == true).ToListAsync();
             
             return Ok(listOfProducts);
         }
@@ -180,11 +180,11 @@ namespace OrderService.Controllers
             {
                 return BadRequest(ModelState);
             }
-            if (!_context.Orders.AsNoTracking().Any())
+            if (!_context.Orders.Any())
             {
                 return NotFound("No orders found");
             }
-            if (!_context.Orders.AsNoTracking().Any(b => b.active == true && b.id == orderid))
+            if (!_context.Orders.Any(b => b.active == true && b.id == orderid))
             {
                 return NoContent();
             }
@@ -200,7 +200,7 @@ namespace OrderService.Controllers
                 }
                 _context.Update(order);
                 await _context.SaveChangesAsync();
-                var returnValue = _context.Orders.AsNoTracking().Where(b => b.active == true);
+                var returnValue = _context.Orders.Where(b => b.active == true);
                 return Ok(returnValue);
             }
         }
@@ -219,11 +219,11 @@ namespace OrderService.Controllers
             {
                 return BadRequest(ModelState);
             }
-            if (!_context.OrderItems.AsNoTracking().Any())
+            if (!_context.OrderItems.Any())
             {
                 return NotFound("No orderitems found");
             }
-            if (!_context.OrderItems.AsNoTracking().Any(b => b.active == true && b.id == id))
+            if (!_context.OrderItems.Any(b => b.active == true && b.id == id))
             {
                 return NotFound("No orderitems found");
             }
@@ -280,11 +280,11 @@ namespace OrderService.Controllers
             {
                 return BadRequest(ModelState);
             }
-            if (!_context.Orders.AsNoTracking().Any())
+            if (!_context.Orders.Any())
             {
                 return NotFound();
             }
-            if (!_context.Orders.AsNoTracking().Any(b => b.id == orderId))
+            if (!_context.Orders.Any(b => b.id == orderId))
             {
                 return NotFound();
             }
