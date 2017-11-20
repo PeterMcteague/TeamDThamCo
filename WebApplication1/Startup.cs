@@ -53,7 +53,7 @@ namespace OrderService
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint(" /swagger/v1/swagger.json", "Order Service API");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Order Service API");
             });
 
             if (env.IsDevelopment())

@@ -92,7 +92,7 @@ namespace OrderService.Controllers
             }
             if (!_context.OrderItems.Any())
             {
-                return NotFound("No orders found");
+                return NotFound("No order items found");
             }
 
             var products = await _context.OrderItems.Where(b => b.active == true).ToListAsync();
@@ -168,15 +168,13 @@ namespace OrderService.Controllers
         }
 
         /// <summary>
-        /// Updates an order
+        /// Updates an orders address
         /// </summary>
-        /// <param name="id">ID of order to update</param>
+        /// <param name="id">ID of order to update.</param>
         /// <param name="address">Address</param>
-        /// <param name="dispatched">Whether the item is dispatched or not</param>
-        /// <param name="invoiced">Whether the item is invoiced or not</param>
-        /// <returns></returns>
-        [HttpPut("Update/Product/id={id}&address={address}&dispatched={dispatched}&invoiced={invoiced}", Name = "Update order properties")]
-        public async Task<IActionResult> UpdateOrderItem([FromRoute] int id, [FromRoute] string address, [FromRoute] bool dispatched, [FromRoute] bool invoiced)
+        /// <returns>Response , updated order if successful</returns>
+        [HttpPut("Update/id={id}&address={address}", Name = "Update order address")]
+        public async Task<IActionResult> UpdateOrderAddress([FromRoute] int id, [FromRoute] string address)
         {
             if (!ModelState.IsValid)
             {
@@ -194,7 +192,67 @@ namespace OrderService.Controllers
             {
                 var order = _context.Orders.FirstOrDefault(m => m.id == id);
                 order.address = address;
+                _context.Update(order);
+                await _context.SaveChangesAsync();
+                return Ok(order);
+            }
+        }
+        
+        /// <summary>
+        /// Updates an orders dispatch status
+        /// </summary>
+        /// <param name="id">ID of order to update.</param>
+        /// <param name="dispatched">Dispatch boolean</param>
+        /// <returns>Response , updated order if successful</returns>
+        [HttpPut("Update/id={id}&dispatched={dispatched}", Name = "Update order dispatch status")]
+        public async Task<IActionResult> UpdateOrderDispatch([FromRoute] int id, [FromRoute] bool dispatched)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            if (!_context.Orders.Any())
+            {
+                return NotFound("No order items found");
+            }
+            if (!_context.Orders.Any(b => b.active == true && b.id == id))
+            {
+                return NoContent();
+            }
+            else
+            {
+                var order = _context.Orders.FirstOrDefault(m => m.id == id);
                 order.dispatched = dispatched;
+                _context.Update(order);
+                await _context.SaveChangesAsync();
+                return Ok(order);
+            }
+        }
+
+        /// <summary>
+        /// Updates an orders dispatch status
+        /// </summary>
+        /// <param name="id">ID of order to update.</param>
+        /// <param name="invoiced">Dispatch boolean</param>
+        /// <returns>Response , updated order if successful</returns>
+        [HttpPut("Update/id={id}&invoiced={invoiced}", Name = "Update order invoiced status")]
+        public async Task<IActionResult> UpdateOrderInvoiced([FromRoute] int id, [FromRoute] bool invoiced)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            if (!_context.Orders.Any())
+            {
+                return NotFound("No order items found");
+            }
+            if (!_context.Orders.Any(b => b.active == true && b.id == id))
+            {
+                return NoContent();
+            }
+            else
+            {
+                var order = _context.Orders.FirstOrDefault(m => m.id == id);
                 order.invoiced = invoiced;
                 _context.Update(order);
                 await _context.SaveChangesAsync();
@@ -206,11 +264,12 @@ namespace OrderService.Controllers
         /// Updates an order item
         /// </summary>
         /// <param name="orderid">The order to update</param>  
+        /// <param name="quantity">The new item quantity</param>  
         /// <response code="200">Successfully updated, returns new data</response>
         /// <response code="400">If not any orders with that orderID that aren't dispatched</response>  
         /// <response code="404">If parameters are invalid</response>  
-        [HttpPut("Update/Product/id={id}quantity={quantity}", Name = "Update order item properties")]
-        public async Task<IActionResult> UpdateOrderItem([FromRoute] int id, [FromRoute] int quantity)
+        [HttpPut("Products/Update/id={id}quantity={quantity}", Name = "Update order item quantity")]
+        public async Task<IActionResult> UpdateOrderItemQuantity([FromRoute] int id, [FromRoute] int quantity)
         {
             if (!ModelState.IsValid)
             {
@@ -280,7 +339,7 @@ namespace OrderService.Controllers
         /// <response code="200">Succesfully deleted from order</response>
         /// <response code="400">If product isn't found in any orders or is already dispatched</response>  
         /// <response code="404">If parameters are invalid</response>  
-        [HttpPut("Product/Delete/productId={productId}", Name = "Delete product from order if not dispatched")]
+        [HttpPut("Products/Delete/productId={productId}", Name = "Delete product from order if not dispatched")]
         public async Task<IActionResult> DeleteProductFromOrder([FromRoute] int id)
         {
             if (!ModelState.IsValid)
@@ -341,7 +400,7 @@ namespace OrderService.Controllers
         /// <param name="quantity">The quantity of the item to add</param>
         /// <param name="cost">The cost of the item to add</param>
         /// <returns></returns>
-        [HttpPost("Add/Product/orderId={orderId}&productId={productId}&name={name}&quantity={quantity}&cost={cost}", Name = "Add an orderitem")]
+        [HttpPost("Products/Add/orderId={orderId}&productId={productId}&name={name}&quantity={quantity}&cost={cost}", Name = "Add an orderitem")]
         public async Task<IActionResult> AddOrderItem([FromRoute] int orderId, [FromRoute] int productId, [FromRoute] string name, [FromRoute] int quantity, [FromRoute] double cost)
         {
             if (!ModelState.IsValid)
