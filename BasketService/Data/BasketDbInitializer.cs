@@ -17,17 +17,12 @@ namespace BasketService.Data
             context.Database.EnsureDeleted(); //Reset for dev
             #endif
             context.Database.EnsureCreated();
-
-
-
+            
             #if DEBUG
             // Seed data
             List<BasketItem> testBasket = new List<BasketItem>();
-            testBasket.Add(new BasketItem { id = 1, buyerId = "test-id-plz-ignore", productId = 1, quantity = 9001 });
-            testBasket.Add(new BasketItem { id = 2, buyerId = "test-id-plz-ignore", productId = 2, quantity = 1 });
-
-            context.Baskets.AddRange(testBasket);
-            context.SaveChanges();
+            testBasket.Add(new BasketItem {buyerId = "test-id-plz-ignore", productId = 1, quantity = 9001 });
+            testBasket.Add(new BasketItem {buyerId = "test-id-plz-ignore", productId = 2, quantity = 1 });
             #endif
 
             if (context.Baskets.Count() == testBasket.Count())

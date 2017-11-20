@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using BasketService.Models;
 using BasketService.Data;
 
-namespace BasketService
+namespace BasketServiceRemake
 {
     public class Program
     {
@@ -42,4 +42,5 @@ namespace BasketService
                 .UseStartup<Startup>()
                 .Build();
     }
+    
 }
