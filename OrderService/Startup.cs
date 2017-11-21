@@ -10,17 +10,29 @@ using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.EntityFrameworkCore;
 using OrderService.Models;
 using OrderService.Data;
+using Stripe;
 
 namespace OrderService
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
-
         public IConfiguration Configuration { get; }
+        public static string _stripeAPIKey { get; private set; }
+
+        public Startup(IHostingEnvironment env)
+        {
+            // Set up configuration sources.
+            var builder = new ConfigurationBuilder();
+
+            if (env.IsDevelopment())
+            {
+                // For more details on using the user secret store see http://go.microsoft.com/fwlink/?LinkID=532709
+                builder.AddUserSecrets<Startup>();
+            }
+
+            builder.AddEnvironmentVariables();
+            Configuration = builder.Build();
+        }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -42,6 +54,8 @@ namespace OrderService
             services.AddDbContext<OrderServiceContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("OrderServiceContext"))
                     );
+
+            _stripeAPIKey = Configuration["StripeAPIKey"];
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,7 +75,7 @@ namespace OrderService
                 app.UseDeveloperExceptionPage();
                 app.UseBrowserLink();
             }
-
+            
             app.UseMvc();
         }
     }
