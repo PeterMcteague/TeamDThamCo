@@ -9,14 +9,17 @@ namespace OrderService.Models
 {
     public class OrderItem
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key, Column("id")]
+        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
 
         [ForeignKey("orderId")]
         public int orderId { get; set; }
 
-        public string name { get; set; }
+        [ForeignKey("productId")]
+        public int productId { get; set; }
+
+        public string itemName { get; set; }
 
         public int quantity { get; set; }
 

@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.EntityFrameworkCore;
 using OrderService.Models;
+using OrderService.Data;
 
 namespace OrderService
 {
@@ -29,7 +30,8 @@ namespace OrderService
             // Register the Swagger generator, defining one or more Swagger documents
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info {
+                c.SwaggerDoc("v1", new Info
+                {
                     Title = "Order Service API",
                     Version = "v1",
                     Description = "A ASP.NET Core Web API for the Order Service",
@@ -38,7 +40,7 @@ namespace OrderService
             });
 
             services.AddDbContext<OrderServiceContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("OrderServiceContext"))                
+                    options.UseSqlServer(Configuration.GetConnectionString("OrderServiceContext"))
                     );
         }
 
@@ -51,7 +53,7 @@ namespace OrderService
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint(" /swagger/v1/swagger.json", "Order Service API");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Order Service API");
             });
 
             if (env.IsDevelopment())

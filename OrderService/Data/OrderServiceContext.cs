@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using OrderService.Models;
 
-namespace OrderService.Models
+namespace OrderService.Data
 {
     public class OrderServiceContext : DbContext
     {
+        private string v;
+
         public OrderServiceContext (DbContextOptions options)
             : base(options)
         {

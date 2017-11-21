@@ -35,8 +35,8 @@ namespace OrderService.Test
             List<Order> testOrders = new List<Order>();
             List<OrderItem> testProducts = new List<OrderItem>();
 
-            testOrders.Add(new Order {id = 1, invoiced = true, dispatched = true, address = "Kevins House, 69 Wallaby Way, Sydney, PST CDE", buyerId = "test-id-plz-ignore", orderDate = DateTime.Parse("2005-09-01"), active = true });
-            testOrders.Add(new Order {id = 2, invoiced = false, dispatched = false, address = "Kevins House, 69 Wallaby Way, Sydney, PST CDE", buyerId = "test-id-plz-ignore", orderDate = DateTime.Parse("2005-09-01"), active = true });
+            testOrders.Add(new Order {id = 1, invoiced = true, dispatched = true, address = "Kevins House, 69 Wallaby Way, Sydney, PST CDE", buyerId = "test-id-plz-ignore", paid = true , orderDate = DateTime.Parse("2005-09-01"), active = true });
+            testOrders.Add(new Order {id = 2, invoiced = false, dispatched = false, address = "Kevins House, 69 Wallaby Way, Sydney, PST CDE", buyerId = "test-id-plz-ignore", paid = true , orderDate = DateTime.Parse("2005-09-01"), active = true });
 
             testProducts.Add(new OrderItem {id = 1, orderId = 1, itemName = "Premium Jelly Beans", cost = 2.00, quantity = 5, active = true });
             testProducts.Add(new OrderItem {id = 2, orderId = 2, itemName = "Netlogo Supercomputer", cost = 2005.99, quantity = 1, active = true });

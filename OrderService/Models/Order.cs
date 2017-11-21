@@ -9,8 +9,8 @@ namespace OrderService.Models
 {
     public class Order
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key, Column("id")]
+        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
 
         public DateTime orderDate { get; set; }
@@ -19,6 +19,8 @@ namespace OrderService.Models
         public string buyerId { get; set; }
 
         public string address { get; set; }
+
+        public bool paid { get; set; }
 
         public bool dispatched { get; set; }
 
