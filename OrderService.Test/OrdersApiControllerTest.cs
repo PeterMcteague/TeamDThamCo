@@ -36,7 +36,7 @@ namespace OrderService.Test
             List<OrderItem> testProducts = new List<OrderItem>();
 
             testOrders.Add(new Order {id = 1, invoiced = true, dispatched = true, address = "Kevins House, 69 Wallaby Way, Sydney, PST CDE", buyerId = "test-id-plz-ignore", paid = true , orderDate = DateTime.Parse("2005-09-01"), active = true });
-            testOrders.Add(new Order {id = 2, invoiced = false, dispatched = false, address = "Kevins House, 69 Wallaby Way, Sydney, PST CDE", buyerId = "test-id-plz-ignore", paid = true , orderDate = DateTime.Parse("2005-09-01"), active = true });
+            testOrders.Add(new Order {id = 2, invoiced = false, dispatched = false, address = "Kevins House, 69 Wallaby Way, Sydney, PST CDE", buyerId = "test-id-plz-ignore", paid = false , orderDate = DateTime.Parse("2005-09-01"), active = true });
 
             testProducts.Add(new OrderItem {id = 1, orderId = 1, itemName = "Premium Jelly Beans", cost = 2.00, quantity = 5, active = true });
             testProducts.Add(new OrderItem {id = 2, orderId = 2, itemName = "Netlogo Supercomputer", cost = 2005.99, quantity = 1, active = true });
@@ -168,6 +168,23 @@ namespace OrderService.Test
             Assert.Equal(false, beforeDispatched);
             Assert.Equal(true, responseDispatched);
             Assert.Equal(true, afterDispatched);
+        }
+
+        //PUT /api/orders/update/id=int&paid=bool
+        [Fact]
+        public async Task UpdateOrderPaid_ShouldChangePaid()
+        {
+            var beforePaid= _context.Orders.AsNoTracking().Where(b => b.id == 2).FirstOrDefault().paid;
+
+            var response = await _controller.UpdateOrderPaid(2, true) as ObjectResult;
+            var responsePaid = (response.Value as Order).paid;
+
+            var afterPaid = _context.Orders.AsNoTracking().Where(b => b.id == 2).FirstOrDefault().paid;
+
+            Assert.Equal(200, response.StatusCode);
+            Assert.Equal(false, beforePaid);
+            Assert.Equal(true, responsePaid);
+            Assert.Equal(true, afterPaid);
         }
 
         //PUT /api/orders/update/id=int&invoiced=bool

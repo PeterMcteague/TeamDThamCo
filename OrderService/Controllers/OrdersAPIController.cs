@@ -233,7 +233,7 @@ namespace OrderService.Controllers
         /// Updates an orders dispatch status
         /// </summary>
         /// <param name="id">ID of order to update.</param>
-        /// <param name="invoiced">Dispatch boolean</param>
+        /// <param name="invoiced">Invoiced boolean</param>
         /// <returns>Response , updated order if successful</returns>
         [HttpPut("Update/id={id}&invoiced={invoiced}", Name = "Update order invoiced status")]
         public async Task<IActionResult> UpdateOrderInvoiced([FromRoute] int id, [FromRoute] bool invoiced)
@@ -254,6 +254,37 @@ namespace OrderService.Controllers
             {
                 var order = _context.Orders.FirstOrDefault(m => m.id == id);
                 order.invoiced = invoiced;
+                _context.Update(order);
+                await _context.SaveChangesAsync();
+                return Ok(order);
+            }
+        }
+
+        /// <summary>
+        /// Updates an orders paid status , to be called after a succesful payment response is recieved
+        /// </summary>
+        /// <param name="id">ID of order to update.</param>
+        /// <param name="paid">Paid boolean</param>
+        /// <returns>Response , updated order if successful</returns>
+        [HttpPut("Update/id={id}&paid={paid}", Name = "Update order invoiced status")]
+        public async Task<IActionResult> UpdateOrderPaid([FromRoute] int id, [FromRoute] bool paid)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            if (!_context.Orders.Any())
+            {
+                return NotFound("No order items found");
+            }
+            if (!_context.Orders.Any(b => b.active == true && b.id == id))
+            {
+                return NoContent();
+            }
+            else
+            {
+                var order = _context.Orders.FirstOrDefault(m => m.id == id);
+                order.paid = paid;
                 _context.Update(order);
                 await _context.SaveChangesAsync();
                 return Ok(order);
