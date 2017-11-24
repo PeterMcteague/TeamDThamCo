@@ -30,3 +30,9 @@ services:
     build:
       context: ./../WebApplication1
       dockerfile: Dockerfile
+
+  invoiceservice:
+    image: invoiceservice
+    build:
+      context: ./../InvoiceService
+      dockerfile: Dockerfile
