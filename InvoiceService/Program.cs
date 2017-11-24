@@ -7,6 +7,8 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
+using InvoiceService.Data;
 
 namespace InvoiceService
 {
@@ -21,8 +23,8 @@ namespace InvoiceService
                 var services = scope.ServiceProvider;
                 try
                 {
-                    var context = services.GetRequiredService<BasketContext>();
-                    BasketDbInitializer.Initialize(context);
+                    var context = services.GetRequiredService<InvoiceContext>();
+                    InvoiceDbInitializer.Initialize(context);
                 }
                 catch (Exception ex)
                 {

@@ -8,6 +8,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.EntityFrameworkCore;
+using Swashbuckle.AspNetCore.Swagger;
+using InvoiceService.Data;
 
 namespace InvoiceService
 {
@@ -28,13 +31,13 @@ namespace InvoiceService
             {
                 c.SwaggerDoc("v1", new Info
                 {
-                    Title = "Basket Service API",
+                    Title = "Invoice Service API",
                     Version = "v1",
-                    Description = "A ASP.NET Core Web API for the Basket Service",
+                    Description = "A ASP.NET Core Web API for the Invoice Service",
                     TermsOfService = "For between service communications",
                 });
             });
-            services.AddDbContext<BasketContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("BasketContext")));
+            services.AddDbContext<InvoiceContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("InvoiceContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,7 +49,7 @@ namespace InvoiceService
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Basket Service API");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Invoice Service API");
             });
 
             if (env.IsDevelopment())
