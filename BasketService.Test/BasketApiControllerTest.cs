@@ -6,6 +6,7 @@ using BasketService.Models;
 using Microsoft.EntityFrameworkCore;
 using BasketService.Controllers;
 using Microsoft.AspNetCore.Mvc;
+using BasketService.Data;
 
 namespace BasketService.Test
 {

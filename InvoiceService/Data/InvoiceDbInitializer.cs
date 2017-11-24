@@ -18,8 +18,8 @@ namespace InvoiceService.Data
             #if DEBUG
             // Seed data
             List<InvoiceItem> testInvoices = new List<InvoiceItem>();
-            testInvoices.Add(new InvoiceItem {customerId = "test-id-plz-ignore" , orderIds  = new List<int>(new int[] {1}) });
-            testInvoices.Add(new InvoiceItem {customerId = "test-id-plz-ignore" , orderIds = new List<int>(new int[] {2}) });
+            testInvoices.Add(new InvoiceItem {customerId = "test-id-plz-ignore" , orderIds  = new List<int>(new int[] {1}) , cost = 2.00});
+            testInvoices.Add(new InvoiceItem { customerId = "test-id-plz-ignore", orderIds = new List<int>(new int[] { 2 }), cost = 2005.99 });
             #endif
 
             if (context.Invoices.Count() == testInvoices.Count())

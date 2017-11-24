@@ -9,5 +9,6 @@ namespace InvoiceService.Models
     {
         public string customerId { get; set; } //The customer that the invoice belongs to
         public List<int> orderIds { get; set; } //The orderId's this invoice refers to
+        public double cost { get; set; }
     }
 }
