@@ -11,6 +11,7 @@ using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
 using BasketService.Models;
 using Microsoft.EntityFrameworkCore;
+using BasketService.Data;
 
 namespace BasketServiceRemake
 {
