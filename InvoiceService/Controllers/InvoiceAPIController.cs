@@ -136,7 +136,7 @@ namespace InvoiceService.Controllers
         /// <param name="invoiceId">The ID of the invoice to get invoice items by</param>
         /// <param name="quantity">The number of invoice items to get from that invoiceId</param>
         /// <returns>Response codes, returns OK with the orders if succesful</returns>
-        [HttpGet("get/orders/invoiceId={invoiceId}&quantity={quantity}", Name = "Get orders in an invoice by invoiceId")]
+        [HttpGet("get/orders/invoiceId={invoiceId}&quantity={quantity}", Name = "Get X orders in an invoice by invoiceId")]
         public async Task<IActionResult> GetInvoiceOrders([FromRoute] int invoiceId, [FromRoute] int quantity)
         {
             if (!ModelState.IsValid)

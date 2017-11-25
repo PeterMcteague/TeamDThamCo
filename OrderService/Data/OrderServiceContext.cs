@@ -9,8 +9,6 @@ namespace OrderService.Data
 {
     public class OrderServiceContext : DbContext
     {
-        private string v;
-
         public OrderServiceContext (DbContextOptions options)
             : base(options)
         {

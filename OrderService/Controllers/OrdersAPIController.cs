@@ -266,7 +266,7 @@ namespace OrderService.Controllers
         /// <param name="id">ID of order to update.</param>
         /// <param name="paid">Paid boolean</param>
         /// <returns>Response , updated order if successful</returns>
-        [HttpPut("Update/id={id}&paid={paid}", Name = "Update order invoiced status")]
+        [HttpPut("Update/id={id}&paid={paid}", Name = "Update order paid status")]
         public async Task<IActionResult> UpdateOrderPaid([FromRoute] int id, [FromRoute] bool paid)
         {
             if (!ModelState.IsValid)

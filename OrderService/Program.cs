@@ -26,6 +26,8 @@ namespace OrderService
                 {
                     var context = services.GetRequiredService<OrderServiceContext>();
                     OrderDbInitializer.Initialize(context);
+                    var hfcontext = services.GetRequiredService<HangfireContext>();
+                    HangfireDbInitializer.Initialize(hfcontext);
                 }
                 catch (Exception ex)
                 {
@@ -40,6 +42,18 @@ namespace OrderService
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
+                .UseContentRoot(Directory.GetCurrentDirectory())
+                .ConfigureAppConfiguration((builderContext, config) =>
+                {
+                    config.AddJsonFile("appsettings.json");
+                    config.AddEnvironmentVariables();
+                })
+                .ConfigureLogging((hostingContext, builder) =>
+                {
+                    builder.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
+                    builder.AddConsole();
+                    builder.AddDebug();
+                })
                 .Build();
     }
 }

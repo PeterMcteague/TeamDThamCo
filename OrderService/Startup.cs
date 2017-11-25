@@ -11,6 +11,8 @@ using Microsoft.EntityFrameworkCore;
 using OrderService.Models;
 using OrderService.Data;
 using Stripe;
+using Hangfire;
+using Hangfire.SqlServer;
 
 namespace OrderService
 {
@@ -22,7 +24,9 @@ namespace OrderService
         public Startup(IHostingEnvironment env)
         {
             // Set up configuration sources.
-            var builder = new ConfigurationBuilder();
+            var builder = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .SetBasePath(env.ContentRootPath);
 
             if (env.IsDevelopment())
             {
@@ -50,11 +54,10 @@ namespace OrderService
                     TermsOfService = "For between service communications",
                 });
             });
-
-            services.AddDbContext<OrderServiceContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("OrderServiceContext"))
-                    );
-
+            
+            services.AddDbContext<OrderServiceContext>(options => options.UseSqlServer(Configuration.GetConnectionString("OrderService")));
+            services.AddDbContext<HangfireContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Hangfire")));
+            services.AddHangfire(x => x.UseSqlServerStorage(Configuration.GetConnectionString("Hangfire")));
             _stripeAPIKey = Configuration["StripeAPIKey"];
         }
 
@@ -75,7 +78,17 @@ namespace OrderService
                 app.UseDeveloperExceptionPage();
                 app.UseBrowserLink();
             }
-            
+
+            // Hangfire
+            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetRequiredService<HangfireContext>();
+                context.Database.Migrate();
+            }
+            app.UseHangfireDashboard();
+            app.UseHangfireServer();
+            RecurringJob.AddOrUpdate(() => Console.WriteLine("Dispatch job"), Cron.MinuteInterval(5));
+
             app.UseMvc();
         }
     }
