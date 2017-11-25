@@ -18,8 +18,11 @@ namespace InvoiceService.Data
             #if DEBUG
             // Seed data
             List<InvoiceItem> testInvoices = new List<InvoiceItem>();
-            testInvoices.Add(new InvoiceItem {customerId = "test-id-plz-ignore" , orderIds  = new List<int>(new int[] {1}) , cost = 2.00});
-            testInvoices.Add(new InvoiceItem { customerId = "test-id-plz-ignore", orderIds = new List<int>(new int[] { 2 }), cost = 2005.99 });
+            testInvoices.Add(new InvoiceItem {customerId = "test-id-plz-ignore"});
+            testInvoices.Add(new InvoiceItem { customerId = "test-id-plz-ignore"});
+            List<InvoiceOrder> testInvoiceOrders = new List<InvoiceOrder>();
+            testInvoiceOrders.Add(new InvoiceOrder { invoiceId = 1,orderId = 1, cost=2.00});
+            testInvoiceOrders.Add(new InvoiceOrder { invoiceId = 2, orderId = 2, cost =2005.99 });
             #endif
 
             if (context.Invoices.Count() == testInvoices.Count())
@@ -30,6 +33,7 @@ namespace InvoiceService.Data
             {
                 #if DEBUG
                 context.Invoices.AddRange(testInvoices);
+                context.InvoiceOrders.AddRange(testInvoiceOrders);
                 context.SaveChanges();
                 #endif
             }

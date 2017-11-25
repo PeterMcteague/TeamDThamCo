@@ -15,10 +15,12 @@ namespace InvoiceService.Data
         }
 
         public DbSet<InvoiceService.Models.InvoiceItem> Invoices { get; set; }
+        public DbSet<InvoiceService.Models.InvoiceOrder> InvoiceOrders { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<InvoiceItem>().ToTable("Invoices");
+            modelBuilder.Entity<InvoiceOrder>().ToTable("InvoiceOrders");
         }
     }
 }
