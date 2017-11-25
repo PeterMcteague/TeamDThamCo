@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using OrderService.Models;
 using OrderService.Data;
+using Hangfire;
 
 namespace OrderService
 {
@@ -38,6 +39,7 @@ namespace OrderService
 
             host.Run();
         }
+        
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)

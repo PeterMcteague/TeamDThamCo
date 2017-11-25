@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OrderService.Models;
 using OrderService.Data;
+using Hangfire;
 
 namespace OrderService.Controllers
 {
@@ -19,10 +20,37 @@ namespace OrderService.Controllers
     public class OrdersAPIController : Controller
     {
         private readonly OrderServiceContext _context;
+        private string previousJobId;
 
         public OrdersAPIController(OrderServiceContext context)
         {
             _context = context;
+        }
+
+        private List<OrderItem> getItems(int orderId)
+        {
+            return _context.OrderItems.Where(b => b.active == true && b.orderId == orderId).ToList();
+        }
+
+        private void createInvoice()
+        {
+            // Get uninvoiced
+            var orders = _context.Orders.Where(b => b.invoiced == false).ToList();
+            createInvoice(orders);
+        }
+
+        private void createInvoice(List<Order> orders)
+        {
+            // Cancel the recurring job
+            BackgroundJob.Delete(previousJobId);
+            // Send invoice
+
+            // Mark invoiced
+            foreach (Order o in orders)
+            {
+                o.invoiced = true;
+                _context.Update(o);
+            }
         }
 
         /// <summary>
@@ -286,6 +314,32 @@ namespace OrderService.Controllers
                 var order = _context.Orders.FirstOrDefault(m => m.id == id);
                 order.paid = paid;
                 _context.Update(order);
+
+                // If the order is paid for that means we can invoice and or dispatch it , so we need to queue hangfire jobs
+                var orderItems = getItems(order.id);
+                if (orderItems.Sum(item => item.cost) > 50.00)
+                {
+                    createInvoice(new List<Order> { order });
+                }
+                else
+                {
+                    var unInvoicedOrders = _context.Orders.Where(b => b.buyerId == order.buyerId && b.invoiced == false).ToList();
+                    var totalCost = 0.00;
+                    foreach (Order o in unInvoicedOrders)
+                    {
+                        var items = getItems(o.id);
+                        totalCost += items.Sum(item => item.cost);
+                    }
+                    if (totalCost > 50)
+                    {
+                        createInvoice(unInvoicedOrders);
+                    }
+                    else
+                    {
+                        previousJobId = BackgroundJob.Schedule(() => createInvoice(), TimeSpan.FromMinutes(5));
+                    }
+                }
+
                 await _context.SaveChangesAsync();
                 return Ok(order);
             }
@@ -416,7 +470,7 @@ namespace OrderService.Controllers
             }
             else
             {
-                var itemToAdd = new Order {orderDate = DateTime.Now , address = address , buyerId = buyerId , dispatched = false , invoiced = false , active = true};
+                var itemToAdd = new Order {orderDate = DateTime.Now , address = address , buyerId = buyerId , paid = false, dispatched = false , invoiced = false , active = true};
                 await _context.Orders.AddAsync(itemToAdd);
                 await _context.SaveChangesAsync();
                 return Ok(itemToAdd);

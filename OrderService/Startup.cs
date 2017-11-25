@@ -87,8 +87,7 @@ namespace OrderService
             }
             app.UseHangfireDashboard();
             app.UseHangfireServer();
-            RecurringJob.AddOrUpdate(() => Console.WriteLine("Dispatch job"), Cron.MinuteInterval(5));
-
+            
             app.UseMvc();
         }
     }
