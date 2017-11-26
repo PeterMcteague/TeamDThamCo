@@ -45,7 +45,7 @@ namespace OrderService.Controllers
             {
                 message += "Order placed " + o.orderDate.Day.ToString() + "/" + o.orderDate.Month.ToString() + "/" + o.orderDate.Year.ToString() + "\n";
                 message += "Dispatch to " + o.address;
-                double total = 0.00;
+                decimal total = 0.00m;
                 List<OrderItem> items = (GetOrderItems(o.id).Result as IEnumerable<OrderItem>).ToList();
                 String productsString = "";
                 foreach (OrderItem i in items)
@@ -360,14 +360,14 @@ namespace OrderService.Controllers
 
                 // If the order is paid for that means we can invoice and or dispatch it , so we need to queue hangfire jobs
                 var orderItems = getItems(order.id);
-                if (orderItems.Sum(item => item.cost) > 50.00)
+                if (orderItems.Sum(item => item.cost) > 50.00m)
                 {
                     createInvoice(new List<Order> { order });
                 }
                 else
                 {
                     var unInvoicedOrders = _context.Orders.Where(b => b.buyerId == order.buyerId && b.invoiced == false).ToList();
-                    var totalCost = 0.00;
+                    var totalCost = 0.00m;
                     foreach (Order o in unInvoicedOrders)
                     {
                         var items = getItems(o.id);
@@ -529,7 +529,7 @@ namespace OrderService.Controllers
         /// <param name="cost">The cost of the item to add</param>
         /// <returns></returns>
         [HttpPost("Products/Add/orderId={orderId}&productId={productId}&name={name}&quantity={quantity}&cost={cost}", Name = "Add an orderitem")]
-        public async Task<IActionResult> AddOrderItem([FromRoute] int orderId, [FromRoute] int productId, [FromRoute] string name, [FromRoute] int quantity, [FromRoute] double cost)
+        public async Task<IActionResult> AddOrderItem([FromRoute] int orderId, [FromRoute] int productId, [FromRoute] string name, [FromRoute] int quantity, [FromRoute] decimal cost)
         {
             if (!ModelState.IsValid)
             {

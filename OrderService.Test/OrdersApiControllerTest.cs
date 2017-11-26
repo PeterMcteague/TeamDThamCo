@@ -38,8 +38,8 @@ namespace OrderService.Test
             testOrders.Add(new Order {id = 1, invoiced = true, dispatched = true, address = "Kevins House, 69 Wallaby Way, Sydney, PST CDE", buyerId = "test-id-plz-ignore", paid = true , orderDate = DateTime.Parse("2005-09-01"), active = true });
             testOrders.Add(new Order {id = 2, invoiced = false, dispatched = false, address = "Kevins House, 69 Wallaby Way, Sydney, PST CDE", buyerId = "test-id-plz-ignore", paid = false , orderDate = DateTime.Parse("2005-09-01"), active = true });
 
-            testProducts.Add(new OrderItem {id = 1, orderId = 1, itemName = "Premium Jelly Beans", cost = 2.00, quantity = 5, active = true });
-            testProducts.Add(new OrderItem {id = 2, orderId = 2, itemName = "Netlogo Supercomputer", cost = 2005.99, quantity = 1, active = true });
+            testProducts.Add(new OrderItem {id = 1, orderId = 1, itemName = "Premium Jelly Beans", cost = 2.00m, quantity = 5, active = true });
+            testProducts.Add(new OrderItem {id = 2, orderId = 2, itemName = "Netlogo Supercomputer", cost = 2005.99m, quantity = 1, active = true });
 
             _context.Orders.AddRange(testOrders);
             _context.OrderItems.AddRange(testProducts);
@@ -287,12 +287,12 @@ namespace OrderService.Test
             //Getting count before add
             var beforeCount = _context.OrderItems.AsNoTracking().Where(b => b.active == true).Count();
             //Test that response is 200 for valid
-            var validRequest = await _controller.AddOrderItem(1,3,"Blue cheese 1KG",1,9.00) as ObjectResult;
+            var validRequest = await _controller.AddOrderItem(1,3,"Blue cheese 1KG",1,9.00m) as ObjectResult;
             var validRequestItem = validRequest.Value as OrderItem;
             //Getting count after add
             var afterCount = _context.OrderItems.AsNoTracking().Where(b => b.active == true).Count();
             //Test that response is 404 for invalid orderId
-            var invalidRequest = await _controller.AddOrderItem(7,4,"Blue cheese 1KG", 1, 9.00) as NotFoundResult;
+            var invalidRequest = await _controller.AddOrderItem(7,4,"Blue cheese 1KG", 1, 9.00m) as NotFoundResult;
 
             Assert.Equal(beforeCount + 1, afterCount);
             Assert.Equal(200, validRequest.StatusCode);
@@ -300,7 +300,7 @@ namespace OrderService.Test
             Assert.Equal(1, validRequestItem.orderId);
             Assert.Equal("Blue cheese 1KG", validRequestItem.itemName);
             Assert.Equal(1, validRequestItem.quantity);
-            Assert.Equal(9.00, validRequestItem.cost);
+            Assert.Equal(9.00m, validRequestItem.cost);
         }
 
         //PUT /api/Orders/Delete/productId=invalid-id
@@ -329,8 +329,8 @@ namespace OrderService.Test
         private List<OrderItem> getTestProducts(int id = 0 , string buyerId = "")
         {
             List<OrderItem> testProducts = new List<OrderItem>();
-            testProducts.Add(new OrderItem {id=1, orderId = 1, productId = 1 , itemName = "Premium Jelly Beans", cost = 2.00, quantity = 5 , active = true });
-            testProducts.Add(new OrderItem {id=2, orderId = 2, productId = 2, itemName = "Netlogo Supercomputer", cost = 2005.99, quantity = 1, active = true });
+            testProducts.Add(new OrderItem {id=1, orderId = 1, productId = 1 , itemName = "Premium Jelly Beans", cost = 2.00m, quantity = 5 , active = true });
+            testProducts.Add(new OrderItem {id=2, orderId = 2, productId = 2, itemName = "Netlogo Supercomputer", cost = 2005.99m, quantity = 1, active = true });
             if (buyerId != "")
             {
                 var listOfOrderIdsByBuyer = getTestOrders().Where(r => r.buyerId == buyerId && r.active).Select(r => r.id);
