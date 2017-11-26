@@ -8,6 +8,12 @@ using Microsoft.EntityFrameworkCore;
 using OrderService.Models;
 using OrderService.Data;
 using Hangfire;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using Microsoft.IdentityModel.Protocols;
+using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
+using System.Text;
 
 namespace OrderService.Controllers
 {
@@ -32,6 +38,27 @@ namespace OrderService.Controllers
             return _context.OrderItems.Where(b => b.active == true && b.orderId == orderId).ToList();
         }
 
+        private String generateInvoiceBody(List<Order> orders)
+        {
+            String message = "";
+            foreach (Order o in orders)
+            {
+                message += "Order placed " + o.orderDate.Day.ToString() + "/" + o.orderDate.Month.ToString() + "/" + o.orderDate.Year.ToString() + "\n";
+                message += "Dispatch to " + o.address;
+                double total = 0.00;
+                List<OrderItem> items = (GetOrderItems(o.id).Result as IEnumerable<OrderItem>).ToList();
+                String productsString = "";
+                foreach (OrderItem i in items)
+                {
+                    total = +i.cost * i.quantity;
+                    productsString += i.itemName + " * " + i.quantity + "   £" + i.cost + "\n";
+                }
+                message += "Total " + total + "\n";
+                message += productsString + "\n\n";
+            }
+            return message;
+        }
+
         private void createInvoice()
         {
             // Get uninvoiced
@@ -39,13 +66,29 @@ namespace OrderService.Controllers
             createInvoice(orders);
         }
 
-        private void createInvoice(List<Order> orders)
+        private async void createInvoice(List<Order> orders)
         {
-            // Cancel the recurring job
-            BackgroundJob.Delete(previousJobId);
+            // Get config for connection string
+            var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json", optional: false);
+            var configuration = builder.Build();
             // Send invoice
-
-            // Mark invoiced
+            try
+            {
+                HttpClient client = new HttpClient();
+                client.BaseAddress = new Uri(configuration.GetConnectionString("MessagingService"));
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var toSendMessage = JsonConvert.SerializeObject(generateInvoiceBody(orders));
+                HttpResponseMessage response = await client.PostAsync("PUT API CALL FROM MESSAGING SERVICE HERE{message}", new StringContent(toSendMessage, Encoding.UTF8, "application/json"));
+                response.EnsureSuccessStatusCode();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return; //We don't want to do anything if we can't send to the messaging service. The job remains in the queue so it should try again every 5 minutes.
+            }
+            // Mark invoiced and Cancel the recurring job
+            BackgroundJob.Delete(previousJobId);
             foreach (Order o in orders)
             {
                 o.invoiced = true;
