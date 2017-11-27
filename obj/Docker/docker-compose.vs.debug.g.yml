@@ -1,0 +1,44 @@
+version: '3'
+
+services:
+  basketservice:
+    image: basketservice:dev
+    build:
+      args:
+        source: obj/Docker/empty/
+    environment:
+      - DOTNET_USE_POLLING_FILE_WATCHER=1
+      - NUGET_FALLBACK_PACKAGES=/root/.nuget/fallbackpackages
+    volumes:
+      - C:\Users\p4029206\Documents\GitHub\TeamDThamCo\BasketService:/app
+      - C:\Users\p4029206\vsdbg:/remote_debugger:ro
+      - C:\Users\p4029206\.nuget\packages\:/root/.nuget/packages:ro
+      - C:\Program Files\dotnet\sdk\NuGetFallbackFolder:/root/.nuget/fallbackpackages:ro
+
+    entrypoint: tail -f /dev/null
+    labels:
+      com.microsoft.visualstudio.debuggee.program: "dotnet"
+      com.microsoft.visualstudio.debuggee.arguments: " --additionalProbingPath /root/.nuget/packages --additionalProbingPath /root/.nuget/fallbackpackages  bin/Debug/netcoreapp2.0/BasketService.dll"
+      com.microsoft.visualstudio.debuggee.workingdirectory: "/app"
+      com.microsoft.visualstudio.debuggee.killprogram: "/bin/bash -c \"if PID=$$(pidof -x dotnet); then kill $$PID; fi\""
+
+  orderservice:
+    image: orderservice:dev
+    build:
+      args:
+        source: obj/Docker/empty/
+    environment:
+      - DOTNET_USE_POLLING_FILE_WATCHER=1
+      - NUGET_FALLBACK_PACKAGES=/root/.nuget/fallbackpackages
+    volumes:
+      - C:\Users\p4029206\Documents\GitHub\TeamDThamCo\OrderService:/app
+      - C:\Users\p4029206\vsdbg:/remote_debugger:ro
+      - C:\Users\p4029206\.nuget\packages\:/root/.nuget/packages:ro
+      - C:\Program Files\dotnet\sdk\NuGetFallbackFolder:/root/.nuget/fallbackpackages:ro
+
+    entrypoint: tail -f /dev/null
+    labels:
+      com.microsoft.visualstudio.debuggee.program: "dotnet"
+      com.microsoft.visualstudio.debuggee.arguments: " --additionalProbingPath /root/.nuget/packages --additionalProbingPath /root/.nuget/fallbackpackages  bin/Debug/netcoreapp2.0/OrderService.dll"
+      com.microsoft.visualstudio.debuggee.workingdirectory: "/app"
+      com.microsoft.visualstudio.debuggee.killprogram: "/bin/bash -c \"if PID=$$(pidof -x dotnet); then kill $$PID; fi\""

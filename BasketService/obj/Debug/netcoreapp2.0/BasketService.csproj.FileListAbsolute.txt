@@ -1,0 +1,11 @@
+C:\Users\p4029206\Documents\GitHub\TeamDThamCo\BasketService\bin\Debug\netcoreapp2.0\BasketService.deps.json
+C:\Users\p4029206\Documents\GitHub\TeamDThamCo\BasketService\bin\Debug\netcoreapp2.0\BasketService.runtimeconfig.json
+C:\Users\p4029206\Documents\GitHub\TeamDThamCo\BasketService\bin\Debug\netcoreapp2.0\BasketService.runtimeconfig.dev.json
+C:\Users\p4029206\Documents\GitHub\TeamDThamCo\BasketService\bin\Debug\netcoreapp2.0\BasketService.dll
+C:\Users\p4029206\Documents\GitHub\TeamDThamCo\BasketService\bin\Debug\netcoreapp2.0\BasketService.pdb
+C:\Users\p4029206\Documents\GitHub\TeamDThamCo\BasketService\obj\Debug\netcoreapp2.0\BasketService.csprojResolveAssemblyReference.cache
+C:\Users\p4029206\Documents\GitHub\TeamDThamCo\BasketService\obj\Debug\netcoreapp2.0\BasketService.csproj.CoreCompileInputs.cache
+C:\Users\p4029206\Documents\GitHub\TeamDThamCo\BasketService\obj\Debug\netcoreapp2.0\BasketService.AssemblyInfoInputs.cache
+C:\Users\p4029206\Documents\GitHub\TeamDThamCo\BasketService\obj\Debug\netcoreapp2.0\BasketService.AssemblyInfo.cs
+C:\Users\p4029206\Documents\GitHub\TeamDThamCo\BasketService\obj\Debug\netcoreapp2.0\BasketService.dll
+C:\Users\p4029206\Documents\GitHub\TeamDThamCo\BasketService\obj\Debug\netcoreapp2.0\BasketService.pdb
