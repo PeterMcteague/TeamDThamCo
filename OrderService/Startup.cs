@@ -84,6 +84,7 @@ namespace OrderService
             {
                 var context = serviceScope.ServiceProvider.GetRequiredService<HangfireContext>();
                 context.Database.Migrate();
+                context.SaveChanges();
             }
             app.UseHangfireDashboard();
             app.UseHangfireServer();

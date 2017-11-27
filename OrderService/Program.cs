@@ -27,8 +27,7 @@ namespace OrderService
                 {
                     var context = services.GetRequiredService<OrderServiceContext>();
                     OrderDbInitializer.Initialize(context);
-                    var hfcontext = services.GetRequiredService<HangfireContext>();
-                    HangfireDbInitializer.Initialize(hfcontext);
+                    context.SaveChanges();
                 }
                 catch (Exception ex)
                 {
