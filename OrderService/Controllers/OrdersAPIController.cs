@@ -14,6 +14,7 @@ using Microsoft.IdentityModel.Protocols;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System.Text;
+using OrderService.Clients;
 
 namespace OrderService.Controllers
 {
@@ -38,27 +39,6 @@ namespace OrderService.Controllers
             return _context.OrderItems.Where(b => b.active == true && b.orderId == orderId).ToList();
         }
 
-        private String generateInvoiceBody(List<Order> orders)
-        {
-            String message = "";
-            foreach (Order o in orders)
-            {
-                message += "Order placed " + o.orderDate.Day.ToString() + "/" + o.orderDate.Month.ToString() + "/" + o.orderDate.Year.ToString() + "\n";
-                message += "Dispatch to " + o.address;
-                decimal total = 0.00m;
-                List<OrderItem> items = (GetOrderItems(o.id).Result as IEnumerable<OrderItem>).ToList();
-                String productsString = "";
-                foreach (OrderItem i in items)
-                {
-                    total = +i.cost * i.quantity;
-                    productsString += i.itemName + " * " + i.quantity + "   £" + i.cost + "\n";
-                }
-                message += "Total " + total + "\n";
-                message += productsString + "\n\n";
-            }
-            return message;
-        }
-
         private void createInvoice()
         {
             // Get uninvoiced
@@ -68,18 +48,11 @@ namespace OrderService.Controllers
 
         private async void createInvoice(List<Order> orders)
         {
-            // Get config for connection string
-            var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json", optional: false);
-            var configuration = builder.Build();
             // Send invoice
             try
             {
-                HttpClient client = new HttpClient();
-                client.BaseAddress = new Uri(configuration.GetConnectionString("MessagingService"));
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var toSendMessage = JsonConvert.SerializeObject(generateInvoiceBody(orders));
-                HttpResponseMessage response = await client.PostAsync("PUT API CALL FROM MESSAGING SERVICE HERE{message}", new StringContent(toSendMessage, Encoding.UTF8, "application/json"));
+                MessageSender sender = new MessageSender(_context);
+                HttpResponseMessage response = await sender.SendOrderInvoice(orders);
                 response.EnsureSuccessStatusCode();
             }
             catch (Exception e)
@@ -357,8 +330,7 @@ namespace OrderService.Controllers
                 var order = _context.Orders.FirstOrDefault(m => m.id == id);
                 order.paid = paid;
                 _context.Update(order);
-
-                // If the order is paid for that means we can invoice and or dispatch it , so we need to queue hangfire jobs
+                
                 if (paid)
                 {
                     var orderItems = getItems(order.id);
