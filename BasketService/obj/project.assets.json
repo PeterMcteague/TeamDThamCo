@@ -12650,13 +12650,10 @@
   },
   "packageFolders": {
     "C:\\Users\\07mct\\.nuget\\packages\\": {},
-    "c:\\program files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
-    "restoreSettings": {
-      "hideWarningsAndErrors": true
-    },
     "restore": {
       "projectUniqueName": "C:\\Users\\07mct\\Documents\\GitHub\\TeamDThamCo\\BasketService\\BasketService.csproj",
       "projectName": "BasketService",
@@ -12665,7 +12662,7 @@
       "outputPath": "C:\\Users\\07mct\\Documents\\GitHub\\TeamDThamCo\\BasketService\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "c:\\program files\\dotnet\\sdk\\NuGetFallbackFolder"
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
         "C:\\Users\\07mct\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -12692,26 +12689,26 @@
     "frameworks": {
       "netcoreapp2.0": {
         "dependencies": {
-          "Microsoft.EntityFrameworkCore": {
-            "target": "Package",
-            "version": "2.0.1"
-          },
           "Microsoft.NETCore.App": {
             "target": "Package",
             "version": "2.0.0",
             "autoReferenced": true
           },
-          "Swashbuckle.AspNetCore": {
+          "Microsoft.AspNetCore.All": {
             "target": "Package",
-            "version": "1.1.0"
+            "version": "2.0.0"
+          },
+          "Microsoft.EntityFrameworkCore": {
+            "target": "Package",
+            "version": "2.0.1"
           },
           "Microsoft.EntityFrameworkCore.SqlServer": {
             "target": "Package",
             "version": "2.0.1"
           },
-          "Microsoft.AspNetCore.All": {
+          "Swashbuckle.AspNetCore": {
             "target": "Package",
-            "version": "2.0.0"
+            "version": "1.1.0"
           }
         },
         "imports": [

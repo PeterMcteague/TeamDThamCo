@@ -15,17 +15,19 @@ namespace OrderService.Data
             context.Database.EnsureDeleted(); //Reset for dev
             #endif
             context.Database.EnsureCreated();
-            
+
+
+
+            #if DEBUG
             List<Order> testOrders = new List<Order>();
             List<OrderItem> testProducts = new List<OrderItem>();
 
-            #if DEBUG
             testOrders.Add(new Order {invoiced = true, dispatched = true, address = "Kevins House, 69 Wallaby Way, Sydney, PST CDE", buyerId = "test-id-plz-ignore", paid = true , orderDate = DateTime.Parse("2005-09-01"), active = true });
             testOrders.Add(new Order {invoiced = true, dispatched = false, address = "Kevins House, 69 Wallaby Way, Sydney, PST CDE", buyerId = "test-id-plz-ignore", paid = true , orderDate = DateTime.Parse("2005-09-01"), active = true });
             
             testProducts.Add(new OrderItem {productId = 1 , itemName = "Premium Jelly Beans", cost = 2.00m, quantity = 5, active = true });
             testProducts.Add(new OrderItem {productId = 2 , itemName = "Netlogo Supercomputer", cost = 2005.99m, quantity = 1, active = true });
-            #endif
+            
 
             if (context.Orders.Count() == testOrders.Count())
             {
@@ -59,6 +61,9 @@ namespace OrderService.Data
                 context.SaveChanges();
                 #endif
             }
+            #endif
+
+            return;
         }
     }
 }

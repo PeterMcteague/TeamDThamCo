@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 using OrderService.Models;
 
@@ -9,7 +10,7 @@ namespace OrderService.Data
 {
     public class OrderServiceContext : DbContext
     {
-        public OrderServiceContext (DbContextOptions<OrderServiceContext> options)
+        public OrderServiceContext (DbContextOptions options)
             : base(options)
         {
         }

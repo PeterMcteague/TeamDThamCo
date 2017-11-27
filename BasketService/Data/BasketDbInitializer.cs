@@ -16,6 +16,7 @@ namespace BasketService.Data
             #if DEBUG
             context.Database.EnsureDeleted(); //Reset for dev
             #endif
+
             context.Database.EnsureCreated();
             
             #if DEBUG
@@ -23,8 +24,6 @@ namespace BasketService.Data
             List<BasketItem> testBasket = new List<BasketItem>();
             testBasket.Add(new BasketItem {buyerId = "test-id-plz-ignore", productId = 1, quantity = 9001 });
             testBasket.Add(new BasketItem {buyerId = "test-id-plz-ignore", productId = 2, quantity = 1 });
-            #endif
-
             if (context.Baskets.Count() == testBasket.Count())
             {
                 return;   // DB has been seeded
@@ -36,6 +35,8 @@ namespace BasketService.Data
                 context.SaveChanges();
                 #endif
             }
+            #endif
+            return;
         }
     }
 }
