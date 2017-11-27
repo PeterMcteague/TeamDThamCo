@@ -13103,8 +13103,8 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\p4029206\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\07mct\\.nuget\\packages\\": {},
+    "c:\\program files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
@@ -13112,17 +13112,17 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "C:\\Users\\p4029206\\Documents\\GitHub\\TeamDThamCo\\OrderService\\OrderService.csproj",
+      "projectUniqueName": "C:\\Users\\07mct\\Documents\\GitHub\\TeamDThamCo\\OrderService\\OrderService.csproj",
       "projectName": "OrderService",
-      "projectPath": "C:\\Users\\p4029206\\Documents\\GitHub\\TeamDThamCo\\OrderService\\OrderService.csproj",
-      "packagesPath": "C:\\Users\\p4029206\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\p4029206\\Documents\\GitHub\\TeamDThamCo\\OrderService\\obj\\",
+      "projectPath": "C:\\Users\\07mct\\Documents\\GitHub\\TeamDThamCo\\OrderService\\OrderService.csproj",
+      "packagesPath": "C:\\Users\\07mct\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\07mct\\Documents\\GitHub\\TeamDThamCo\\OrderService\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        "c:\\program files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\p4029206\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\07mct\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
