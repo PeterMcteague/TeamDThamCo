@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.0",
-    "signature": "35bd95b52cd3a7b931c2990a75b80e0c919ac7bc"
+    "signature": "2a72838be81ec1eded90e28d7674528f845cc421"
   },
   "compilationOptions": {
     "defines": [
@@ -24,6 +24,7 @@
       "OrderService/1.0.0": {
         "dependencies": {
           "Hangfire": "1.6.17",
+          "Hangfire.MySqlStorage": "1.0.5",
           "Microsoft.AspNetCore.All": "2.0.0",
           "Microsoft.EntityFrameworkCore": "2.0.1",
           "Microsoft.EntityFrameworkCore.SqlServer": "2.0.1",
@@ -112,6 +113,20 @@
         },
         "compile": {
           "lib/netstandard1.3/Hangfire.Core.dll": {}
+        }
+      },
+      "Hangfire.MySqlStorage/1.0.5": {
+        "dependencies": {
+          "Dapper": "1.50.1",
+          "Hangfire.Core": "1.6.17",
+          "MySql.Data": "6.9.9",
+          "Newtonsoft.Json": "10.0.1"
+        },
+        "runtime": {
+          "lib/net45/Hangfire.MySql.dll": {}
+        },
+        "compile": {
+          "lib/net45/Hangfire.MySql.dll": {}
         }
       },
       "Hangfire.SqlServer/1.6.17": {
@@ -2445,6 +2460,14 @@
           "ref/netstandard2.0/Microsoft.Win32.Registry.dll": {}
         }
       },
+      "MySql.Data/6.9.9": {
+        "runtime": {
+          "lib/net45/MySql.Data.dll": {}
+        },
+        "compile": {
+          "lib/net45/MySql.Data.dll": {}
+        }
+      },
       "Newtonsoft.Json/10.0.1": {
         "dependencies": {
           "Microsoft.CSharp": "4.4.0",
@@ -4218,6 +4241,13 @@
       "path": "hangfire.core/1.6.17",
       "hashPath": "hangfire.core.1.6.17.nupkg.sha512"
     },
+    "Hangfire.MySqlStorage/1.0.5": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Ngv48LgjB6/cfQhADyjVPbZHvOwi2BNdXg5ImHQFlINTWWJCkE4yCClmFepfwHXi2Tomfq21k3AmTC7uAoBdjw==",
+      "path": "hangfire.mysqlstorage/1.0.5",
+      "hashPath": "hangfire.mysqlstorage.1.0.5.nupkg.sha512"
+    },
     "Hangfire.SqlServer/1.6.17": {
       "type": "package",
       "serviceable": true,
@@ -5393,6 +5423,13 @@
       "sha512": "sha512-dA36TlNVn/XfrZtmf0fiI/z1nd3Wfp2QVzTdj26pqgP9LFWq0i1hYEUAW50xUjGFYn1+/cP3KGuxT2Yn1OUNBQ==",
       "path": "microsoft.win32.registry/4.4.0",
       "hashPath": "microsoft.win32.registry.4.4.0.nupkg.sha512"
+    },
+    "MySql.Data/6.9.9": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-rhpv2iJBqvvHU9gkhn/OZfhanQT/jZpfovyO9TEbJl5jLKMvABgxSkIPQbubrvR04M2/ZtdTeI9fC9WSkBe2wA==",
+      "path": "mysql.data/6.9.9",
+      "hashPath": "mysql.data.6.9.9.nupkg.sha512"
     },
     "Newtonsoft.Json/10.0.1": {
       "type": "package",

@@ -38,7 +38,11 @@ namespace BasketServiceRemake
                     TermsOfService = "For between service communications",
                 });
             });
+#if DEBUG
             services.AddDbContext<BasketContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("BasketContext")));
+#else
+            services.AddDbContext<BasketContext>(opt => opt.UseMySql(Configuration.GetConnectionString("BasketContext")));
+#endif
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -13,6 +13,7 @@ using OrderService.Data;
 using Stripe;
 using Hangfire;
 using Hangfire.SqlServer;
+using Hangfire.MySql;
 
 namespace OrderService
 {
@@ -54,10 +55,16 @@ namespace OrderService
                     TermsOfService = "For between service communications",
                 });
             });
-            
+
+#if DEBUG
             services.AddDbContext<OrderServiceContext>(options => options.UseSqlServer(Configuration.GetConnectionString("OrderService")));
             services.AddDbContext<HangfireContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Hangfire")));
             services.AddHangfire(x => x.UseSqlServerStorage(Configuration.GetConnectionString("Hangfire")));
+#else
+            services.AddDbContext<OrderServiceContext>(options => options.UseMySql(Configuration.GetConnectionString("OrderService")));
+            services.AddDbContext<HangfireContext>(options => options.UseMySql(Configuration.GetConnectionString("Hangfire")));
+            GlobalConfiguration.Configuration.UseStorage(new MySqlStorage("Hangfire"));
+#endif
             _stripeAPIKey = Configuration["StripeAPIKey"];
         }
 

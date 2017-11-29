@@ -81,6 +81,21 @@
           }
         }
       },
+      "Hangfire.MySqlStorage/1.0.5": {
+        "type": "package",
+        "dependencies": {
+          "Dapper": "1.42.0",
+          "Hangfire.Core": "1.5.3",
+          "MySql.Data": "6.9.9",
+          "Newtonsoft.Json": "5.0.1"
+        },
+        "compile": {
+          "lib/net45/Hangfire.MySql.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Hangfire.MySql.dll": {}
+        }
+      },
       "Hangfire.SqlServer/1.6.17": {
         "type": "package",
         "dependencies": {
@@ -1774,10 +1789,10 @@
           "lib/netstandard2.0/Microsoft.EntityFrameworkCore.dll": {}
         }
       },
-      "Microsoft.EntityFrameworkCore.Design/2.0.0": {
+      "Microsoft.EntityFrameworkCore.Design/2.0.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.EntityFrameworkCore.Relational": "2.0.0"
+          "Microsoft.EntityFrameworkCore.Relational": "2.0.1"
         },
         "compile": {
           "lib/netstandard2.0/Microsoft.EntityFrameworkCore.Design.dll": {}
@@ -3088,6 +3103,33 @@
           }
         }
       },
+      "MySql.Data/6.9.9": {
+        "type": "package",
+        "compile": {
+          "lib/net45/MySql.Data.dll": {}
+        },
+        "runtime": {
+          "lib/net45/MySql.Data.dll": {}
+        }
+      },
+      "MySqlConnector/0.32.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Buffers": "4.3.0",
+          "System.Data.Common": "4.3.0",
+          "System.Diagnostics.Process": "4.3.0",
+          "System.Net.NameResolution": "4.3.0",
+          "System.Net.Security": "4.3.0",
+          "System.Security.Cryptography.Algorithms": "4.3.0",
+          "System.Threading.Tasks.Extensions": "4.3.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/MySqlConnector.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/MySqlConnector.dll": {}
+        }
+      },
       "NETStandard.Library/2.0.0": {
         "type": "package",
         "dependencies": {
@@ -3151,6 +3193,35 @@
         },
         "runtime": {
           "lib/netstandard1.3/Newtonsoft.Json.Bson.dll": {}
+        }
+      },
+      "Pomelo.EntityFrameworkCore.MySql/2.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.Design": "2.0.1",
+          "Microsoft.EntityFrameworkCore.Relational": "2.0.1",
+          "Microsoft.Extensions.Logging.Console": "2.0.0",
+          "MySqlConnector": "0.32.0",
+          "Pomelo.JsonObject": "1.1.1"
+        },
+        "compile": {
+          "lib/netstandard2.0/Pomelo.EntityFrameworkCore.MySql.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Pomelo.EntityFrameworkCore.MySql.dll": {}
+        }
+      },
+      "Pomelo.JsonObject/1.1.1": {
+        "type": "package",
+        "dependencies": {
+          "NETStandard.Library": "1.6.1",
+          "Newtonsoft.Json": "9.0.1"
+        },
+        "compile": {
+          "lib/netstandard1.3/Pomelo.JsonObject.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/Pomelo.JsonObject.dll": {}
         }
       },
       "Remotion.Linq/2.1.1": {
@@ -3787,17 +3858,17 @@
           "ref/netstandard1.3/System.Console.dll": {}
         }
       },
-      "System.Data.Common/4.1.0": {
+      "System.Data.Common/4.3.0": {
         "type": "package",
         "dependencies": {
-          "System.Collections": "4.0.11",
-          "System.Globalization": "4.0.11",
-          "System.IO": "4.1.0",
-          "System.Resources.ResourceManager": "4.0.1",
-          "System.Runtime": "4.1.0",
-          "System.Runtime.Extensions": "4.1.0",
-          "System.Text.RegularExpressions": "4.1.0",
-          "System.Threading.Tasks": "4.0.11"
+          "System.Collections": "4.3.0",
+          "System.Globalization": "4.3.0",
+          "System.IO": "4.3.0",
+          "System.Resources.ResourceManager": "4.3.0",
+          "System.Runtime": "4.3.0",
+          "System.Runtime.Extensions": "4.3.0",
+          "System.Text.RegularExpressions": "4.3.0",
+          "System.Threading.Tasks": "4.3.0"
         },
         "compile": {
           "ref/netstandard1.2/System.Data.Common.dll": {}
@@ -5484,11 +5555,13 @@
         "framework": ".NETCoreApp,Version=v2.0",
         "dependencies": {
           "Hangfire": "1.6.17",
+          "Hangfire.MySqlStorage": "1.0.5",
           "Microsoft.AspNetCore.All": "2.0.0",
           "Microsoft.EntityFrameworkCore": "2.0.1",
           "Microsoft.EntityFrameworkCore.SqlServer": "2.0.1",
           "Microsoft.Extensions.SecretManager.Tools": "2.0.0",
           "Microsoft.NETCore.App": "2.0.0",
+          "Pomelo.EntityFrameworkCore.MySql": "2.0.1",
           "Stripe.net": "11.7.1",
           "Swashbuckle.AspNetCore": "1.1.0"
         },
@@ -5557,6 +5630,16 @@
         "lib/netstandard1.3/Hangfire.Core.xml",
         "lib/netstandard1.3/es/Hangfire.Core.resources.dll",
         "lib/netstandard1.3/zh/Hangfire.Core.resources.dll"
+      ]
+    },
+    "Hangfire.MySqlStorage/1.0.5": {
+      "sha512": "Ngv48LgjB6/cfQhADyjVPbZHvOwi2BNdXg5ImHQFlINTWWJCkE4yCClmFepfwHXi2Tomfq21k3AmTC7uAoBdjw==",
+      "type": "package",
+      "path": "hangfire.mysqlstorage/1.0.5",
+      "files": [
+        "hangfire.mysqlstorage.1.0.5.nupkg.sha512",
+        "hangfire.mysqlstorage.nuspec",
+        "lib/net45/Hangfire.MySql.dll"
       ]
     },
     "Hangfire.SqlServer/1.6.17": {
@@ -6891,16 +6974,16 @@
         "microsoft.entityframeworkcore.nuspec"
       ]
     },
-    "Microsoft.EntityFrameworkCore.Design/2.0.0": {
-      "sha512": "v8e4OwmK+BIm7jINmGJaQz1+r6BiFl+bGJNVUF4JQZ9H40keeTIHEgKDxdEr+24EdllfLLKTisEziq1H089TYg==",
+    "Microsoft.EntityFrameworkCore.Design/2.0.1": {
+      "sha512": "gEdT/YSI/buO15X/UN+gQY6D7qeozRYU80WuesZCj33jJBw4wCHHn8SYcp38k2BPOBDC4I2AfsOFH6Vaf8CeLQ==",
       "type": "package",
-      "path": "microsoft.entityframeworkcore.design/2.0.0",
+      "path": "microsoft.entityframeworkcore.design/2.0.1",
       "files": [
         "lib/net461/Microsoft.EntityFrameworkCore.Design.dll",
         "lib/net461/Microsoft.EntityFrameworkCore.Design.xml",
         "lib/netstandard2.0/Microsoft.EntityFrameworkCore.Design.dll",
         "lib/netstandard2.0/Microsoft.EntityFrameworkCore.Design.xml",
-        "microsoft.entityframeworkcore.design.2.0.0.nupkg.sha512",
+        "microsoft.entityframeworkcore.design.2.0.1.nupkg.sha512",
         "microsoft.entityframeworkcore.design.nuspec"
       ]
     },
@@ -8481,6 +8564,34 @@
         "version.txt"
       ]
     },
+    "MySql.Data/6.9.9": {
+      "sha512": "rhpv2iJBqvvHU9gkhn/OZfhanQT/jZpfovyO9TEbJl5jLKMvABgxSkIPQbubrvR04M2/ZtdTeI9fC9WSkBe2wA==",
+      "type": "package",
+      "path": "mysql.data/6.9.9",
+      "files": [
+        "CHANGES",
+        "Readme.txt",
+        "content/app.config.transform",
+        "content/web.config.transform",
+        "lib/net40/MySql.Data.dll",
+        "lib/net45/MySql.Data.dll",
+        "mysql.data.6.9.9.nupkg.sha512",
+        "mysql.data.nuspec"
+      ]
+    },
+    "MySqlConnector/0.32.0": {
+      "sha512": "BsPX6w3Ctb6JSZlMPf+LNad+de6L4EWgovU5vjnkWq9m09KW9GySHwcAdWgXobPgke9uK706JzDdmRxQriUa1w==",
+      "type": "package",
+      "path": "mysqlconnector/0.32.0",
+      "files": [
+        "lib/net45/MySqlConnector.dll",
+        "lib/net46/MySqlConnector.dll",
+        "lib/netstandard1.3/MySqlConnector.dll",
+        "lib/netstandard2.0/MySqlConnector.dll",
+        "mysqlconnector.0.32.0.nupkg.sha512",
+        "mysqlconnector.nuspec"
+      ]
+    },
     "NETStandard.Library/2.0.0": {
       "sha512": "7jnbRU+L08FXKMxqUflxEXtVymWvNOrS8yHgu9s6EM8Anr6T/wIX4nZ08j/u3Asz+tCufp3YVwFSEvFTPYmBPA==",
       "type": "package",
@@ -8644,6 +8755,27 @@
         "lib/netstandard1.3/Newtonsoft.Json.Bson.xml",
         "newtonsoft.json.bson.1.0.1.nupkg.sha512",
         "newtonsoft.json.bson.nuspec"
+      ]
+    },
+    "Pomelo.EntityFrameworkCore.MySql/2.0.1": {
+      "sha512": "7EvKOe8hczKfgeeG7JIlHLUb3Pc+OrM4xQwhYb1a2sNdnDMMTMH203zKeeetSP6HBaoZqaBJTAjliNtJDkGFsA==",
+      "type": "package",
+      "path": "pomelo.entityframeworkcore.mysql/2.0.1",
+      "files": [
+        "lib/netstandard2.0/Pomelo.EntityFrameworkCore.MySql.dll",
+        "pomelo.entityframeworkcore.mysql.2.0.1.nupkg.sha512",
+        "pomelo.entityframeworkcore.mysql.nuspec"
+      ]
+    },
+    "Pomelo.JsonObject/1.1.1": {
+      "sha512": "erkYG/OW1LloSwDFGeS9MvVjy1FLmaV3k8GK/GMR8D3sSDEylZogoLdLiaOFc92+zTen92rG6XGiioNacSlg0A==",
+      "type": "package",
+      "path": "pomelo.jsonobject/1.1.1",
+      "files": [
+        "lib/net451/Pomelo.JsonObject.dll",
+        "lib/netstandard1.3/Pomelo.JsonObject.dll",
+        "pomelo.jsonobject.1.1.1.nupkg.sha512",
+        "pomelo.jsonobject.nuspec"
       ]
     },
     "Remotion.Linq/2.1.1": {
@@ -9760,10 +9892,10 @@
         "system.console.nuspec"
       ]
     },
-    "System.Data.Common/4.1.0": {
-      "sha512": "epU8jeTe7aE7RqGHq9rZ8b0Q4Ah7DgubzHQblgZMSqgW1saW868WmooSyC5ywf8upLBkcVLDu93W9GPWUYsU2Q==",
+    "System.Data.Common/4.3.0": {
+      "sha512": "lm6E3T5u7BOuEH0u18JpbJHxBfOJPuCyl4Kg1RH10ktYLp5uEEE1xKrHW56/We4SnZpGAuCc9N0MJpSDhTHZGQ==",
       "type": "package",
-      "path": "system.data.common/4.1.0",
+      "path": "system.data.common/4.3.0",
       "files": [
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
@@ -9805,7 +9937,7 @@
         "ref/xamarinmac20/_._",
         "ref/xamarintvos10/_._",
         "ref/xamarinwatchos10/_._",
-        "system.data.common.4.1.0.nupkg.sha512",
+        "system.data.common.4.3.0.nupkg.sha512",
         "system.data.common.nuspec"
       ]
     },
@@ -14171,5 +14303,27 @@
         "warn": true
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Hangfire.MySqlStorage 1.0.5' was restored using '.NETFramework,Version=v4.6.1' instead of the project target framework '.NETCoreApp,Version=v2.0'. This package may not be fully compatible with your project.",
+      "libraryId": "Hangfire.MySqlStorage",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v2.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'MySql.Data 6.9.9' was restored using '.NETFramework,Version=v4.6.1' instead of the project target framework '.NETCoreApp,Version=v2.0'. This package may not be fully compatible with your project.",
+      "libraryId": "MySql.Data",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v2.0"
+      ]
+    }
+  ]
 }
