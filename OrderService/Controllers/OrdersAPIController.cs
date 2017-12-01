@@ -39,14 +39,15 @@ namespace OrderService.Controllers
             return _context.OrderItems.Where(b => b.active == true && b.orderId == orderId).ToList();
         }
 
-        private void createInvoice()
+        private bool createInvoice()
         {
             // Get uninvoiced
             var orders = _context.Orders.Where(b => b.invoiced == false).ToList();
-            createInvoice(orders);
+            bool success = createInvoice(orders).IsCompleted;
+            return success;
         }
 
-        private async void createInvoice(List<Order> orders)
+        private async Task<bool> createInvoice(List<Order> orders)
         {
             // Send invoice
             try
@@ -58,15 +59,17 @@ namespace OrderService.Controllers
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                return; //We don't want to do anything if we can't send to the messaging service. The job remains in the queue so it should try again every 5 minutes.
+                return false; //We don't want to do anything if we can't send to the messaging service. The job remains in the queue so it should try again every 5 minutes if it exists.
             }
-            // Mark invoiced and Cancel the recurring job
+            // Mark invoiced and Cancel the recurring job and dispatch it
             BackgroundJob.Delete(invoiceJobId);
             foreach (Order o in orders)
             {
                 o.invoiced = true;
                 _context.Update(o);
+                await UpdateOrderDispatch(o.id, true);
             }
+            return true;
         }
 
         /// <summary>
@@ -263,47 +266,21 @@ namespace OrderService.Controllers
             {
                 return NoContent();
             }
+            if (!_context.Orders.Any(b => b.active == true && b.id == id && b.paid == false))
+            {
+                return BadRequest("Order must be paid before it is dispatched");
+            }
             else
             {
                 var order = _context.Orders.FirstOrDefault(m => m.id == id);
                 order.dispatched = dispatched;
                 _context.Update(order);
                 await _context.SaveChangesAsync();
+                _context.Dispatches.Add(new Dispatch { orderId = id });
                 return Ok(order);
             }
         }
-
-        /// <summary>
-        /// Updates an orders dispatch status
-        /// </summary>
-        /// <param name="id">ID of order to update.</param>
-        /// <param name="invoiced">Invoiced boolean</param>
-        /// <returns>Response , updated order if successful</returns>
-        [HttpPut("Update/id={id}&invoiced={invoiced}", Name = "Update order invoiced status")]
-        public async Task<IActionResult> UpdateOrderInvoiced([FromRoute] int id, [FromRoute] bool invoiced)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            if (!_context.Orders.Any())
-            {
-                return NotFound("No order items found");
-            }
-            if (!_context.Orders.Any(b => b.active == true && b.id == id))
-            {
-                return NoContent();
-            }
-            else
-            {
-                var order = _context.Orders.FirstOrDefault(m => m.id == id);
-                order.invoiced = invoiced;
-                _context.Update(order);
-                await _context.SaveChangesAsync();
-                return Ok(order);
-            }
-        }
-
+        
         /// <summary>
         /// Updates an orders paid status , to be called after a succesful payment response is recieved
         /// </summary>
@@ -311,7 +288,7 @@ namespace OrderService.Controllers
         /// <param name="paid">Paid boolean</param>
         /// <returns>Response , updated order if successful</returns>
         [HttpPut("Update/id={id}&paid={paid}", Name = "Update order paid status")]
-        public async Task<IActionResult> UpdateOrderPaid([FromRoute] int id, [FromRoute] bool paid)
+        public async Task<IActionResult> UpdateOrderPaid([FromRoute] int id, [FromRoute] bool paid, bool sendInvoice)
         {
             if (!ModelState.IsValid)
             {
@@ -328,15 +305,16 @@ namespace OrderService.Controllers
             else
             {
                 var order = _context.Orders.FirstOrDefault(m => m.id == id);
-                order.paid = paid;
-                _context.Update(order);
-                
                 if (paid)
                 {
                     var orderItems = getItems(order.id);
                     if (orderItems.Sum(item => item.cost) > 50.00m)
                     {
-                        createInvoice(new List<Order> { order });
+                        if (await createInvoice(new List<Order> { order }))
+                        {
+                            order.paid = paid;
+                            _context.Update(order);
+                        }
                     }
                     else
                     {
@@ -349,7 +327,11 @@ namespace OrderService.Controllers
                         }
                         if (totalCost > 50m)
                         {
-                            createInvoice(unInvoicedOrders);
+                            if(await createInvoice(unInvoicedOrders))
+                            {
+                                order.paid = paid;
+                                _context.Update(order);
+                            }
                         }
                         else
                         {

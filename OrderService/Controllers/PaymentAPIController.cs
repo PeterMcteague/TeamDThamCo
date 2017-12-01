@@ -11,7 +11,7 @@ namespace OrderService.Controllers
     [Route("api/[controller]")]
     public class PaymentAPIController : Controller
     {
-        [HttpPost("MakePaymentTest", Name = "Tests payment API")]
+        [HttpPost("/MakePayment", Name = "Makes a payment from a stripeTokenId (Use Javascript stripe payment in frontend to get this)")]
         public IActionResult PostPayment(int pence, string stripeTokenId)
         {
             try
@@ -25,7 +25,7 @@ namespace OrderService.Controllers
                     Description = "Charge from TeamDThamCo e-store",
                     SourceTokenOrExistingSourceId = stripeTokenId
                 };
-
+                
                 var chargeService = new StripeChargeService();
                 StripeCharge charge = chargeService.Create(chargeOptions);
 

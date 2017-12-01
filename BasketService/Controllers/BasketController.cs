@@ -28,7 +28,7 @@ namespace BasketService.Controllers
         /// <returns>Returns all baskets</returns>
         /// <response code="200">Returns the basket</response>
         /// <response code="400">If not any baskets</response>  
-        [HttpGet("", Name = "Get all baskets")]
+        [HttpGet("get/", Name = "Get all baskets")]
         public async Task<IActionResult> GetBaskets()
         {
             if (!ModelState.IsValid)
@@ -39,8 +39,8 @@ namespace BasketService.Controllers
             {
                 return NotFound();
             }
-            var orders = await _context.Baskets.ToListAsync();
-            return Ok(orders);
+            var baskets = await _context.Baskets.ToListAsync();
+            return Ok(baskets);
         }
 
         /// <summary>
@@ -50,19 +50,62 @@ namespace BasketService.Controllers
         /// <response code="200">Returns the basket</response>
         /// <response code="400">If not any basket items by userid</response>  
         /// <response code="404">If parameters are invalid</response>
-        [HttpGet("/{userid}", Name = "Get basket by buyer ID")]
+        [HttpGet("get/{userid}", Name = "Get baskets by buyer ID")]
         public async Task<IActionResult> GetBasket([FromRoute] string userid)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            if (!_context.Baskets.Any())
+            if (!_context.Baskets.Any(b => b.buyerId == userid))
             {
                 return NotFound("No baskets found");
             }
-            var orders = await _context.Baskets.Where(b => b.buyerId == userid).ToListAsync();
-            return Ok(orders);
+            var baskets = await _context.Baskets.Where(b => b.buyerId == userid).ToListAsync();
+            return Ok(baskets);
+        }
+
+        /// <summary>
+        /// Gets X baskets
+        /// </summary>
+        /// <param name="userid">The userId that owns the baskets</param>
+        /// <param name="count">Number of baskets to get</param>
+        /// <returns>Result codes</returns>
+        [HttpGet("get/{userid}&count={count}", Name = "Get X baskets by buyer ID")]
+        public async Task<IActionResult> GetBasket([FromRoute] string userid, [FromRoute] int count)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            if (!_context.Baskets.Any(b => b.buyerId == userid))
+            {
+                return NotFound("No baskets found");
+            }
+            var baskets = await _context.Baskets.Where(b => b.buyerId == userid).Take(count).ToListAsync();
+            return Ok(baskets);
+        }
+
+        /// <summary>
+        /// Gets a range of items , useful for pages
+        /// </summary>
+        /// <param name="userid">The userId that the basket is owned by</param>
+        /// <param name="start">The start of the range</param>
+        /// <param name="end">The end of the range</param>
+        /// <returns>Result codes</returns>
+        [HttpGet("get/{userid}&range={start}-{end}", Name = "Get basket by buyer ID in range start-end")]
+        public async Task<IActionResult> GetBasket([FromRoute] string userid , [FromRoute] int start, [FromRoute] int end)
+        {
+            if (!ModelState.IsValid || start >= end)
+            {
+                return BadRequest(ModelState);
+            }
+            if (!_context.Baskets.Any(b => b.buyerId == userid) || !(_context.Baskets.Count() < end))
+            {
+                return NotFound("No baskets found");
+            }
+            var baskets = await _context.Baskets.Where(b => b.buyerId == userid).Skip(start - 1).Take(end - start).ToListAsync();
+            return Ok(baskets);
         }
 
         /// <summary>
@@ -71,7 +114,7 @@ namespace BasketService.Controllers
         /// <param name="userid">The userid to get by</param>
         /// <param name="productid">The productid to get by</param>
         /// <returns></returns>
-        [HttpGet("{userid}&{productid}", Name = "Get basket item by buyer ID and productid")]
+        [HttpGet("get/{userid}&{productid}", Name = "Get basket item by buyer ID and productid")]
         public async Task<IActionResult> GetBasketItem([FromRoute] string userid, [FromRoute] int productid)
         {
             if (!ModelState.IsValid)
@@ -86,8 +129,8 @@ namespace BasketService.Controllers
             {
                 return NotFound();
             }
-            var orders = await _context.Baskets.Where(b => b.buyerId == userid && b.productId == productid).ToListAsync();
-            return Ok(orders);
+            var basketItems = await _context.Baskets.Where(b => b.buyerId == userid && b.productId == productid).ToListAsync();
+            return Ok(basketItems);
         }
 
         /// <summary>
@@ -98,7 +141,7 @@ namespace BasketService.Controllers
         /// <param name="quantity">The amount to add.</param>  
         /// <response code="200">OK. Returns the item added.</response>
         /// <response code="400">If parameters invalid.</response>  
-        [HttpPut("/add/userId={userId}&productId={productId}&quantity={quantity}", Name = "Add an item to a customers basket")]
+        [HttpPost("add/userId={userId}&productId={productId}&quantity={quantity}", Name = "Add an item to a customers basket")]
         public async Task<IActionResult> AddItemToBasket([FromRoute] string userId, [FromRoute] int productId, [FromRoute] int quantity)
         {
             if (!ModelState.IsValid)
@@ -134,7 +177,7 @@ namespace BasketService.Controllers
         /// <response code="200">OK. Returns the item added.</response>
         /// <response code="400">If parameters invalid.</response>
         /// <response code="404">If basket item to update not found.</response>
-        [HttpPut("/update/userId={userId}&productId={productId}&quantity={quantity}", Name = "Update an items quantity a customers basket")]
+        [HttpPut("update/userId={userId}&productId={productId}&quantity={quantity}", Name = "Update an items quantity a customers basket")]
         public async Task<IActionResult> UpdateItemInBasket([FromRoute] string userId, [FromRoute] int productId, [FromRoute] int quantity)
         {
             if (!ModelState.IsValid)
@@ -167,7 +210,7 @@ namespace BasketService.Controllers
         /// <response code="200">OK. Returns the item added.</response>
         /// <response code="400">If parameters invalid.</response>
         /// <response code="404">If item to delete not found.</response>
-        [HttpDelete("/delete/userId={userId}&productId={productId}")]
+        [HttpDelete("delete/userId={userId}&productId={productId}")]
         public async Task<IActionResult> DeleteBasketItem([FromRoute] string userId , [FromRoute] int productId)
         {
             if (!ModelState.IsValid)

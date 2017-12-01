@@ -36,6 +36,7 @@ namespace OrderService.Clients
         public async Task<HttpResponseMessage> SendOrderInvoice(List<Order> orders)
         {
             String message = "";
+            String buyerId = orders.FirstOrDefault().buyerId;
             foreach (Order o in orders)
             {
                 message += "Order placed " + o.orderDate.Day.ToString() + "/" + o.orderDate.Month.ToString() + "/" + o.orderDate.Year.ToString() + "\n";
@@ -51,13 +52,23 @@ namespace OrderService.Clients
                 message += "Total " + total + "\n";
                 message += productsString + "\n\n";
             }
-            return await SendMessage(message);
+            return await SendMessage(buyerId,message);
         }
 
-        public async Task<HttpResponseMessage> SendMessage(String message)
+        public async Task<HttpResponseMessage> SendMessage(String buyerId , String message)
         {
-            var toSendMessage = JsonConvert.SerializeObject(message);
-            return await this.PostAsync("PUT API CALL FROM MESSAGING SERVICE HERE{message}", new StringContent(toSendMessage, Encoding.UTF8, "application/json"));
+            using (var formData = new MultipartFormDataContent())
+            {
+                formData.Add(new StringContent(JsonConvert.SerializeObject(message)), "message");
+                formData.Add(new StringContent(JsonConvert.SerializeObject(buyerId)), "buyerId");
+
+                //TODO Check this is the right URL with service creator
+                HttpResponseMessage response = await this.PostAsync("/post/message/buyerId={buyerId}&message={message}", formData);
+                response.EnsureSuccessStatusCode();
+
+                return response;
+            }
+           
         }
     }
 }
