@@ -52,6 +52,7 @@ namespace OrderService
             services.AddDbContext<HangfireContext>(options => options.UseMySql(Configuration.GetConnectionString("Hangfire")));
             GlobalConfiguration.Configuration.UseStorage(new MySqlStorage("Hangfire"));
 #endif
+            StripeConfiguration.SetApiKey(Configuration.GetSection("Keys").GetValue<string>("Stripe"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

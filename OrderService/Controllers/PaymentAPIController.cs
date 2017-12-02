@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Stripe;
 using Microsoft.Extensions.Configuration;
+using System.IO;
 
 namespace OrderService.Controllers
 {
@@ -27,10 +28,6 @@ namespace OrderService.Controllers
                     Description = "Charge from TeamDThamCo e-store",
                     SourceTokenOrExistingSourceId = stripeTokenId
                 };
-                var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json", optional: false);
-                var configuration = builder.Build();
-                var key = configuration.GetSection("APIKeys").GetValue<string>("StripeKey");
-                StripeConfiguration.SetApiKey(key);
 
                 StripeCharge charge = chargeService.Create(chargeOptions);
 
