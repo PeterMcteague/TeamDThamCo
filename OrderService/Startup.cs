@@ -20,23 +20,10 @@ namespace OrderService
     public class Startup
     {
         public IConfiguration Configuration { get; }
-        public static string _stripeAPIKey { get; private set; }
 
-        public Startup(IHostingEnvironment env)
+        public Startup(IConfiguration configuration)
         {
-            // Set up configuration sources.
-            var builder = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .SetBasePath(env.ContentRootPath);
-
-            if (env.IsDevelopment())
-            {
-                // For more details on using the user secret store see http://go.microsoft.com/fwlink/?LinkID=532709
-                builder.AddUserSecrets<Startup>();
-            }
-
-            builder.AddEnvironmentVariables();
-            Configuration = builder.Build();
+            Configuration = configuration;
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -65,7 +52,6 @@ namespace OrderService
             services.AddDbContext<HangfireContext>(options => options.UseMySql(Configuration.GetConnectionString("Hangfire")));
             GlobalConfiguration.Configuration.UseStorage(new MySqlStorage("Hangfire"));
 #endif
-            _stripeAPIKey = Configuration["StripeAPIKey"];
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -95,8 +81,13 @@ namespace OrderService
             }
             app.UseHangfireDashboard();
             app.UseHangfireServer();
-            
-            app.UseMvc();
+
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
+            });
         }
     }
 }

@@ -27,7 +27,6 @@ namespace OrderService
                 {
                     var context = services.GetRequiredService<OrderServiceContext>();
                     OrderDbInitializer.Initialize(context);
-                    context.SaveChanges();
                 }
                 catch (Exception ex)
                 {
@@ -38,23 +37,12 @@ namespace OrderService
 
             host.Run();
         }
-        
+
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
-                .UseContentRoot(Directory.GetCurrentDirectory())
-                .ConfigureAppConfiguration((builderContext, config) =>
-                {
-                    config.AddJsonFile("appsettings.json");
-                    config.AddEnvironmentVariables();
-                })
-                .ConfigureLogging((hostingContext, builder) =>
-                {
-                    builder.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
-                    builder.AddConsole();
-                    builder.AddDebug();
-                })
                 .Build();
+
     }
 }

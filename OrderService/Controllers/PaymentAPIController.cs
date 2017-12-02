@@ -12,11 +12,13 @@ namespace OrderService.Controllers
     public class PaymentAPIController : Controller
     {
         [HttpPost("/MakePayment", Name = "Makes a payment from a stripeTokenId (Use Javascript stripe payment in frontend to get this)")]
-        public IActionResult PostPayment(int pence, string stripeTokenId)
+        public IActionResult PostPayment(Decimal totalGbp, string stripeTokenId)
         {
+            int pence = Convert.ToInt32(totalGbp * 100); //Converts 49.99 to 4999
             try
             {
-                StripeConfiguration.SetApiKey(Startup._stripeAPIKey);
+
+                var chargeService = new StripeChargeService();
 
                 var chargeOptions = new StripeChargeCreateOptions()
                 {
@@ -25,8 +27,11 @@ namespace OrderService.Controllers
                     Description = "Charge from TeamDThamCo e-store",
                     SourceTokenOrExistingSourceId = stripeTokenId
                 };
-                
-                var chargeService = new StripeChargeService();
+                var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json", optional: false);
+                var configuration = builder.Build();
+                var key = configuration.GetSection("APIKeys").GetValue<string>("StripeKey");
+                StripeConfiguration.SetApiKey(key);
+
                 StripeCharge charge = chargeService.Create(chargeOptions);
 
                 return Ok(charge.StripeResponse.ResponseJson);

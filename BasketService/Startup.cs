@@ -13,7 +13,7 @@ using BasketService.Models;
 using Microsoft.EntityFrameworkCore;
 using BasketService.Data;
 
-namespace BasketServiceRemake
+namespace BasketService
 {
     public class Startup
     {
@@ -62,7 +62,12 @@ namespace BasketServiceRemake
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseMvc();
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
+            });
         }
     }
 }

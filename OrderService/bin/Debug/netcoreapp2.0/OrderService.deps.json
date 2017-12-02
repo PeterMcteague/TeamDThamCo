@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.0",
-    "signature": "d9e5a27112782e2d5836415fbbbc5510ec7c13ee"
+    "signature": "da2d6aa3daf9541b283fda338f06d6a3193b8afb"
   },
   "compilationOptions": {
     "defines": [
@@ -28,7 +28,6 @@
           "Microsoft.AspNetCore.All": "2.0.0",
           "Microsoft.EntityFrameworkCore": "2.0.1",
           "Microsoft.EntityFrameworkCore.SqlServer": "2.0.1",
-          "Microsoft.Extensions.SecretManager.Tools": "2.0.0",
           "Microsoft.NETCore.App": "2.0.0",
           "Pomelo.EntityFrameworkCore.MySql": "2.0.1",
           "Stripe.net": "11.7.1",
@@ -2257,18 +2256,6 @@
         },
         "compile": {
           "lib/netstandard2.0/Microsoft.Extensions.Primitives.dll": {}
-        }
-      },
-      "Microsoft.Extensions.SecretManager.Tools/2.0.0": {
-        "dependencies": {
-          "Microsoft.Extensions.Configuration.UserSecrets": "2.0.0",
-          "Microsoft.NETCore.App": "2.0.0"
-        },
-        "runtime": {
-          "lib/netcoreapp2.0/dotnet-user-secrets.dll": {}
-        },
-        "compile": {
-          "lib/netcoreapp2.0/dotnet-user-secrets.dll": {}
         }
       },
       "Microsoft.Extensions.WebEncoders/2.0.0": {
@@ -5381,13 +5368,6 @@
       "sha512": "sha512-ukg53qNlqTrK38WA30b5qhw0GD7y3jdI9PHHASjdKyTcBHTevFM2o23tyk3pWCgAV27Bbkm+CPQ2zUe1ZOuYSA==",
       "path": "microsoft.extensions.primitives/2.0.0",
       "hashPath": "microsoft.extensions.primitives.2.0.0.nupkg.sha512"
-    },
-    "Microsoft.Extensions.SecretManager.Tools/2.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-YojQ+ZAn+pHY7QVNgT4FDxCy9OW5JJ4FN2LdofTEmsp9/WKFW9vb//b+3UFMzTourwZoxfB1cdwCC1z2/+LJ/A==",
-      "path": "microsoft.extensions.secretmanager.tools/2.0.0",
-      "hashPath": "microsoft.extensions.secretmanager.tools.2.0.0.nupkg.sha512"
     },
     "Microsoft.Extensions.WebEncoders/2.0.0": {
       "type": "package",

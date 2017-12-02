@@ -21,7 +21,7 @@ namespace OrderService.Test
         [Fact]
         public void MakeValidPaymentRequest_ShouldReturnOK()
         {
-            var result = _controller.PostPayment(500, "tok_visa") as ObjectResult;
+            var result = _controller.PostPayment(5.00m, "tok_visa") as ObjectResult;
             var resultValue = result.Value;
 
             Assert.Equal(200, result.StatusCode);

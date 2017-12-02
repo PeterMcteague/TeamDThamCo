@@ -15,9 +15,7 @@ namespace OrderService.Data
             context.Database.EnsureDeleted(); //Reset for dev
             #endif
             context.Database.EnsureCreated();
-
-
-
+            
             #if DEBUG
             List<Order> testOrders = new List<Order>();
             List<OrderItem> testProducts = new List<OrderItem>();

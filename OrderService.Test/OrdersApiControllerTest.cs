@@ -174,25 +174,6 @@ namespace OrderService.Test
             Assert.Equal(true, afterDispatched);
         }
 
-        // Update Paid unit test has been removed as it queues jobs and sends requests which we don't want to do in our unit tests, as it could mess the system up 
-
-        //PUT /api/orders/update/id=int&invoiced=bool
-        [Fact]
-        public async Task UpdateOrderInvoiced_ShouldChangeInvoiced()
-        {
-            var beforeInvoiced = _context.Orders.AsNoTracking().Where(b => b.id == 2).FirstOrDefault().invoiced;
-
-            var response = await _controller.UpdateOrderInvoiced(2, true) as ObjectResult;
-            var responseInvoiced= (response.Value as Order).invoiced;
-
-            var afterInvoiced = _context.Orders.AsNoTracking().Where(b => b.id == 2).FirstOrDefault().invoiced;
-
-            Assert.Equal(200, response.StatusCode);
-            Assert.Equal(false, beforeInvoiced);
-            Assert.Equal(true, responseInvoiced);
-            Assert.Equal(true, afterInvoiced);
-        }
-
         //PUT /api/orders/products/update/id=int&quantity=int
         [Fact]
         public async Task UpdateOrderItemQuantity_ShouldChangeQuantity()
