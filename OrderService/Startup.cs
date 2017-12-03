@@ -46,6 +46,7 @@ namespace OrderService
                     Description = "A ASP.NET Core Web API for the Order Service",
                     TermsOfService = "For between service communications",
                 });
+                c.OperationFilter<AddAuthTokenHeader>();
             });
 
             // Add databases
@@ -95,6 +96,9 @@ namespace OrderService
         {
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
+
+            // Enable static files so we can return something else if user isn't authenticated
+            app.UseStaticFiles();
 
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
