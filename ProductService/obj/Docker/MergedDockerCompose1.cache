@@ -1,0 +1,25 @@
+networks: {}
+services:
+  productservice:
+    build:
+      args:
+        source: obj/Docker/empty/
+      context: C:\Users\P4258660\Desktop\ProductService
+      dockerfile: Dockerfile
+    entrypoint: tail -f /dev/null
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      DOTNET_USE_POLLING_FILE_WATCHER: '1'
+    image: productservice:dev
+    labels:
+      com.microsoft.visualstudio.debuggee.killprogram: /bin/bash -c "if PID=$(pidof
+        -x dotnet); then kill $PID; fi"
+      com.microsoft.visualstudio.debuggee.program: dotnet
+      com.microsoft.visualstudio.debuggee.workingdirectory: /app
+    ports:
+    - '80'
+    volumes:
+    - C:\Users\P4258660\Desktop\ProductService:/app:rw
+    - C:\Users\P4258660\vsdbg:/remote_debugger:ro
+version: '3.0'
+volumes: {}

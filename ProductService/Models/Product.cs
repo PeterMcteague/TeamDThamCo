@@ -20,10 +20,13 @@ namespace ProductService.Models
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public bool InStock { get; set; }
+        public int StockNumber { get; set; }
         public string Name { get; set; }
         public decimal Price { get; set; }
 
         public Product() { }
 
     }
+
+
 }

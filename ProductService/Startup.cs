@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 namespace ProductService
 {
@@ -25,7 +26,13 @@ namespace ProductService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            #if DEBUG
             services.AddDbContext<ProductContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ProductConnection")));
+            #else
+            services.AddDbContext<ProductContext>(options => options.UseMySql(Configuration.GetConnectionString("ProductConnection")));
+            #endif
+
             services.AddMvc();
 
             services.AddSwaggerGen(c =>
