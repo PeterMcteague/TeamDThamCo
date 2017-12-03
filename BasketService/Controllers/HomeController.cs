@@ -16,7 +16,6 @@ namespace BasketService
         /// </summary>
         /// <returns>views/home/index.cshtml</returns>
         // GET: /<controller>/
-        [Authorize("read:basket")]
         public IActionResult Index()
         {
             return View();

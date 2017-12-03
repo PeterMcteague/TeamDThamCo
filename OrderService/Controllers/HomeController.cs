@@ -16,7 +16,6 @@ namespace OrderService.Controllers
         /// </summary>
         /// <returns>views/home/index.cshtml</returns>
         // GET: /<controller>/
-        [Authorize("read:order")]
         public IActionResult Index()
         {
             return View();
