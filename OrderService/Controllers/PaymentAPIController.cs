@@ -8,11 +8,20 @@ using Microsoft.Extensions.Configuration;
 using System.IO;
 using Microsoft.AspNetCore.Authorization;
 
+// Controller for the Payment API
+
 namespace OrderService.Controllers
 {
     [Route("api/[controller]")]
     public class PaymentAPIController : Controller
     {
+        /// <summary>
+        /// Posts a payment 
+        /// </summary>
+        /// <param name="totalGbp">The gbp for the payment</param>
+        /// <param name="stripeTokenId">The stripTokenId representing the payment info</param>
+        /// <response code="400">If an exception occurs</response>
+        /// <response code="200">OK with the charge response</response>
         [Authorize("create:payment")]
         [HttpPost("/MakePayment", Name = "Makes a payment from a stripeTokenId (Use Javascript stripe payment in frontend to get this)")]
         public IActionResult PostPayment(Decimal totalGbp, string stripeTokenId)

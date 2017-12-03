@@ -10,12 +10,19 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
+// A HttpClient for sending invoices to the messaging service
+
 namespace OrderService.Clients
 {
     public class MessageSender : HttpClient
     {
+        // Database context
         private readonly OrderServiceContext _context;
 
+        /// <summary>
+        /// Initializes the client for sending HTTP Requests
+        /// </summary>
+        /// <param name="context">The order database context</param>
         public MessageSender(OrderServiceContext context)
         {
             _context = context;
@@ -28,11 +35,21 @@ namespace OrderService.Clients
             this.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
+        /// <summary>
+        /// Gets items in an order for invoicing
+        /// </summary>
+        /// <param name="orderId">The ID of the order to return items for</param>
+        /// <returns>A list of order items containing all order items in an order</returns>
         private List<OrderItem> getItems(int orderId)
         {
             return _context.OrderItems.Where(b => b.active == true && b.orderId == orderId).ToList();
         }
 
+        /// <summary>
+        /// Calls SendMessage for a series of orders that are to be invoiced
+        /// </summary>
+        /// <param name="orders">The orders to invoice</param>
+        /// <returns>Returns the API response</returns>
         public async Task<HttpResponseMessage> SendOrderInvoice(List<Order> orders)
         {
             String message = "";
@@ -55,6 +72,12 @@ namespace OrderService.Clients
             return await SendMessage(buyerId,message);
         }
 
+        /// <summary>
+        /// Sends invoice messages to buyers
+        /// </summary>
+        /// <param name="buyerId">The buyer to send the messages to</param>
+        /// <param name="message">The message to send</param>
+        /// <returns>Returns the HTTP response from the messaging service</returns>
         public async Task<HttpResponseMessage> SendMessage(String buyerId , String message)
         {
             using (var formData = new MultipartFormDataContent())

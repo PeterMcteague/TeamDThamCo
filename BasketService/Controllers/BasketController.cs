@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using BasketService.Data;
 using Microsoft.AspNetCore.Authorization;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+// A controller for the basket service API
 
 namespace BasketService.Controllers
 {
@@ -18,6 +18,10 @@ namespace BasketService.Controllers
     {
         private readonly BasketContext _context;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="context">The basket database context</param>
         public BasketController(BasketContext context)
         {
             _context = context;
@@ -28,7 +32,8 @@ namespace BasketService.Controllers
         /// </summary>
         /// <returns>Returns all baskets</returns>
         /// <response code="200">Returns the basket</response>
-        /// <response code="400">If not any baskets</response>  
+        /// <response code="400">If the parameters sent are invalid</response>
+        /// <response code="404">If not any baskets</response>  
         [Authorize("read:basket")]
         [HttpGet("get/", Name = "Get all baskets")]
         public async Task<IActionResult> GetBaskets()
@@ -50,11 +55,11 @@ namespace BasketService.Controllers
         /// </summary>
         /// <param name="userid">The userid to get the basket of</param>  
         /// <response code="200">Returns the basket</response>
-        /// <response code="400">If not any basket items by userid</response>  
-        /// <response code="404">If parameters are invalid</response>
+        /// <response code="400">If the parameters sent are invalid</response>  
+        /// <response code="404">If there aren't any baskets owned by that userid</response>
         [Authorize("read:basket")]
         [HttpGet("get/{userid}", Name = "Get baskets by buyer ID")]
-        public async Task<IActionResult> GetBasket([FromRoute] string userid)
+        public async Task<IActionResult> GetBaskets([FromRoute] string userid)
         {
             if (!ModelState.IsValid)
             {
@@ -69,16 +74,19 @@ namespace BasketService.Controllers
         }
 
         /// <summary>
-        /// Gets X baskets
+        /// Gets a range of basket items , useful for pages
         /// </summary>
-        /// <param name="userid">The userId that owns the baskets</param>
-        /// <param name="count">Number of baskets to get</param>
-        /// <returns>Result codes</returns>
+        /// <param name="userid">The userId that the basket is owned by</param>
+        /// <param name="start">The start of the range</param>
+        /// <param name="end">The end of the range</param>
+        /// <response code="200">Returns the baskets</response>
+        /// <response code="400">If the parameters sent are invalid</response>  
+        /// <response code="404">If there aren't baskets owned by that userId</response>
         [Authorize("read:basket")]
-        [HttpGet("get/{userid}&count={count}", Name = "Get X baskets by buyer ID")]
-        public async Task<IActionResult> GetBasket([FromRoute] string userid, [FromRoute] int count)
+        [HttpGet("get/{userid}&range={start}-{end}", Name = "Get basket by buyer ID in range start-end")]
+        public async Task<IActionResult> GetBaskets([FromRoute] string userid , [FromRoute] int start, [FromRoute] int end)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || start >= end)
             {
                 return BadRequest(ModelState);
             }
@@ -86,30 +94,7 @@ namespace BasketService.Controllers
             {
                 return NotFound("No baskets found");
             }
-            var baskets = await _context.Baskets.Where(b => b.buyerId == userid).Take(count).ToListAsync();
-            return Ok(baskets);
-        }
-
-        /// <summary>
-        /// Gets a range of items , useful for pages
-        /// </summary>
-        /// <param name="userid">The userId that the basket is owned by</param>
-        /// <param name="start">The start of the range</param>
-        /// <param name="end">The end of the range</param>
-        /// <returns>Result codes</returns>
-        [Authorize("read:basket")]
-        [HttpGet("get/{userid}&range={start}-{end}", Name = "Get basket by buyer ID in range start-end")]
-        public async Task<IActionResult> GetBasket([FromRoute] string userid , [FromRoute] int start, [FromRoute] int end)
-        {
-            if (!ModelState.IsValid || start >= end)
-            {
-                return BadRequest(ModelState);
-            }
-            if (!_context.Baskets.Any(b => b.buyerId == userid) || !(_context.Baskets.Count() < end))
-            {
-                return NotFound("No baskets found");
-            }
-            var baskets = await _context.Baskets.Where(b => b.buyerId == userid).Skip(start - 1).Take(end - start).ToListAsync();
+            var baskets = await _context.Baskets.Where(b => b.buyerId == userid).Skip(start).Take(end - start).ToListAsync();
             return Ok(baskets);
         }
 
@@ -118,7 +103,9 @@ namespace BasketService.Controllers
         /// </summary>
         /// <param name="userid">The userid to get by</param>
         /// <param name="productid">The productid to get by</param>
-        /// <returns></returns>
+        /// <response code="200">Returns the basket item</response>
+        /// <response code="400">If the parameters sent are invalid</response>  
+        /// <response code="404">If there aren't baskets with the parameters</response>
         [Authorize("read:basket")]
         [HttpGet("get/{userid}&{productid}", Name = "Get basket item by buyer ID and productid")]
         public async Task<IActionResult> GetBasketItem([FromRoute] string userid, [FromRoute] int productid)

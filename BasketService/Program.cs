@@ -19,11 +19,13 @@ namespace BasketService
         {
             var host = BuildWebHost(args);
 
+            // Adds services
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
                 try
                 {
+                    // Add basket database
                     var context = services.GetRequiredService<BasketContext>();
                     BasketDbInitializer.Initialize(context);
                 }

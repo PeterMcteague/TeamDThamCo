@@ -6,10 +6,13 @@ using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 using OrderService.Models;
 
+// A database context for the orderservice db
+
 namespace OrderService.Data
 {
     public class OrderServiceContext : DbContext
     {
+        // Constructor
         public OrderServiceContext (DbContextOptions options)
             : base(options)
         {
@@ -19,6 +22,10 @@ namespace OrderService.Data
         public DbSet<OrderService.Models.OrderItem> OrderItems { get; set; }
         public DbSet<OrderService.Models.Dispatch> Dispatches { get; set; }
 
+        /// <summary>
+        /// Creates tables when the database is created
+        /// </summary>
+        /// <param name="modelBuilder">A modelBuilder object</param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Order>().ToTable("Order");

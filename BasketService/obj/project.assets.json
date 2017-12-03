@@ -12956,7 +12956,7 @@
           },
           "Microsoft.AspNetCore.Authentication.JwtBearer": {
             "target": "Package",
-            "version": "[2.0.1, )"
+            "version": "2.0.1"
           },
           "Swashbuckle.AspNetCore": {
             "target": "Package",

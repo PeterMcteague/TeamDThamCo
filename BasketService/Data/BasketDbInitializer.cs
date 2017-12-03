@@ -5,12 +5,16 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using BasketService.Models;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+// Database initializer for the basket db
 
 namespace BasketService.Data
 {
     public class BasketDbInitializer
     {
+        /// <summary>
+        /// Called to setup the database
+        /// </summary>
+        /// <param name="context">The database context</param>
         public static void Initialize(BasketContext context)
         {
             #if DEBUG

@@ -17,12 +17,10 @@ using System.Text;
 using OrderService.Clients;
 using Microsoft.AspNetCore.Authorization;
 
+// A controller for the orders API
+
 namespace OrderService.Controllers
 {
-    ///<Summary>
-    /// A controller for the orders API.
-    /// TODO: Have deletes refund payment.
-    ///</Summary>
     [Produces("application/json")]
     [Route("api/Orders/")]
     public class OrdersAPIController : Controller
@@ -30,16 +28,29 @@ namespace OrderService.Controllers
         private readonly OrderServiceContext _context;
         private string invoiceJobId;
 
+        /// <summary>
+        /// Constructor for the API controller
+        /// </summary>
+        /// <param name="context">An OrderServiceContext object for the orders database</param>
         public OrdersAPIController(OrderServiceContext context)
         {
             _context = context;
         }
 
+        /// <summary>
+        /// A helper function which gets items in a order
+        /// </summary>
+        /// <param name="orderId">The orderId to get orderItems for</param>
+        /// <returns>Returns the orderItems for that order in a List</returns>
         private List<OrderItem> getItems(int orderId)
         {
             return _context.OrderItems.Where(b => b.active == true && b.orderId == orderId).ToList();
         }
 
+        /// <summary>
+        /// A helper function that creates an invoice for any uninvoiced orders
+        /// </summary>
+        /// <returns>Whether the invoice was successfully created</returns>
         private bool createInvoice()
         {
             // Get uninvoiced
@@ -48,6 +59,11 @@ namespace OrderService.Controllers
             return success;
         }
 
+        /// <summary>
+        /// Creates an invoice from a list of orders by sending invoices through a messaging API and if succesful updates the dispatch and invoice status of the order.
+        /// </summary>
+        /// <param name="orders">A list of orders to invoice</param>
+        /// <returns>Returns whether invoicing these orders was succesful</returns>
         private async Task<bool> createInvoice(List<Order> orders)
         {
             // Send invoice
@@ -77,8 +93,8 @@ namespace OrderService.Controllers
         /// Gets all orders
         /// </summary>
         /// <response code="200">Returns the orders</response>
-        /// <response code="400">If not any orders</response>  
-        /// <response code="404">If parameters are invalid</response>  
+        /// <response code="204">If not any orders</response>  
+        /// <response code="400">If parameters are invalid</response>
         [Authorize("read:order")]
         [HttpGet("Get", Name = "Get all orders")]
         public async Task<IActionResult> GetOrder()
@@ -105,8 +121,9 @@ namespace OrderService.Controllers
         /// </summary>
         /// <param name="buyerid">The buyer to get orders by.</param>  
         /// <response code="200">Returns the orders</response>
-        /// <response code="400">If not any orders by buyerId</response>  
-        /// <response code="404">If parameters are invalid</response>  
+        /// <response code="204">If not any orders by buyerId</response>  
+        /// <response code="400">If parameters are invalid</response>  
+        /// <response code="404">If not any orders</response>  
         [Authorize("read:order")]
         [HttpGet("Get/{buyerid}", Name = "Get orders by buyer ID")]
         public async Task<IActionResult> GetOrder([FromRoute] string buyerid)
@@ -131,8 +148,8 @@ namespace OrderService.Controllers
         /// Gets all products ordered.
         /// </summary>
         /// <response code="200">Returns the products</response>
-        /// <response code="400">If not any products ordered</response>  
-        /// <response code="404">If parameters are invalid</response>  
+        /// <response code="400">If parameters are invalid</response>
+        /// <response code="404">If not any products ordered</response>  
         [Authorize("read:order")]
         [HttpGet("Products/Get", Name = "Get all products ordered")]
         public async Task<IActionResult> GetOrderItems()
@@ -156,8 +173,8 @@ namespace OrderService.Controllers
         /// </summary>
         /// <param name="orderid">The ID of the order to get products by.</param>  
         /// <response code="200">Returns the products</response>
-        /// <response code="400">If not any products with that orderID</response>  
-        /// <response code="404">If parameters are invalid</response>  
+        /// <response code="400">If parameters are invalid</response>  
+        /// <response code="404">If not any products with that orderID</response>  
         [Authorize("read:order")]
         [HttpGet("Products/Get/orderid={orderid}", Name = "Get products in order by order ID")]
         public async Task<IActionResult> GetOrderItems([FromRoute] int orderid)
@@ -185,8 +202,8 @@ namespace OrderService.Controllers
         /// </summary>
         /// <param name="buyerid">The buyerid to get order items by.</param>
         /// <response code="200">Returns the products</response>
-        /// <response code="400">If not any products ordered by that buyer</response>  
-        /// <response code="404">If parameters are invalid</response>  
+        /// <response code="400">If parameters are invalid</response>  
+        /// <response code="404">If not any products ordered by that buyer</response>  
         [Authorize("read:order")]
         [HttpGet("Products/Get/buyerid={buyerid}", Name = "Get products ordered by buyer ID")]
         public async Task<IActionResult> GetOrderItemsByBuyerID([FromRoute] string buyerid)
@@ -225,7 +242,9 @@ namespace OrderService.Controllers
         /// </summary>
         /// <param name="id">ID of order to update.</param>
         /// <param name="address">Address</param>
-        /// <returns>Response , updated order if successful</returns>
+        /// <response code="200">Returns the new order</response>
+        /// <response code="400">If parameters are invalid</response>  
+        /// <response code="404">If not any orders with that id</response>  
         [Authorize("create:order")]
         [HttpPut("Update/id={id}&address={address}", Name = "Update order address")]
         public async Task<IActionResult> UpdateOrderAddress([FromRoute] int id, [FromRoute] string address)
@@ -257,7 +276,9 @@ namespace OrderService.Controllers
         /// </summary>
         /// <param name="id">ID of order to update.</param>
         /// <param name="dispatched">Dispatch boolean</param>
-        /// <returns>Response , updated order if successful</returns>
+        /// <response code="200">Returns the new order</response>
+        /// <response code="400">If parameters are invalid</response>  
+        /// <response code="404">If not any products ordered by that buyer</response>  
         [Authorize("create:order")]
         [HttpPut("Update/id={id}&dispatched={dispatched}", Name = "Update order dispatch status")]
         public async Task<IActionResult> UpdateOrderDispatch([FromRoute] int id, [FromRoute] bool dispatched)
@@ -294,7 +315,9 @@ namespace OrderService.Controllers
         /// </summary>
         /// <param name="id">ID of order to update.</param>
         /// <param name="paid">Paid boolean</param>
-        /// <returns>Response , updated order if successful</returns>
+        /// <response code="200">Returns the new order</response>
+        /// <response code="400">If parameters are invalid</response>  
+        /// <response code="404">If not any products ordered by that buyer</response>  
         [Authorize("create:order")]
         [HttpPut("Update/id={id}&paid={paid}", Name = "Update order paid status")]
         public async Task<IActionResult> UpdateOrderPaid([FromRoute] int id, [FromRoute] bool paid, bool sendInvoice)
@@ -359,8 +382,8 @@ namespace OrderService.Controllers
         /// <param name="orderid">The order to update</param>  
         /// <param name="quantity">The new item quantity</param>  
         /// <response code="200">Successfully updated, returns new data</response>
-        /// <response code="400">If not any orders with that orderID that aren't dispatched</response>  
-        /// <response code="404">If parameters are invalid</response>  
+        /// <response code="400">If parameters are invalid</response>  
+        /// <response code="404">If not any orders with that orderID that aren't dispatched</response>  
         [Authorize("create:order")]
         [HttpPut("Products/Update/id={id}quantity={quantity}", Name = "Update order item quantity")]
         public async Task<IActionResult> UpdateOrderItemQuantity([FromRoute] int id, [FromRoute] int quantity)
@@ -392,8 +415,8 @@ namespace OrderService.Controllers
         /// </summary>
         /// <param name="orderid">The order to delete</param>  
         /// <response code="200">Successfully deleted</response>
-        /// <response code="400">If not any orders with that orderID that aren't dispatched</response>  
-        /// <response code="404">If parameters are invalid</response>  
+        /// <response code="400">If parameters are invalid</response>  
+        /// <response code="404">If not any orders with that orderID that aren't dispatched</response>
         [Authorize("create:order")]
         [HttpPut("Delete/orderId={orderid}", Name = "Delete order by orderID if not dispatched")]
         public async Task<IActionResult> DeleteOrder([FromRoute] int orderid)
@@ -432,8 +455,8 @@ namespace OrderService.Controllers
         /// </summary>
         /// <param name="id">The id of the product to delete from an order</param>  
         /// <response code="200">Succesfully deleted from order</response>
-        /// <response code="400">If product isn't found in any orders or is already dispatched</response>  
-        /// <response code="404">If parameters are invalid</response>  
+        /// <response code="400">If parameters are invalid</response>  
+        /// <response code="404">If product isn't found in any orders or is already dispatched</response>  
         [Authorize("create:order")]
         [HttpPut("Products/Delete/productId={productId}", Name = "Delete product from order if not dispatched")]
         public async Task<IActionResult> DeleteProductFromOrder([FromRoute] int id)
@@ -471,7 +494,8 @@ namespace OrderService.Controllers
         /// </summary>
         /// <param name="buyerId">The id of the buyer</param>
         /// <param name="address">Their address</param>
-        /// <returns>Returns the added item.</returns>
+        /// <response code="200">The added order</response>
+        /// <response code="400">If parameters are invalid</response>  
         [Authorize("create:order")]
         [HttpPost("Add/buyerId={buyerId}&address={address}", Name = "Add an order")]
         public async Task<IActionResult> AddOrder([FromRoute] string buyerId, [FromRoute] string address)
@@ -496,7 +520,9 @@ namespace OrderService.Controllers
         /// <param name="name">The name of the item to add</param>
         /// <param name="quantity">The quantity of the item to add</param>
         /// <param name="cost">The cost of the item to add</param>
-        /// <returns></returns>
+        /// <response code="200">The added order item</response>
+        /// <response code="400">If parameters are invalid</response>  
+        /// <response code="400">If not any orders or the entered orderId is invalid</response>  
         [Authorize("create:order")]
         [HttpPost("Products/Add/orderId={orderId}&productId={productId}&name={name}&quantity={quantity}&cost={cost}", Name = "Add an orderitem")]
         public async Task<IActionResult> AddOrderItem([FromRoute] int orderId, [FromRoute] int productId, [FromRoute] string name, [FromRoute] int quantity, [FromRoute] decimal cost)

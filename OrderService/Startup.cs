@@ -46,6 +46,7 @@ namespace OrderService
                 });
             });
 
+            // Add databases
 #if DEBUG
             services.AddDbContext<OrderServiceContext>(options => options.UseSqlServer(Configuration.GetConnectionString("OrderService")));
             services.AddDbContext<HangfireContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Hangfire")));
@@ -55,8 +56,11 @@ namespace OrderService
             services.AddDbContext<HangfireContext>(options => options.UseMySql(Configuration.GetConnectionString("Hangfire")));
             GlobalConfiguration.Configuration.UseStorage(new MySqlStorage("Hangfire"));
 #endif
+            // Configure stripe payment API key
             StripeConfiguration.SetApiKey(Configuration.GetSection("Keys").GetValue<string>("Stripe"));
 
+
+            // Setup Auth0 authentication
             string domain = $"https://{Configuration["Auth0:Domain"]}/";
             services.AddAuthentication(options =>
             {
@@ -108,8 +112,10 @@ namespace OrderService
             app.UseHangfireDashboard();
             app.UseHangfireServer();
 
+            // Authentication
             app.UseAuthentication();
 
+            // MVC routine
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

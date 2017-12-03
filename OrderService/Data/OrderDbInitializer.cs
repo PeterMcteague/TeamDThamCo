@@ -5,10 +5,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+// Database initializer for the order db
+
 namespace OrderService.Data
 {
     public class OrderDbInitializer
     {
+        /// <summary>
+        /// Called to initialize the database , resets and adds test data if debug.
+        /// </summary>
+        /// <param name="context">Database context item for order service</param>
         public static void Initialize(OrderServiceContext context)
         {
             #if DEBUG

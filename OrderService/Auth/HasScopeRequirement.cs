@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using System;
 
+//Handles authentication scope for auth0 roles
+
 namespace OrderService.Auth
 {
     public class HasScopeRequirement : IAuthorizationRequirement

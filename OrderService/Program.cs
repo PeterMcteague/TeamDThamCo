@@ -20,6 +20,7 @@ namespace OrderService
         {
             var host = BuildWebHost(args);
 
+            // Setup services
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;

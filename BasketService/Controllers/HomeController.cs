@@ -5,12 +5,17 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+// A controller for a simple home page
 
 namespace BasketService
 {
     public class HomeController : Controller
     {
+        /// <summary>
+        /// MVC controller method for returning index
+        /// </summary>
+        /// <returns>views/home/index.cshtml</returns>
+        // GET: /<controller>/
         [Authorize("read:basket")]
         public IActionResult Index()
         {

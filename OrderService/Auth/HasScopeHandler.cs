@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+//Handles authentication scope for auth0 roles
+
 namespace OrderService.Auth
 {
     public class HasScopeHandler : AuthorizationHandler<HasScopeRequirement>

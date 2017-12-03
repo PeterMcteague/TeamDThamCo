@@ -30,6 +30,7 @@ namespace BasketService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Swagger API help page UI
             services.AddMvc();
             services.AddSwaggerGen(c =>
             {
@@ -41,11 +42,15 @@ namespace BasketService
                     TermsOfService = "For between service communications",
                 });
             });
+
+            // Database
 #if DEBUG
             services.AddDbContext<BasketContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("BasketContext")));
 #else
             services.AddDbContext<BasketContext>(opt => opt.UseMySql(Configuration.GetConnectionString("BasketContext")));
 #endif
+
+            // Auth0 authentication
             string domain = $"https://{Configuration["Auth0:Domain"]}/";
             services.AddAuthentication(options =>
             {
@@ -85,8 +90,10 @@ namespace BasketService
                 app.UseDeveloperExceptionPage();
             }
 
+            // Enable authentication
             app.UseAuthentication();
 
+            // Set up MVC routing
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

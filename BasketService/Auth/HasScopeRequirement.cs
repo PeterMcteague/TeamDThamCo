@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.AspNetCore.Authorization;
 
+//For authentication scope for auth0 roles
+
 namespace BasketService.Auth
 {
     public class HasScopeRequirement : IAuthorizationRequirement
