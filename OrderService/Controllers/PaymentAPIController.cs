@@ -6,12 +6,14 @@ using Microsoft.AspNetCore.Mvc;
 using Stripe;
 using Microsoft.Extensions.Configuration;
 using System.IO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace OrderService.Controllers
 {
     [Route("api/[controller]")]
     public class PaymentAPIController : Controller
     {
+        [Authorize("create:payment")]
         [HttpPost("/MakePayment", Name = "Makes a payment from a stripeTokenId (Use Javascript stripe payment in frontend to get this)")]
         public IActionResult PostPayment(Decimal totalGbp, string stripeTokenId)
         {

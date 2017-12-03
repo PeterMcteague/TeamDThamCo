@@ -12,6 +12,9 @@ using Swashbuckle.AspNetCore.Swagger;
 using BasketService.Models;
 using Microsoft.EntityFrameworkCore;
 using BasketService.Data;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using BasketService.Auth;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BasketService
 {
@@ -43,6 +46,26 @@ namespace BasketService
 #else
             services.AddDbContext<BasketContext>(opt => opt.UseMySql(Configuration.GetConnectionString("BasketContext")));
 #endif
+            string domain = $"https://{Configuration["Auth0:Domain"]}/";
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+            }).AddJwtBearer(options =>
+            {
+                options.Authority = domain;
+                options.Audience = Configuration["Auth0:ApiIdentifier"];
+            });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("read:basket", policy => policy.Requirements.Add(new HasScopeRequirement("read:basket", domain)));
+                options.AddPolicy("create:basket", policy => policy.Requirements.Add(new HasScopeRequirement("create:basket", domain)));
+            });
+
+            // register the scope authorization handler
+            services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,6 +84,8 @@ namespace BasketService
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {

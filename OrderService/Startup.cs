@@ -14,6 +14,9 @@ using Stripe;
 using Hangfire;
 using Hangfire.SqlServer;
 using Hangfire.MySql;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using OrderService.Auth;
+using Microsoft.AspNetCore.Authorization;
 
 namespace OrderService
 {
@@ -53,6 +56,28 @@ namespace OrderService
             GlobalConfiguration.Configuration.UseStorage(new MySqlStorage("Hangfire"));
 #endif
             StripeConfiguration.SetApiKey(Configuration.GetSection("Keys").GetValue<string>("Stripe"));
+
+            string domain = $"https://{Configuration["Auth0:Domain"]}/";
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+            }).AddJwtBearer(options =>
+            {
+                options.Authority = domain;
+                options.Audience = Configuration["Auth0:ApiIdentifier"];
+            });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("read:order", policy => policy.Requirements.Add(new HasScopeRequirement("read:order", domain)));
+                options.AddPolicy("create:order", policy => policy.Requirements.Add(new HasScopeRequirement("create:order", domain)));
+                options.AddPolicy("create:payment", policy => policy.Requirements.Add(new HasScopeRequirement("create:payment", domain)));
+            });
+
+            // register the scope authorization handler
+            services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -82,6 +107,8 @@ namespace OrderService
             }
             app.UseHangfireDashboard();
             app.UseHangfireServer();
+
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using BasketService.Models;
 using Microsoft.EntityFrameworkCore;
 using BasketService.Data;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -28,6 +29,7 @@ namespace BasketService.Controllers
         /// <returns>Returns all baskets</returns>
         /// <response code="200">Returns the basket</response>
         /// <response code="400">If not any baskets</response>  
+        [Authorize("read:basket")]
         [HttpGet("get/", Name = "Get all baskets")]
         public async Task<IActionResult> GetBaskets()
         {
@@ -50,6 +52,7 @@ namespace BasketService.Controllers
         /// <response code="200">Returns the basket</response>
         /// <response code="400">If not any basket items by userid</response>  
         /// <response code="404">If parameters are invalid</response>
+        [Authorize("read:basket")]
         [HttpGet("get/{userid}", Name = "Get baskets by buyer ID")]
         public async Task<IActionResult> GetBasket([FromRoute] string userid)
         {
@@ -71,6 +74,7 @@ namespace BasketService.Controllers
         /// <param name="userid">The userId that owns the baskets</param>
         /// <param name="count">Number of baskets to get</param>
         /// <returns>Result codes</returns>
+        [Authorize("read:basket")]
         [HttpGet("get/{userid}&count={count}", Name = "Get X baskets by buyer ID")]
         public async Task<IActionResult> GetBasket([FromRoute] string userid, [FromRoute] int count)
         {
@@ -93,6 +97,7 @@ namespace BasketService.Controllers
         /// <param name="start">The start of the range</param>
         /// <param name="end">The end of the range</param>
         /// <returns>Result codes</returns>
+        [Authorize("read:basket")]
         [HttpGet("get/{userid}&range={start}-{end}", Name = "Get basket by buyer ID in range start-end")]
         public async Task<IActionResult> GetBasket([FromRoute] string userid , [FromRoute] int start, [FromRoute] int end)
         {
@@ -114,6 +119,7 @@ namespace BasketService.Controllers
         /// <param name="userid">The userid to get by</param>
         /// <param name="productid">The productid to get by</param>
         /// <returns></returns>
+        [Authorize("read:basket")]
         [HttpGet("get/{userid}&{productid}", Name = "Get basket item by buyer ID and productid")]
         public async Task<IActionResult> GetBasketItem([FromRoute] string userid, [FromRoute] int productid)
         {
@@ -141,6 +147,7 @@ namespace BasketService.Controllers
         /// <param name="quantity">The amount to add.</param>  
         /// <response code="200">OK. Returns the item added.</response>
         /// <response code="400">If parameters invalid.</response>  
+        [Authorize("create:basket")]
         [HttpPost("add/userId={userId}&productId={productId}&quantity={quantity}", Name = "Add an item to a customers basket")]
         public async Task<IActionResult> AddItemToBasket([FromRoute] string userId, [FromRoute] int productId, [FromRoute] int quantity)
         {
@@ -177,6 +184,7 @@ namespace BasketService.Controllers
         /// <response code="200">OK. Returns the item added.</response>
         /// <response code="400">If parameters invalid.</response>
         /// <response code="404">If basket item to update not found.</response>
+        [Authorize("create:basket")]
         [HttpPut("update/userId={userId}&productId={productId}&quantity={quantity}", Name = "Update an items quantity a customers basket")]
         public async Task<IActionResult> UpdateItemInBasket([FromRoute] string userId, [FromRoute] int productId, [FromRoute] int quantity)
         {
@@ -210,6 +218,7 @@ namespace BasketService.Controllers
         /// <response code="200">OK. Returns the item added.</response>
         /// <response code="400">If parameters invalid.</response>
         /// <response code="404">If item to delete not found.</response>
+        [Authorize("create:basket")]
         [HttpDelete("delete/userId={userId}&productId={productId}")]
         public async Task<IActionResult> DeleteBasketItem([FromRoute] string userId , [FromRoute] int productId)
         {
