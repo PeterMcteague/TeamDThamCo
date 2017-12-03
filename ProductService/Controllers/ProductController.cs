@@ -76,7 +76,7 @@ namespace ProductService.Controllers
         /// This updates a products stock
         /// </summary>
         /// <returns>returns a HTTP response if successful</returns>
-        [HttpPut("put/name={name}", Name = "Updates a products stock")]
+        [HttpPut("put/Id={Id}&StockNumber={StockNumber}", Name = "Updates a products stock")]
 
         public async Task<IActionResult> UpdateProductStock([FromBody]Product productToUpdate)
         {
@@ -105,7 +105,7 @@ namespace ProductService.Controllers
         /// This adds a new product
         /// </summary>
         /// <returns>returns a HTTP response if successful</returns>
-        [HttpPost("post/name={name}", Name = "adds a product")]
+        [HttpPost("post/Name={Name}&BrandId={BrandId}&BrandName={BrandName}&CategoryId={CategoryId}&CategoryName={CategoryName}&Description={Description}&Ean={Ean}&ExpectedRestock={ExpectedRestock}&Id={Id}&InStock={InStock}&StockNumber={StockNumber}&Price={Price}", Name = "adds a product")]
         public async Task<IActionResult> CreateProduct([FromBody]Product product)
         {
             var item = new Product
@@ -134,7 +134,7 @@ namespace ProductService.Controllers
         /// This removes a product by id
         /// </summary>
         /// <returns>returns a HTTP response if successful</returns>
-        [HttpDelete("delete/name={name}", Name = "removes a product")]
+        [HttpDelete("delete/Id={Id}", Name = "removes a product")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
             var product = _context.Products.SingleOrDefault(x => x.Id == id);
