@@ -53,7 +53,7 @@ namespace BasketService.Test
         [Fact]
         public async Task GetBasketId_ShouldReturnBasket()
         {
-            var result = await _controller.GetBasket("test-id-plz-ignore") as ObjectResult;
+            var result = await _controller.GetBaskets("test-id-plz-ignore") as ObjectResult;
             var basket = result.Value as IEnumerable<BasketItem>;
 
             Assert.Equal(getTestBasket().Count() - 1, basket.Count());

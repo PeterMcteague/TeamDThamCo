@@ -12,16 +12,15 @@ namespace OrderService.Data
 {
     public class OrderServiceContext : DbContext
     {
+        public DbSet<OrderService.Models.Order> Orders { get; set; }
+        public DbSet<OrderService.Models.OrderItem> OrderItems { get; set; }
+        public DbSet<OrderService.Models.Dispatch> Dispatches { get; set; }
+
         // Constructor
         public OrderServiceContext (DbContextOptions options)
             : base(options)
         {
         }
-
-        public DbSet<OrderService.Models.Order> Orders { get; set; }
-        public DbSet<OrderService.Models.OrderItem> OrderItems { get; set; }
-        public DbSet<OrderService.Models.Dispatch> Dispatches { get; set; }
-
         /// <summary>
         /// Creates tables when the database is created
         /// </summary>

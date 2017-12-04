@@ -52,25 +52,22 @@ namespace BasketService
 #else
             services.AddDbContext<BasketContext>(opt => opt.UseMySql(Configuration.GetConnectionString("BasketContext")));
 #endif
-
             // Auth0 authentication
-            string domain = $"https://{Configuration["Auth0:Domain"]}/";
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;
 
             }).AddJwtBearer(options =>
             {
-                options.Authority = domain;
-                options.Audience = Configuration["Auth0:ApiIdentifier"];
+                options.Authority = Configuration["Auth0:Authority"];
+                options.Audience = Configuration["Auth0:Audience"];
             });
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("read:basket", policy => policy.Requirements.Add(new HasScopeRequirement("read:basket", domain)));
-                options.AddPolicy("create:basket", policy => policy.Requirements.Add(new HasScopeRequirement("create:basket", domain)));
+                options.AddPolicy("read:basket", policy => policy.Requirements.Add(new HasScopeRequirement("read:basket", Configuration["Auth0:Authority"])));
+                options.AddPolicy("create:basket", policy => policy.Requirements.Add(new HasScopeRequirement("create:basket", Configuration["Auth0:Authority"])));
             });
 
             // register the scope authorization handler
@@ -80,6 +77,15 @@ namespace BasketService
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+            }
+
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
 
@@ -91,12 +97,7 @@ namespace BasketService
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Basket Service API");
             });
-
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-
+            
             // Enable authentication
             app.UseAuthentication();
 

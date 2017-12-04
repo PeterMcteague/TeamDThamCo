@@ -5,13 +5,13 @@
     <UserSecretsId>7e8263ff-6151-4f3d-b955-bd55914d2424</UserSecretsId>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Controllers\LoginController.cs" />
-  </ItemGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants>DEBUG;TRACE;RELEASE;NETCOREAPP2_0</DefineConstants>
+  </PropertyGroup>
 
-  <ItemGroup>
-    <Content Remove="apikeys.json" />
-  </ItemGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>DEBUG;TRACE;NETCOREAPP2_0</DefineConstants>
+  </PropertyGroup>
 
   <ItemGroup>
     <Folder Include="wwwroot\" />

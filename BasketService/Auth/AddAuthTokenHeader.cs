@@ -13,7 +13,7 @@ namespace BasketService.Auth
 
             operation.Parameters.Add(new HeaderParameter()
             {
-                Name = "AuthToken",
+                Name = "authorization",
                 In = "header",
                 Type = "string",
                 Required = false

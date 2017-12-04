@@ -61,31 +61,25 @@ namespace OrderService
 #endif
             // Configure stripe payment API key
             StripeConfiguration.SetApiKey(Configuration.GetSection("Keys").GetValue<string>("Stripe"));
-
-
+            
             // Setup Auth0 authentication
-            string domain = $"https://{Configuration["Auth0:Domain"]}/";
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;
 
             }).AddJwtBearer(options =>
             {
-                options.Authority = domain;
-                options.Audience = Configuration["Auth0:ApiIdentifier"];
+                options.Authority = Configuration["Auth0:Authority"];
+                options.Audience = Configuration["Auth0:Audience"];
             });            
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("read:order", policy => policy.Requirements.Add(new HasScopeRequirement("read:order", domain)));
-                options.AddPolicy("create:order", policy => policy.Requirements.Add(new HasScopeRequirement("create:order", domain)));
-                options.AddPolicy("create:payment", policy => policy.Requirements.Add(new HasScopeRequirement("create:payment", domain)));
+                options.AddPolicy("read:order", policy => policy.Requirements.Add(new HasScopeRequirement("read:order", Configuration["Auth0:Authority"])));
+                options.AddPolicy("create:order", policy => policy.Requirements.Add(new HasScopeRequirement("create:order", Configuration["Auth0:Authority"])));
+                options.AddPolicy("create:payment", policy => policy.Requirements.Add(new HasScopeRequirement("create:payment", Configuration["Auth0:Authority"])));
             });
-
-
-
 
             // register the scope authorization handler
             services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
@@ -94,6 +88,15 @@ namespace OrderService
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+            }
+
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
 
@@ -105,13 +108,7 @@ namespace OrderService
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Order Service API");
             });
-
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseBrowserLink();
-            }
-
+            
             // Hangfire
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
