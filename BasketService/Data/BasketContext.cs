@@ -17,7 +17,7 @@ namespace BasketService.Data
         /// Constructor
         /// </summary>
         /// <param name="options">Database context options for the dbcontext</param>
-        public BasketContext(DbContextOptions options)
+        public BasketContext(DbContextOptions<BasketContext> options)
             : base(options)
         {
         }

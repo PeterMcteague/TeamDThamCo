@@ -15,6 +15,7 @@ C:\Users\07mct\Documents\GitHub\TeamDThamCo\OrderService\bin\Debug\netcoreapp2.0
 C:\Users\07mct\Documents\GitHub\TeamDThamCo\OrderService\bin\Debug\netcoreapp2.0\OrderService.runtimeconfig.dev.json
 C:\Users\07mct\Documents\GitHub\TeamDThamCo\OrderService\bin\Debug\netcoreapp2.0\OrderService.dll
 C:\Users\07mct\Documents\GitHub\TeamDThamCo\OrderService\bin\Debug\netcoreapp2.0\OrderService.pdb
+C:\Users\07mct\Documents\GitHub\TeamDThamCo\OrderService\obj\Debug\netcoreapp2.0\OrderService.csprojResolveAssemblyReference.cache
 C:\Users\07mct\Documents\GitHub\TeamDThamCo\OrderService\obj\Debug\netcoreapp2.0\OrderService.csproj.CoreCompileInputs.cache
 C:\Users\07mct\Documents\GitHub\TeamDThamCo\OrderService\obj\Debug\netcoreapp2.0\UserSecretsAssemblyInfo.cs
 C:\Users\07mct\Documents\GitHub\TeamDThamCo\OrderService\obj\Debug\netcoreapp2.0\OrderService.AssemblyInfoInputs.cache

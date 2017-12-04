@@ -17,7 +17,7 @@ namespace OrderService.Data
         public DbSet<OrderService.Models.Dispatch> Dispatches { get; set; }
 
         // Constructor
-        public OrderServiceContext (DbContextOptions options)
+        public OrderServiceContext (DbContextOptions<OrderServiceContext> options)
             : base(options)
         {
         }
