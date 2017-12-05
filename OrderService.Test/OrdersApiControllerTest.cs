@@ -25,7 +25,7 @@ namespace OrderService.Test
             connection = new SqliteConnection("DataSource=:memory:");
             connection.Open();
 
-            var optionsBuilder = new DbContextOptionsBuilder();
+            var optionsBuilder = new DbContextOptionsBuilder<OrderServiceContext>();
             optionsBuilder.UseSqlite(connection);
             _context = new OrderServiceContext(optionsBuilder.Options);
             _context.Database.EnsureDeleted();

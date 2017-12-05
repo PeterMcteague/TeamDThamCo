@@ -18,7 +18,7 @@ namespace BasketService.Test
         public BasketApiControllerTest()
         {
             // Initialize DbContext in memory
-            var optionsBuilder = new DbContextOptionsBuilder();
+            var optionsBuilder = new DbContextOptionsBuilder<BasketContext>();
             optionsBuilder.UseInMemoryDatabase("BasketAPITestDB");
             _context = new BasketContext(optionsBuilder.Options);
 
