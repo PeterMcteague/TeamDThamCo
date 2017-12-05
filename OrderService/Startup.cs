@@ -45,10 +45,16 @@ namespace OrderService
                 {
                     Title = "Order Service API",
                     Version = "v1",
-                    Description = "A ASP.NET Core Web API for the Order Service",
+                    Description = "A ASP.NET Core Web API for the Order Service. Make sure that you press the authorize button and ender a valid bearer token for access. " +
+                    "Valid bearer tokens can be found on the auth0 dashboard.",
                     TermsOfService = "For between service communications",
                 });
-                c.OperationFilter<AddAuthTokenHeader>();
+                c.AddSecurityDefinition("JWT Token", new ApiKeyScheme
+                {
+                    Description = "JWT Token",
+                    Name = "Authorization",
+                    In = "header"
+                });
             });
 
             // Add databases
