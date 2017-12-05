@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using OrderService.Models;
+using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 public class AccountController : Controller
@@ -11,6 +14,17 @@ public class AccountController : Controller
     public async Task Login(string returnUrl = "/")
     {
         await HttpContext.ChallengeAsync("Auth0", new AuthenticationProperties() { RedirectUri = returnUrl });
+    }
+
+    [Authorize]
+    public IActionResult Profile()
+    {
+        return View(new UserProfileViewModel()
+        {
+            Name = User.Identity.Name,
+            EmailAddress = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value,
+            ProfileImage = User.Claims.FirstOrDefault(c => c.Type == "picture")?.Value
+        });
     }
 
     [Authorize]

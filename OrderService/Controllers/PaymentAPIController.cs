@@ -22,7 +22,7 @@ namespace OrderService.Controllers
         /// <param name="stripeTokenId">The stripTokenId representing the payment info</param>
         /// <response code="400">If an exception occurs</response>
         /// <response code="200">OK with the charge response</response>
-        [Authorize("create:payment")]
+        [Authorize]
         [HttpPost("/MakePayment", Name = "Makes a payment from a stripeTokenId (Use Javascript stripe payment in frontend to get this)")]
         public IActionResult PostPayment(Decimal totalGbp, string stripeTokenId)
         {
