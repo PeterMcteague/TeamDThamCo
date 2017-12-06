@@ -12896,7 +12896,7 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Adam\\.nuget\\packages\\": {},
+    "C:\\Users\\P4258660\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
@@ -12905,17 +12905,17 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "C:\\Users\\Adam\\Documents\\GitHub\\TeamDThamCo\\ProductService\\ProductService.csproj",
+      "projectUniqueName": "C:\\Users\\P4258660\\Desktop\\TeamDThamCo-product-dev\\ProductService\\ProductService.csproj",
       "projectName": "ProductService",
-      "projectPath": "C:\\Users\\Adam\\Documents\\GitHub\\TeamDThamCo\\ProductService\\ProductService.csproj",
-      "packagesPath": "C:\\Users\\Adam\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Adam\\Documents\\GitHub\\TeamDThamCo\\ProductService\\obj\\",
+      "projectPath": "C:\\Users\\P4258660\\Desktop\\TeamDThamCo-product-dev\\ProductService\\ProductService.csproj",
+      "packagesPath": "C:\\Users\\P4258660\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\P4258660\\Desktop\\TeamDThamCo-product-dev\\ProductService\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Adam\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\P4258660\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

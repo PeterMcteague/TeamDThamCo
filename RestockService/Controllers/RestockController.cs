@@ -7,6 +7,8 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using RestockService.Models;
 using Newtonsoft.Json;
+using System.Net;
+
 
 namespace RestockService.Controllers
 {
@@ -57,6 +59,25 @@ namespace RestockService.Controllers
             return Ok(products);
         }
 
+        /// <summary>
+        /// Posts to API to purchase Product
+        /// </summary>
+        /// <param name="product"></param>
+        /// <returns></returns>
+        static async Task<Uri> PurchaseProduct(Product product)
+        {
+            using (var client = new HttpClient())
+            {
+                var formData = new MultipartFormDataContent();
+                formData.Add(new StringContent(JsonConvert.SerializeObject(product)), "product");
+
+                HttpResponseMessage response = await client.PostAsync("api/Order", formData);
+                response.EnsureSuccessStatusCode();
+
+                // return URI of the created resource.
+                return response.Headers.Location;
+            }
+        }
 
         // GET api/values
         [HttpGet]

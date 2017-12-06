@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProductService.Models;
+using System.Net;
 
 namespace ProductService.Controllers
 {
@@ -18,6 +19,29 @@ namespace ProductService.Controllers
         public ProductController(ProductContext context)
         {
             _context = context;
+        }
+
+        /// <summary>
+        /// This returns a specific product by its id
+        /// </summary>
+        /// <returns>returns a HTTP response if successful</returns>
+        [HttpGet("api/Product/{id:int}", Name = "return product by id")]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(Product), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetItemById(int Id)
+        {
+            if (Id <= 0)
+            {
+                return BadRequest();
+            }
+
+            var item = await _context.Products.SingleOrDefaultAsync(ci => ci.Id == Id);
+            if (item != null)
+            {
+                return Ok(item);
+            }
+
+            return NotFound();
         }
 
         /// <summary>
@@ -43,7 +67,7 @@ namespace ProductService.Controllers
         /// </summary>
         /// <returns>returns a HTTP response if successful</returns>
         [HttpGet("get/name={name}", Name = "search by name")]
-        public async Task<IActionResult> getProducts([FromRoute] string name)
+        public async Task<IActionResult> searchProducts([FromRoute] string name)
         {
             if (!_context.Products.Any())
             {
@@ -57,7 +81,7 @@ namespace ProductService.Controllers
         }
 
         /// <summary>
-        /// This lists 10 of the products per page
+        /// This lists x of the products per page
         /// </summary>
         /// <returns>returns a HTTP response if successful</returns>
         [HttpGet("get/page={page}/pageSize={pageSize}", Name = "Lists all products at 10 products per page")]
