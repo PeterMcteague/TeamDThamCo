@@ -1,0 +1,47 @@
+﻿@model List<BasketItem>
+
+@{
+    ViewData["Title"] = "Your Basket";
+    var checkoutUrl = @ViewBag.OrderConnection;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Basket</title>
+</head>
+<body>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <li>You are not logged in, so no basket items were found.</li>
+    }
+    else
+    {
+        if (Model.Count > 0)
+        {
+            <table>
+                <tr>
+                    <td>Name</td>
+                    <td>Quantity</td>
+                    <td>Item cost</td>
+                </tr>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.name</td>
+                        <td>@item.quantity</td>
+                        <td>@item.cost</td>
+                    </tr>
+                }
+            </table>
+            <input type="button" value="Proceed to Checkout" onclick="@checkoutUrl" />
+        }
+        else
+        {
+            <li>There are no items in your basket.</li>
+        }
+    }
+</body>
+</html>
