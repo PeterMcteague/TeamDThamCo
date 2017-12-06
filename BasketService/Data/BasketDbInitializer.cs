@@ -26,8 +26,8 @@ namespace BasketService.Data
             #if DEBUG
             // Seed data
             List<BasketItem> testBasket = new List<BasketItem>();
-            testBasket.Add(new BasketItem {buyerId = "test-id-plz-ignore", productId = 1, quantity = 9001 });
-            testBasket.Add(new BasketItem {buyerId = "test-id-plz-ignore", productId = 2, quantity = 1 });
+            testBasket.Add(new BasketItem {name = "Premium Jelly Beans", cost = 0.80m, buyerId = "test-id-plz-ignore", productId = 1, quantity = 5});
+            testBasket.Add(new BasketItem {name = "Netlogo Supercomputer", cost = 2005.99m, buyerId = "test-id-plz-ignore", productId = 2, quantity = 1});
             if (context.Baskets.Count() == testBasket.Count())
             {
                 return;   // DB has been seeded

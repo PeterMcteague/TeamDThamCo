@@ -72,6 +72,9 @@ namespace BasketService
                 options.Audience = Configuration["Auth0:Audience"];
             });
 
+            // register config 
+            services.AddSingleton<IConfiguration>(Configuration);
+
             // register the scope authorization handler
             services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
         }

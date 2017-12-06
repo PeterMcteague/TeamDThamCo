@@ -19,6 +19,10 @@ namespace BasketService.Models
         [ForeignKey("productId")]
         public int productId { get; set; }
 
+        public string name { get; set; }
+
+        public decimal cost { get; set; }
+
         public int quantity { get; set; }
     }
 }

@@ -13,7 +13,7 @@ namespace BasketService.Test
     public class BasketApiControllerTest
     {
         private BasketContext _context;
-        private BasketController _controller;
+        private BasketAPIController _controller;
 
         public BasketApiControllerTest()
         {
@@ -35,7 +35,7 @@ namespace BasketService.Test
             _context.SaveChanges();
 
             // Create test subject
-            _controller = new BasketController(_context);
+            _controller = new BasketAPIController(_context);
         }
 
         //GetBasket
