@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ProductService.Models
+namespace RestockService.Models
 {
     public class Product
     {
@@ -16,11 +16,8 @@ namespace ProductService.Models
         public string Description { get; set; }
         public string Ean { get; set; }
         public DateTime ExpectedRestock { get; set; }
-        [Key, Column("Id")]
-        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public bool InStock { get; set; }
-        public int StockNumber { get; set; }
         public string Name { get; set; }
         public decimal Price { get; set; }
         public int SupplierId { get; set; }
