@@ -1,7 +1,6 @@
 FROM gcr.io/google-appengine/aspnetcore:2.0
-ARG source
+COPY . /app
 WORKDIR /app
-EXPOSE 80
-ENV ASPNETCORE_URLS=http://*:80
-COPY ${source:-obj/Docker/publish} .
+EXPOSE 8080
+ENV ASPNETCORE_URLS=http://*:8080
 ENTRYPOINT ["dotnet", "OrderService.dll"]
