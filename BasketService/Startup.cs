@@ -34,8 +34,9 @@ namespace BasketService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // Swagger API help page UI
             services.AddMvc();
+
+            // Swagger API help page UI
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info

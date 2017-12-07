@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+
+@model List<BasketFrontend.Models.BasketItem>
+
+@{
+    ViewData["Title"] = "Your Basket";
+    var checkoutUrl = @ViewBag.OrderConnection;
+}
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Basket</title>
+</head>
+<body>
+    <h2>Your basket</h2>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <b>You are not logged in. You must be logged in to add to basket.</b>
+    }
+    else
+    {
+        @if (Model == null)
+        {
+            <b>The basket service is down.</b>
+        }
+        else
+        {
+            if (Model.Count > 0)
+            {
+                <table class="table table-bordered table-responsive table-hover">
+                    <tr>
+                        <td>Name</td>
+                        <td>Quantity</td>
+                        <td>Item cost</td>
+                        <td></td>
+                    </tr>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.name</td>
+                            <td>@item.quantity</td>
+                            <td>@item.cost</td>
+                            <td><a href="@Url.Action("Delete","Basket", new {id = item.productId })" class="btn btn-primary btn-lg">X</a></td>
+                        </tr>
+                    }
+                </table>
+                <br>
+                <input type="button" class="btn btn-info" value="Checkout!" onclick="location.href='@checkoutUrl'" />
+            }
+            else
+            {
+                <b>There are no items in your basket.</b>
+            }
+        }
+    }
+</body>
+</html>

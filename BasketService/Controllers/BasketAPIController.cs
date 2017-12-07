@@ -201,13 +201,13 @@ namespace BasketService.Controllers
         /// Deletes a basket item.
         /// </summary>
         /// <param name="userId">The userId to add the item to.</param>  
-        /// <param name="productId">The productId to add to the basket.</param>  
+        /// <param name="productId">The productId to delete from the basket.</param>  
         /// <response code="200">OK. Returns the item added.</response>
         /// <response code="400">If parameters invalid.</response>
         /// <response code="404">If item to delete not found.</response>
         [Authorize]
-        [HttpDelete("delete/userId={userId}&productId={productId}")]
-        public async Task<IActionResult> DeleteBasketItem([FromRoute] string userId , [FromRoute] int productId)
+        [HttpDelete("delete/userId={userId}/productId={productId}" , Name ="Delete a single basket item")]
+        public async Task<IActionResult> DeleteBasket([FromRoute] string userId , [FromRoute] int productId)
         {
             if (!ModelState.IsValid)
             {
@@ -218,7 +218,7 @@ namespace BasketService.Controllers
                 return NotFound("No baskets found");
             }
 
-            var basketItem = await _context.Baskets.SingleOrDefaultAsync(m => m.productId == productId && m.buyerId == userId);
+            BasketItem basketItem = _context.Baskets.Where(m => m.productId == productId && m.buyerId == userId).FirstOrDefault();
 
             if (basketItem == null)
             {
@@ -228,11 +228,11 @@ namespace BasketService.Controllers
             _context.Baskets.Remove(basketItem);
             await _context.SaveChangesAsync();
 
-            return Ok(basketItem);
+            return Ok();
         }
 
         [Authorize]
-        [HttpDelete("delete/userId={userId}")]
+        [HttpDelete("delete/userId={userId}", Name = "Clear a basket")]
         public async Task<IActionResult> DeleteBasket([FromRoute] string userId)
         {
             if (!ModelState.IsValid)

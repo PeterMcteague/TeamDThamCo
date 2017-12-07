@@ -12,10 +12,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>DEBUG;TRACE;NETCOREAPP2_0</DefineConstants>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="Models\BasketItem.cs" />
-  </ItemGroup>
   
   <ItemGroup>
     <Folder Include="Data\" />
