@@ -23,6 +23,13 @@ namespace RestockService.Models
         public int SupplierId { get; set; }
         public int SupplierProductId { get; set; }
 
+        public int ProductId { get; set; }
+        public int Quantity { get; set; }
+        public DateTime When { get; set; }
+        public string ProductName { get; set; }
+        public string ProductEan { get; set; }
+        public decimal TotalPrice { get; set; }
+
         public Product() { }
 
     }

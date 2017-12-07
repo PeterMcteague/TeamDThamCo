@@ -14,10 +14,12 @@ namespace ProductService
         }
 
         public DbSet<Product> Products { get; set; }
+        public DbSet<PriceLog> PriceLogs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Product>().ToTable("Product");
+            modelBuilder.Entity<PriceLog>().ToTable("PriceLog");
         }
 
     }

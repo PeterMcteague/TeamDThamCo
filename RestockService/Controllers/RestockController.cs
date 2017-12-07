@@ -64,12 +64,14 @@ namespace RestockService.Controllers
         /// </summary>
         /// <param name="product"></param>
         /// <returns></returns>
-        static async Task<Uri> PurchaseProduct(Product product)
+        public async Task<Uri> PurchaseProduct(Product product, Card card)
         {
             using (var client = new HttpClient())
             {
+                client.BaseAddress = _context.Suppliers.Where(b => b.Id == product.SupplierId).FirstOrDefault().OrderUri;
                 var formData = new MultipartFormDataContent();
                 formData.Add(new StringContent(JsonConvert.SerializeObject(product)), "product");
+                formData.Add(new StringContent(JsonConvert.SerializeObject(card)), "card");
 
                 HttpResponseMessage response = await client.PostAsync("api/Order", formData);
                 response.EnsureSuccessStatusCode();
@@ -79,36 +81,46 @@ namespace RestockService.Controllers
             }
         }
 
-        // GET api/values
-        [HttpGet]
-        public IEnumerable<string> Get()
+        /// <summary>
+        /// This removes a card by cardnumber
+        /// </summary>
+        /// <returns>returns a HTTP response if successful</returns>
+        [HttpDelete("delete/CardNumber={CardNumber}", Name = "removes a card")]
+        public async Task<IActionResult> DeleteCard(string CardNumber)
         {
-            return new string[] { "value1", "value2" };
+            var log = _context.Cards.SingleOrDefault(x => x.CardNumber == CardNumber);
+
+            if (log == null)
+            {
+                return NotFound();
+            }
+
+            _context.Cards.Remove(log);
+
+            await _context.SaveChangesAsync();
+
+            return NoContent();
         }
 
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
 
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody]string value)
+        /// <summary>
+        /// This adds a new card
+        /// </summary>
+        /// <returns>returns a HTTP response if successful</returns>
+        [HttpPost("post/AccountName={AccountName}&CardNumber={CardNumber}", Name = "adds a new card")]
+        public async Task<IActionResult> CreateProduct([FromBody]Card card)
         {
-        }
+            var item = new Card
+            {
+                AccountName = card.AccountName,
+                CardNumber = card.CardNumber,
+                
+            };
+            _context.Cards.Add(item);
 
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
-        }
+            await _context.SaveChangesAsync();
 
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            return Ok(item);
         }
     }
 }

@@ -95,6 +95,21 @@ namespace ProductService.Controllers
             return Ok(itemsOnPage);
         }
 
+        /// <summary>
+        /// This lists x of the price change logs per page
+        /// </summary>
+        /// <returns>returns a HTTP response if successful</returns>
+        [HttpGet("get/page={page}/pageSize={pageSize}", Name = "Lists all products at 10 logs per page")]
+        public async Task<IActionResult> PriceHistory([FromQuery]int page, [FromQuery]int pageSize)
+        {
+            var itemsOnPage = await _context.PriceLogs
+                .OrderBy(c => c.UpdateDate)
+                .Skip(page * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+            return Ok(itemsOnPage);
+        }
+
 
         /// <summary>
         /// This updates a products stock
@@ -121,6 +136,38 @@ namespace ProductService.Controllers
 
             return Ok(productToUpdate);
 
+        }
+
+        /// <summary>
+        /// This updates a products price
+        /// </summary>
+        /// <returns>returns a HTTP response if successful</returns>
+        [HttpPut("put/Id={Id}&Price={Price}", Name = "Updates a products price")]
+
+        public async Task<IActionResult> UpdateProductPrice([FromBody]int productId , [FromBody] decimal newPrice)
+        {
+            var catalogItem = await _context.Products.SingleOrDefaultAsync(i => i.Id == productId);
+
+            if (catalogItem == null)
+            {
+                return NotFound(new { Message = $"Item with id {productId} has not been located." });
+            }
+
+            var oldPrice = catalogItem.Price;
+
+            if (oldPrice != newPrice)
+            {
+                return StatusCode(304); //Not modified
+            }
+            else
+            {
+                _context.PriceLogs.Add(new PriceLog {productId = productId,OldPrice=oldPrice,UpdateDate=DateTime.Now });
+                catalogItem.Price = newPrice;
+                _context.Products.Update(catalogItem);
+
+                await _context.SaveChangesAsync();
+                return Ok(catalogItem);
+            }
         }
 
 
