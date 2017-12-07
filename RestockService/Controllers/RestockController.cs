@@ -8,7 +8,7 @@ using System.Net.Http.Headers;
 using RestockService.Models;
 using Newtonsoft.Json;
 using System.Net;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace RestockService.Controllers
 {
@@ -27,6 +27,7 @@ namespace RestockService.Controllers
         /// </summary>
         /// <returns>returns a HTTP response if successful</returns>
         [HttpGet("get", Name = "List all products")]
+        [Authorize]
         public async Task<IActionResult> getSupplierProducts()
         {
             if (!_context.Suppliers.Any())
@@ -60,10 +61,47 @@ namespace RestockService.Controllers
         }
 
         /// <summary>
+        /// This returns a specific product by its id
+        /// </summary>
+        /// <returns>returns a HTTP response if successful</returns>
+        [HttpGet("api/Product/{id:int}", Name = "return product by id")]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(Product), (int)HttpStatusCode.OK)]
+        [Authorize]
+        public IActionResult GetSupplierProductById(int Id, Supplier s)
+        {
+            using (var client = new HttpClient())
+            {
+                if (Id <= 0)
+                {
+                    return BadRequest();
+                }
+                client.BaseAddress = s.GetUri;
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var response = client.GetAsync("").Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var jsonString = response.Content.ReadAsStringAsync();
+                    jsonString.Wait();
+                    var item = JsonConvert.DeserializeObject<Product>(jsonString.Result);
+                    if (item != null)
+                    {
+                        return Ok(item);
+                    }
+                }
+            }
+            return NotFound();
+        }
+
+        /// <summary>
         /// Posts to API to purchase Product
         /// </summary>
         /// <param name="product"></param>
         /// <returns></returns>
+
+        [HttpPost("post/Product={Product}&Card={Card}", Name = "buys a product")]
+        [Authorize]
         public async Task<Uri> PurchaseProduct(Product product, Card card)
         {
             using (var client = new HttpClient())
@@ -86,6 +124,7 @@ namespace RestockService.Controllers
         /// </summary>
         /// <returns>returns a HTTP response if successful</returns>
         [HttpDelete("delete/CardNumber={CardNumber}", Name = "removes a card")]
+        [Authorize]
         public async Task<IActionResult> DeleteCard(string CardNumber)
         {
             var log = _context.Cards.SingleOrDefault(x => x.CardNumber == CardNumber);
@@ -108,6 +147,7 @@ namespace RestockService.Controllers
         /// </summary>
         /// <returns>returns a HTTP response if successful</returns>
         [HttpPost("post/AccountName={AccountName}&CardNumber={CardNumber}", Name = "adds a new card")]
+        [Authorize]
         public async Task<IActionResult> CreateProduct([FromBody]Card card)
         {
             var item = new Card

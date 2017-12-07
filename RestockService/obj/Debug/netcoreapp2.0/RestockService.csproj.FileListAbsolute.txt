@@ -6,3 +6,14 @@ C:\Users\Adam\Documents\GitHub\RestockService\obj\Debug\netcoreapp2.0\RestockSer
 C:\Users\Adam\Documents\GitHub\RestockService\obj\Debug\netcoreapp2.0\RestockService.csproj.CoreCompileInputs.cache
 C:\Users\Adam\Documents\GitHub\RestockService\obj\Debug\netcoreapp2.0\RestockService.AssemblyInfoInputs.cache
 C:\Users\Adam\Documents\GitHub\RestockService\obj\Debug\netcoreapp2.0\RestockService.AssemblyInfo.cs
+C:\Users\Adam\Documents\GitHub\TeamDThamCo\RestockService\bin\Debug\netcoreapp2.0\RestockService.deps.json
+C:\Users\Adam\Documents\GitHub\TeamDThamCo\RestockService\bin\Debug\netcoreapp2.0\RestockService.runtimeconfig.json
+C:\Users\Adam\Documents\GitHub\TeamDThamCo\RestockService\bin\Debug\netcoreapp2.0\RestockService.runtimeconfig.dev.json
+C:\Users\Adam\Documents\GitHub\TeamDThamCo\RestockService\bin\Debug\netcoreapp2.0\RestockService.dll
+C:\Users\Adam\Documents\GitHub\TeamDThamCo\RestockService\obj\Debug\netcoreapp2.0\RestockService.csprojResolveAssemblyReference.cache
+C:\Users\Adam\Documents\GitHub\TeamDThamCo\RestockService\obj\Debug\netcoreapp2.0\RestockService.csproj.CoreCompileInputs.cache
+C:\Users\Adam\Documents\GitHub\TeamDThamCo\RestockService\obj\Debug\netcoreapp2.0\RestockService.AssemblyInfoInputs.cache
+C:\Users\Adam\Documents\GitHub\TeamDThamCo\RestockService\obj\Debug\netcoreapp2.0\RestockService.AssemblyInfo.cs
+C:\Users\Adam\Documents\GitHub\TeamDThamCo\RestockService\bin\Debug\netcoreapp2.0\RestockService.pdb
+C:\Users\Adam\Documents\GitHub\TeamDThamCo\RestockService\obj\Debug\netcoreapp2.0\RestockService.dll
+C:\Users\Adam\Documents\GitHub\TeamDThamCo\RestockService\obj\Debug\netcoreapp2.0\RestockService.pdb

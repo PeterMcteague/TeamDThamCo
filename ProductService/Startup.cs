@@ -11,6 +11,7 @@ using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace ProductService
 {
@@ -35,9 +36,26 @@ namespace ProductService
 
             services.AddMvc();
 
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+            }).AddJwtBearer(options =>
+            {
+                options.Authority = "https://thamco.eu.auth0.com/";
+                options.Audience = "Product";
+            });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "ProductService API", Version = "v1" });
+                c.AddSecurityDefinition("JWT Token", new ApiKeyScheme
+                {
+                    Description = "JWT Token",
+                    Name = "Authorization",
+                    In = "header"
+                });
             });
         }
 
@@ -48,7 +66,22 @@ namespace ProductService
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+            }
 
+            app.UseStaticFiles();
+
+            // 2. Enable authentication middleware
+            app.UseAuthentication();
+
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
+            });
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {

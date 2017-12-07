@@ -44,13 +44,21 @@ namespace ProductService.Test
 
             //GET /api/Products
             [Fact]
-            public async Task GetAllProductsAsync_ShouldReturnAllProducts()
+            public async Task GetProductById_ShouldReturnProduct()
             {
                 var result = await _controller.GetItemById(1) as ObjectResult;
                 var products = result.Value as Product;
 
                 Assert.Equal(getTestProducts()[0].BrandName, products.BrandName);
                 Assert.Equal(200, result.StatusCode);
+            }
+
+            [Fact]
+            public async Task GetNonExistentProduct_ThrowError()
+            {
+                var result = await _controller.GetItemById(999999) as NotFoundResult;
+                
+                Assert.Equal(404, result.StatusCode);
             }
 
             private List<Product> getTestProducts()

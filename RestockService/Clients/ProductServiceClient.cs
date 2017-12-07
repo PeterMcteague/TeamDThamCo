@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,12 +17,23 @@ namespace RestockService.Clients
         /// </summary>
         public ProductServiceClient()
         {
+            // Get bearer token 
+            var client = new RestClient("https://thamco.eu.auth0.com/oauth/token");
+            var request = new RestRequest(Method.POST);
+            request.AddHeader("content-type", "application/json");
+            request.AddParameter("application/json", "{\"client_id\":\"r3QHaaimC1jD6Cari3zYHWn5YhWKfcy2\",\"client_secret\":\"d1WL0qduy66PlW6MMTe5zFPX3deBB8PnV_QjZ2T6oDXlTgSFkh6XsT4phV1Zqku9\",\"audience\":\"Product\",\"grant_type\":\"client_credentials\"}", ParameterType.RequestBody);
+            IRestResponse response = client.Execute(request);
+            var dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(response.Content.ToString());
+            var value = dict.FirstOrDefault(x => x.Key == "access_token").Value.ToString();
+            var bearer = "Bearer " + value;
+
             // Get connection string
             var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json", optional: false);
             var configuration = builder.Build();
             // Set up client
             this.BaseAddress = new Uri(configuration.GetConnectionString("ProductService") + "api/Product");
             this.DefaultRequestHeaders.Accept.Clear();
+            this.DefaultRequestHeaders.Add("authorization",bearer);
             this.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 

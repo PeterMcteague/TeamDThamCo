@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProductService.Models;
 using System.Net;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ProductService.Controllers
 {
@@ -28,6 +29,7 @@ namespace ProductService.Controllers
         [HttpGet("api/Product/{id:int}", Name = "return product by id")]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(Product), (int)HttpStatusCode.OK)]
+        [Authorize]
         public async Task<IActionResult> GetItemById(int Id)
         {
             if (Id <= 0)
@@ -49,6 +51,7 @@ namespace ProductService.Controllers
         /// </summary>
         /// <returns>returns a HTTP response if successful</returns>
         [HttpGet("get",Name ="List all products")]
+        [Authorize]
         public async Task<IActionResult> getProducts()
         {
             if (!_context.Products.Any())
@@ -67,6 +70,7 @@ namespace ProductService.Controllers
         /// </summary>
         /// <returns>returns a HTTP response if successful</returns>
         [HttpGet("get/name={name}", Name = "search by name")]
+        [Authorize]
         public async Task<IActionResult> searchProducts([FromRoute] string name)
         {
             if (!_context.Products.Any())
@@ -85,6 +89,7 @@ namespace ProductService.Controllers
         /// </summary>
         /// <returns>returns a HTTP response if successful</returns>
         [HttpGet("get/page={page}/pageSize={pageSize}", Name = "Lists all products at 10 products per page")]
+        [Authorize]
         public async Task<IActionResult> Items([FromQuery]int page, [FromQuery]int pageSize)
         {
             var itemsOnPage = await _context.Products
@@ -99,7 +104,8 @@ namespace ProductService.Controllers
         /// This lists x of the price change logs per page
         /// </summary>
         /// <returns>returns a HTTP response if successful</returns>
-        [HttpGet("get/page={page}/pageSize={pageSize}", Name = "Lists all products at 10 logs per page")]
+        [HttpGet("get/pricelog/page={page}/pageSize={pageSize}", Name = "Lists all products at 10 logs per page")]
+        [Authorize]
         public async Task<IActionResult> PriceHistory([FromQuery]int page, [FromQuery]int pageSize)
         {
             var itemsOnPage = await _context.PriceLogs
@@ -116,7 +122,7 @@ namespace ProductService.Controllers
         /// </summary>
         /// <returns>returns a HTTP response if successful</returns>
         [HttpPut("put/Id={Id}&StockNumber={StockNumber}", Name = "Updates a products stock")]
-
+        [Authorize]
         public async Task<IActionResult> UpdateProductStock([FromBody]Product productToUpdate)
         {
             var catalogItem = await _context.Products.SingleOrDefaultAsync(i => i.Id == productToUpdate.Id);
@@ -143,7 +149,7 @@ namespace ProductService.Controllers
         /// </summary>
         /// <returns>returns a HTTP response if successful</returns>
         [HttpPut("put/Id={Id}&Price={Price}", Name = "Updates a products price")]
-
+        [Authorize]
         public async Task<IActionResult> UpdateProductPrice([FromBody]int productId , [FromBody] decimal newPrice)
         {
             var catalogItem = await _context.Products.SingleOrDefaultAsync(i => i.Id == productId);
@@ -177,6 +183,7 @@ namespace ProductService.Controllers
         /// </summary>
         /// <returns>returns a HTTP response if successful</returns>
         [HttpPost("post/Name={Name}&BrandId={BrandId}&BrandName={BrandName}&CategoryId={CategoryId}&CategoryName={CategoryName}&Description={Description}&Ean={Ean}&ExpectedRestock={ExpectedRestock}&Id={Id}&InStock={InStock}&StockNumber={StockNumber}&Price={Price}", Name = "adds a product")]
+        [Authorize]
         public async Task<IActionResult> CreateProduct([FromBody]Product product)
         {
             var item = new Product
@@ -206,6 +213,7 @@ namespace ProductService.Controllers
         /// </summary>
         /// <returns>returns a HTTP response if successful</returns>
         [HttpDelete("delete/Id={Id}", Name = "removes a product")]
+        [Authorize]
         public async Task<IActionResult> DeleteProduct(int id)
         {
             var product = _context.Products.SingleOrDefault(x => x.Id == id);

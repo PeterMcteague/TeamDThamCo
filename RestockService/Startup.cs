@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace RestockService
 {
@@ -27,16 +28,33 @@ namespace RestockService
         {
 
             #if DEBUG
-            services.AddDbContext<ProductContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ProductConnection")));
+            services.AddDbContext<RestockContext>(options => options.UseSqlServer(Configuration.GetConnectionString("RestockConnection")));
             #else
-            services.AddDbContext<ProductContext>(options => options.UseMySql(Configuration.GetConnectionString("ProductConnection")));
+            services.AddDbContext<RestockContext>(options => options.UseMySql(Configuration.GetConnectionString("RestockConnection")));
             #endif
 
+            // 1. Add Authentication Services
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+            }).AddJwtBearer(options =>
+            {
+                options.Authority = "https://thamco.eu.auth0.com/";
+                options.Audience = "Restock";
+            });
             services.AddMvc();
 
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "RestockService API", Version = "v1" });
+                c.AddSecurityDefinition("JWT Token", new ApiKeyScheme
+                {
+                    Description = "JWT Token",
+                    Name = "Authorization",
+                    In = "header"
+                });
             });
         }
 
@@ -47,6 +65,22 @@ namespace RestockService
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+            }
+
+            app.UseStaticFiles();
+
+            // 2. Enable authentication middleware
+            app.UseAuthentication();
+
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
+            });
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
@@ -54,7 +88,6 @@ namespace RestockService
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "RestockService API V1");
             });
             app.UseMvc();
-
         }
     }
 }
