@@ -231,6 +231,26 @@ namespace BasketService.Controllers
             return Ok(basketItem);
         }
 
+        [Authorize]
+        [HttpDelete("delete/userId={userId}")]
+        public async Task<IActionResult> DeleteBasket([FromRoute] string userId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            if (!_context.Baskets.Any())
+            {
+                return NotFound("No baskets found");
+            }
+
+            var basketItems = _context.Baskets.Where(m => m.buyerId == userId);
+             _context.Baskets.RemoveRange(basketItems);
+
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
         private bool BasketItemExists(int id)
         {
             return _context.Baskets.Any(e => e.id == id);

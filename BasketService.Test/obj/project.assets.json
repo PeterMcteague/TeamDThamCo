@@ -14475,7 +14475,7 @@
       ]
     },
     "xunit.analyzers/0.7.0": {
-      "sha512": "pEjPJ/pd+r9blGBJ9bXg961phkAiCl4k2DwxwWGEZyYC/7Tb1xJ1az0H18uGANX7zFIkvE5ZO1eZZ4vU7gny7w==",
+      "sha512": "YLyB3zDIbuliqMPOeGNp4BbNKrAMmoU0RI3DqJrPIaHJ2u1l3c9hILxUgY2DoKN2nSRgaIhGVdZ4tNSDtnaZQg==",
       "type": "package",
       "path": "xunit.analyzers/0.7.0",
       "files": [
@@ -14583,8 +14583,8 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\p4029206\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\07mct\\.nuget\\packages\\": {},
+    "c:\\program files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
@@ -14592,17 +14592,17 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "C:\\Users\\p4029206\\Documents\\GitHub\\TeamDThamCo\\BasketService.Test\\BasketService.Test.csproj",
+      "projectUniqueName": "C:\\Users\\07mct\\Documents\\GitHub\\TeamDThamCo\\BasketService.Test\\BasketService.Test.csproj",
       "projectName": "BasketService.Test",
-      "projectPath": "C:\\Users\\p4029206\\Documents\\GitHub\\TeamDThamCo\\BasketService.Test\\BasketService.Test.csproj",
-      "packagesPath": "C:\\Users\\p4029206\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\p4029206\\Documents\\GitHub\\TeamDThamCo\\BasketService.Test\\obj\\",
+      "projectPath": "C:\\Users\\07mct\\Documents\\GitHub\\TeamDThamCo\\BasketService.Test\\BasketService.Test.csproj",
+      "packagesPath": "C:\\Users\\07mct\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\07mct\\Documents\\GitHub\\TeamDThamCo\\BasketService.Test\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        "c:\\program files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\p4029206\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\07mct\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -14615,8 +14615,8 @@
       "frameworks": {
         "netcoreapp2.0": {
           "projectReferences": {
-            "C:\\Users\\p4029206\\Documents\\GitHub\\TeamDThamCo\\BasketService\\BasketService.csproj": {
-              "projectPath": "C:\\Users\\p4029206\\Documents\\GitHub\\TeamDThamCo\\BasketService\\BasketService.csproj"
+            "C:\\Users\\07mct\\Documents\\GitHub\\TeamDThamCo\\BasketService\\BasketService.csproj": {
+              "projectPath": "C:\\Users\\07mct\\Documents\\GitHub\\TeamDThamCo\\BasketService\\BasketService.csproj"
             }
           }
         }

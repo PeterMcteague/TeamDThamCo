@@ -78,7 +78,7 @@ namespace BasketService.Test
         [Fact]
         public async Task AddBasket_ShouldAddItem()
         {
-            var result = await _controller.AddItemToBasket("test-id-plz-ignore",3,500) as ObjectResult;
+            var result = await _controller.AddItemToBasket("test-id-plz-ignore",3,500,"rocket",2.00m) as ObjectResult;
             var itemAdded = result.Value as BasketItem;
 
             var result2 = await _controller.GetBaskets() as ObjectResult;

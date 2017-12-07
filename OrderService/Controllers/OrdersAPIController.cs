@@ -320,7 +320,7 @@ namespace OrderService.Controllers
         /// <response code="404">If not any products ordered by that buyer</response>  
         [Authorize]
         [HttpPut("Update/id={id}&paid={paid}", Name = "Update order paid status")]
-        public async Task<IActionResult> UpdateOrderPaid([FromRoute] int id, [FromRoute] bool paid, bool sendInvoice)
+        public async Task<IActionResult> UpdateOrderPaid([FromRoute] int id, [FromRoute] bool paid)
         {
             if (!ModelState.IsValid)
             {

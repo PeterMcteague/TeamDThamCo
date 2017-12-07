@@ -1,0 +1,43 @@
+﻿@model CheckoutDTO
+
+@{
+    ViewData["Title"] = "Checkout";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Checkout Details</title>
+</head>
+<body>
+    <b>Please ensure that the below details are correct before proceeding. If they aren't you can update them in your profile.</b>
+    <hr>
+    @if (User.Identity.IsAuthenticated || @Model.buyerId == null)
+    {
+        <b>You are not logged in. You must be logged in to checkout.</b>
+    }
+    @if (Model.items.Count() == 0 || Model.items == null)
+    {
+        <b>Your basket is empty..</b>
+    }
+    @if (Model.items.Count() > 0)
+    {
+        <b>Address: @Model.buyerAddress</b>
+
+        <hr>
+
+        @if (!Model.canPurchase)
+        {
+            <b>Note , you are not approved for purchasing. Because of this if you continue your order will be placed but you will have to continue purchasing with it from your order history page.</b>
+            <hr>
+        }
+
+        <a href="@Url.Action("Payment","Orders", @Model)"
+           class="btn btn-primary btn-lg">Looks good!</a>
+    }
+</body>
+</html>
+
+

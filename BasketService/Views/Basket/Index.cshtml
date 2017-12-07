@@ -1,11 +1,11 @@
-﻿@model List<BasketItem>
+﻿<!DOCTYPE html>
+
+@model List<BasketItem>
 
 @{
     ViewData["Title"] = "Your Basket";
     var checkoutUrl = @ViewBag.OrderConnection;
 }
-
-<!DOCTYPE html>
 
 <html>
 <head>
@@ -13,19 +13,21 @@
     <title>Basket</title>
 </head>
 <body>
+    <h2>Your basket</h2>
     @if (User.Identity.IsAuthenticated)
     {
-        <li>You are not logged in, so no basket items were found.</li>
+        <b>You are not logged in. You must be logged in to add to basket.</b>
     }
     else
     {
         if (Model.Count > 0)
         {
-            <table>
+            <table class="table table-bordered table-responsive table-hover">
                 <tr>
                     <td>Name</td>
                     <td>Quantity</td>
                     <td>Item cost</td>
+                    <td></td>
                 </tr>
                 @foreach (var item in Model)
                 {
@@ -33,14 +35,16 @@
                         <td>@item.name</td>
                         <td>@item.quantity</td>
                         <td>@item.cost</td>
+                        <td><a href="@Url.Action("Delete","Basket", new {id = item.id })" class="btn btn-primary btn-lg">X</a></td>
                     </tr>
                 }
             </table>
-            <input type="button" value="Proceed to Checkout" onclick="@checkoutUrl" />
+            <br>
+            <input type="button" class="btn btn-info" value="Checkout!" onclick="location.href='@checkoutUrl'" />
         }
         else
         {
-            <li>There are no items in your basket.</li>
+            <b>There are no items in your basket.</b>
         }
     }
 </body>

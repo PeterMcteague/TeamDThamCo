@@ -22,18 +22,32 @@ namespace BasketService.Controllers
             this._context = context;
         }
 
-        //[Authorize]
+        // GET: <controller>
         public IActionResult Index()
         {
             // Add connection string to viewbag
-            ViewBag.OrderConnection = configuration.GetConnectionString("OrderService");
+            var OrderString = configuration.GetConnectionString("OrderService") + "orders/checkoutdetails";
+            ViewBag.OrderConnection = OrderString;
 
 #if DEBUG
             var userId = "test-id-plz-ignore";
 #else
+            // Not sure where we're getting this from tbh , either customer deets service or from token
             var userId = User.Claims.Where(uId => uId.Type == "User_Id").Select(c => c.Value).SingleOrDefault();
 #endif
-            return View(_context.Baskets.Where(b => b.buyerId == userId).ToList());
+            var basket = _context.Baskets.Where(b => b.buyerId == userId).ToList();
+            return View(basket);
+        }
+        
+        public IActionResult Delete(int id)
+        {
+            var toDelete = _context.Baskets.Where(b => b.id == id).FirstOrDefault();
+            if (toDelete != null)
+            {
+                _context.Baskets.Remove(toDelete);
+                _context.SaveChanges();
+            }
+            return RedirectToAction("Index");
         }
 
         public IActionResult Error()
