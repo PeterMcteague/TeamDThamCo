@@ -19,7 +19,7 @@ namespace OrderFrontend.Clients
             this._configuration = configuration;
 
             // Get auth token
-            var bearer = new AuthClient().getBasketBearer();
+            var bearer = new AuthClient(configuration).getBasketBearer();
 
             // Get connection string
             var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json", optional: false);

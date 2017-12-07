@@ -33,6 +33,5 @@ namespace BasketFrontend.Clients
             var value = dict.FirstOrDefault(x => x.Key == "access_token").Value.ToString();
             return "Bearer " + value;
         }
-
     }
 }

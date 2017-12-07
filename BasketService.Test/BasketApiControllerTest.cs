@@ -115,8 +115,7 @@ namespace BasketService.Test
             var before = await _controller.GetBasketItem("test-id-plz-ignore", 2) as ObjectResult;
             var beforeItem = before.Value as IEnumerable<BasketItem>;
 
-            var deleted = await _controller.DeleteBasketItem("test-id-plz-ignore", 2) as ObjectResult;
-            var deletedItem = deleted.Value as BasketItem;
+            var deleted = await _controller.DeleteBasket("test-id-plz-ignore", 2) as OkResult;
 
             var after = await _controller.GetBasketItem("test-id-plz-ignore", 2) as NotFoundResult;
 
@@ -124,7 +123,6 @@ namespace BasketService.Test
             var afterItems = getAfter.Value as IEnumerable<BasketItem>;
 
             Assert.Equal(404, after.StatusCode);
-            Assert.Equal(beforeItem.FirstOrDefault() , deletedItem); 
             Assert.Equal(getTestBasket().Count() - 1, afterItems.Count()); 
         }
 

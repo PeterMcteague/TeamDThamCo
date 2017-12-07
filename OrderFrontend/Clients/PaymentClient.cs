@@ -24,7 +24,7 @@ namespace OrderFrontend.Clients
             this._configuration = configuration;
 
             // Get auth token
-            var bearer = new AuthClient().getOrderBearer();
+            var bearer = new AuthClient(configuration).getOrderBearer();
 
             // Get connection string
             var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json", optional: false);

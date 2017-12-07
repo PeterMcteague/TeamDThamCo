@@ -20,7 +20,7 @@ namespace BasketFrontend.Clients
             this._configuration = configuration;
 
             // Get auth token
-            var bearer = new AuthClient().getBearer();
+            var bearer = new AuthClient(configuration).getBearer();
 
             // Get connection string
             var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json", optional: false);
