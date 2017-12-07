@@ -26,10 +26,17 @@ namespace OrderFrontend.Clients
 
         public async Task<HttpResponseMessage> GetUser(String id)
         {
-            HttpResponseMessage response = await this.GetAsync("/api/user/id=" + id);
-            response.EnsureSuccessStatusCode();
+            try
+            {
+                HttpResponseMessage response = await this.GetAsync("/api/user/id=" + id);
+                response.EnsureSuccessStatusCode();
 
-            return response;
+                return response;
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }

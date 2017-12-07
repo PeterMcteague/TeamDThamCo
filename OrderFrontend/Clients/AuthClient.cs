@@ -27,7 +27,7 @@ namespace OrderFrontend.Clients
 
         public String getBasketBearer()
         {
-            request.AddParameter("application/json", "{\"client_id\":\"" + _configuration.GetSection("Auth0").GetSection("Basket").GetValue<String>("ClientId") + "\",\"client_secret\":\"" + _configuration.GetSection("Auth0").GetSection("Basket").GetValue<String>("ClientSecret") + "\",\"audience\":\"" + _configuration.GetSection("Auth0").GetSection("Basket").GetValue<String>("Audience") + "\",\"grant_type\":\"client_credentials\"}", ParameterType.RequestBody);
+            request.AddParameter("application/json", "{\"client_id\":\"" + _configuration.GetSection("Auth0").GetSection("Basket").GetValue<String>("ClientId").ToString() + "\",\"client_secret\":\"" + _configuration.GetSection("Auth0").GetSection("Basket").GetValue<String>("ClientSecret").ToString() + "\",\"audience\":\"" + _configuration.GetSection("Auth0").GetSection("Basket").GetValue<String>("Audience").ToString() + "\",\"grant_type\":\"client_credentials\"}", ParameterType.RequestBody);
             var response = client.Execute(request);
             var dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(response.Content.ToString());
             var value = dict.FirstOrDefault(x => x.Key == "access_token").Value.ToString();
@@ -36,7 +36,7 @@ namespace OrderFrontend.Clients
 
         public String getOrderBearer()
         {
-            request.AddParameter("application/json", "{\"client_id\":\"" + _configuration.GetSection("Auth0").GetSection("Order").GetValue<String>("ClientId") + "\",\"client_secret\":\"" + _configuration.GetSection("Auth0").GetSection("Order").GetValue<String>("ClientSecret") + "\",\"audience\":\"" + _configuration.GetSection("Auth0").GetSection("Order").GetValue<String>("Audience") + "\",\"grant_type\":\"client_credentials\"}", ParameterType.RequestBody);
+            request.AddParameter("application/json", "{\"client_id\":\"" + _configuration.GetSection("Auth0").GetSection("Order").GetValue<String>("ClientId").ToString() + "\",\"client_secret\":\"" + _configuration.GetSection("Auth0").GetSection("Order").GetValue<String>("ClientSecret").ToString() + "\",\"audience\":\"" + _configuration.GetSection("Auth0").GetSection("Order").GetValue<String>("Audience").ToString() + "\",\"grant_type\":\"client_credentials\"}", ParameterType.RequestBody);
             var response = client.Execute(request);
             var dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(response.Content.ToString());
             var value = dict.FirstOrDefault(x => x.Key == "access_token").Value.ToString();
