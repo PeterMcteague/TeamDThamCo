@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2008
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestockService", "RestockService\RestockService.csproj", "{905A130E-4C20-44CD-9DB4-ECDBB996C6CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestockService", "RestockService\RestockService.csproj", "{905A130E-4C20-44CD-9DB4-ECDBB996C6CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductService", "ProductService\ProductService.csproj", "{0F637F5B-F52F-4CC9-B9A8-FB56E35F80F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductService", "ProductService\ProductService.csproj", "{0F637F5B-F52F-4CC9-B9A8-FB56E35F80F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductService.Test", "ProductService.Test\ProductService.Test.csproj", "{81798AC9-8A84-48C8-948E-790BD2CC4303}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductService.Test", "ProductService.Test\ProductService.Test.csproj", "{81798AC9-8A84-48C8-948E-790BD2CC4303}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestockService.Test", "RestockService.Test\RestockService.Test.csproj", "{BDE925FB-6D00-4827-B8E8-4F8D53398E9A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestockService.Test", "RestockService.Test\RestockService.Test.csproj", "{BDE925FB-6D00-4827-B8E8-4F8D53398E9A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

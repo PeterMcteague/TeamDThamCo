@@ -39,7 +39,7 @@ namespace RestockService.Controllers
             {
                 using (var client = new HttpClient())
                 {
-                    client.BaseAddress = s.GetUri;
+                    client.BaseAddress = new Uri(s.GetUri);
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                     var response = client.GetAsync("").Result;
@@ -64,11 +64,11 @@ namespace RestockService.Controllers
         /// This returns a specific product by its id
         /// </summary>
         /// <returns>returns a HTTP response if successful</returns>
-        [HttpGet("api/Product/{id:int}", Name = "return product by id")]
+        [HttpGet("get/id={id}supplierId={supplierId}", Name = "return product by id")]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(Product), (int)HttpStatusCode.OK)]
         [Authorize]
-        public IActionResult GetSupplierProductById(int Id, Supplier s)
+        public IActionResult GetSupplierProductById(int Id, int supplierId)
         {
             using (var client = new HttpClient())
             {
@@ -76,7 +76,8 @@ namespace RestockService.Controllers
                 {
                     return BadRequest();
                 }
-                client.BaseAddress = s.GetUri;
+                Supplier s = _context.Suppliers.First(b => b.Id == supplierId);
+                client.BaseAddress = new Uri(s.GetUri);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var response = client.GetAsync("").Result;
@@ -106,7 +107,7 @@ namespace RestockService.Controllers
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = _context.Suppliers.Where(b => b.Id == product.SupplierId).FirstOrDefault().OrderUri;
+                client.BaseAddress = new Uri(_context.Suppliers.Where(b => b.Id == product.SupplierId).FirstOrDefault().OrderUri);
                 var formData = new MultipartFormDataContent();
                 formData.Add(new StringContent(JsonConvert.SerializeObject(product)), "product");
                 formData.Add(new StringContent(JsonConvert.SerializeObject(card)), "card");

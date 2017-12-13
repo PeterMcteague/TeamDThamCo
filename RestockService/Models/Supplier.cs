@@ -13,7 +13,7 @@ namespace RestockService.Models
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string Name { get; set; }
-        public Uri GetUri { get; set; }
-        public Uri OrderUri { get; set; }
+        public string GetUri { get; set; }
+        public string OrderUri { get; set; }
     }
 }
