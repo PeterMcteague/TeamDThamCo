@@ -14798,11 +14798,11 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "C:\\Users\\07mct\\Documents\\GitHub\\TeamDThamCo\\OrderService.Test\\OrderService.Test.csproj",
+      "projectUniqueName": "H:\\Year 3\\Software Architecture\\ICA\\Submission folder\\source\\OrderService.Test\\OrderService.Test.csproj",
       "projectName": "OrderService.Test",
-      "projectPath": "C:\\Users\\07mct\\Documents\\GitHub\\TeamDThamCo\\OrderService.Test\\OrderService.Test.csproj",
+      "projectPath": "H:\\Year 3\\Software Architecture\\ICA\\Submission folder\\source\\OrderService.Test\\OrderService.Test.csproj",
       "packagesPath": "C:\\Users\\07mct\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\07mct\\Documents\\GitHub\\TeamDThamCo\\OrderService.Test\\obj\\",
+      "outputPath": "H:\\Year 3\\Software Architecture\\ICA\\Submission folder\\source\\OrderService.Test\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "c:\\program files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -14821,8 +14821,8 @@
       "frameworks": {
         "netcoreapp2.0": {
           "projectReferences": {
-            "C:\\Users\\07mct\\Documents\\GitHub\\TeamDThamCo\\OrderService\\OrderService.csproj": {
-              "projectPath": "C:\\Users\\07mct\\Documents\\GitHub\\TeamDThamCo\\OrderService\\OrderService.csproj"
+            "H:\\Year 3\\Software Architecture\\ICA\\Submission folder\\source\\OrderService\\OrderService.csproj": {
+              "projectPath": "H:\\Year 3\\Software Architecture\\ICA\\Submission folder\\source\\OrderService\\OrderService.csproj"
             }
           }
         }

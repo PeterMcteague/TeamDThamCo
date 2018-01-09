@@ -21,7 +21,7 @@ namespace BasketFrontend.Controllers
         // GET: /<controller>/
         public IActionResult Index()
         {
-            return Redirect(configuration.GetConnectionString("ProductService"));
+            return RedirectToAction("Index","Basket","");
         }
     }
 }

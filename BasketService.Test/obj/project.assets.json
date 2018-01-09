@@ -14592,11 +14592,11 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "C:\\Users\\07mct\\Documents\\GitHub\\TeamDThamCo\\BasketService.Test\\BasketService.Test.csproj",
+      "projectUniqueName": "H:\\Year 3\\Software Architecture\\ICA\\Submission folder\\source\\BasketService.Test\\BasketService.Test.csproj",
       "projectName": "BasketService.Test",
-      "projectPath": "C:\\Users\\07mct\\Documents\\GitHub\\TeamDThamCo\\BasketService.Test\\BasketService.Test.csproj",
+      "projectPath": "H:\\Year 3\\Software Architecture\\ICA\\Submission folder\\source\\BasketService.Test\\BasketService.Test.csproj",
       "packagesPath": "C:\\Users\\07mct\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\07mct\\Documents\\GitHub\\TeamDThamCo\\BasketService.Test\\obj\\",
+      "outputPath": "H:\\Year 3\\Software Architecture\\ICA\\Submission folder\\source\\BasketService.Test\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "c:\\program files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -14615,8 +14615,8 @@
       "frameworks": {
         "netcoreapp2.0": {
           "projectReferences": {
-            "C:\\Users\\07mct\\Documents\\GitHub\\TeamDThamCo\\BasketService\\BasketService.csproj": {
-              "projectPath": "C:\\Users\\07mct\\Documents\\GitHub\\TeamDThamCo\\BasketService\\BasketService.csproj"
+            "H:\\Year 3\\Software Architecture\\ICA\\Submission folder\\source\\BasketService\\BasketService.csproj": {
+              "projectPath": "H:\\Year 3\\Software Architecture\\ICA\\Submission folder\\source\\BasketService\\BasketService.csproj"
             }
           }
         }

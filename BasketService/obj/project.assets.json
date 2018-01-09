@@ -13490,11 +13490,11 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "C:\\Users\\07mct\\Documents\\GitHub\\TeamDThamCo\\BasketService\\BasketService.csproj",
+      "projectUniqueName": "H:\\Year 3\\Software Architecture\\ICA\\Submission folder\\source\\BasketService\\BasketService.csproj",
       "projectName": "BasketService",
-      "projectPath": "C:\\Users\\07mct\\Documents\\GitHub\\TeamDThamCo\\BasketService\\BasketService.csproj",
+      "projectPath": "H:\\Year 3\\Software Architecture\\ICA\\Submission folder\\source\\BasketService\\BasketService.csproj",
       "packagesPath": "C:\\Users\\07mct\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\07mct\\Documents\\GitHub\\TeamDThamCo\\BasketService\\obj\\",
+      "outputPath": "H:\\Year 3\\Software Architecture\\ICA\\Submission folder\\source\\BasketService\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "c:\\program files\\dotnet\\sdk\\NuGetFallbackFolder"

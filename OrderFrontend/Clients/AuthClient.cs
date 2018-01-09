@@ -20,7 +20,7 @@ namespace OrderFrontend.Clients
         {
             _configuration = configuration;
             // Auth
-            client = new RestClient(configuration.GetSection("Auth0").GetValue<String>("Authority"));
+            client = new RestClient(configuration.GetSection("Auth0").GetValue<String>("Authority") + "oauth/token");
             request = new RestRequest(Method.POST);
             request.AddHeader("content-type", "application/json");
         }

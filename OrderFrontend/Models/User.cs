@@ -9,5 +9,6 @@ namespace OrderFrontend.Models
     {
         public string address { get; set; }
         public bool canBuy { get; set; }
+        public string id { get; set; }
     }
 }
